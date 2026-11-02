@@ -9,8 +9,8 @@ Convierte una necesidad en un ticket que la fábrica puede ejecutar sin pregunta
 
 ## 0. Cargar el contexto
 
-1. Buscá la configuración del proyecto: `factory/config.md` en el repo, o el doc de configuración del Project de claude.ai. Si no existe, pedí los datos mínimos (clave Jira, cloudId, ruta de docs) y seguí.
-2. Leé la story del backlog y los requisitos (`R-x.y`) relacionados con el pedido. Si el pedido no aparece en los docs, decilo: puede ser alcance nuevo.
+1. Buscá la configuración del proyecto en `factory/proyecto/config.md`: en el repo o, si estás en un Project de claude.ai, el doc con esa misma ruta. Reglas en `factory/reglas.md`. Si no existe el config, pedí los datos mínimos (clave Jira, cloudId, ruta de docs) y seguí.
+2. Leé la story del backlog (`factory/proyecto/docs/02-product-backlog.md`) y los requisitos (`R-x.y`, en `factory/proyecto/docs/01-analisis-requerimientos.md`) relacionados con el pedido. Si el pedido no aparece en los docs, decilo: puede ser alcance nuevo.
 
 ## 1. Clasificar el pedido
 
@@ -32,7 +32,7 @@ Si hay coincidencias, mostralas y preguntá si es duplicado, extensión del exis
 
 ## 3. Redactar con la plantilla
 
-Usá la plantilla de ticket (`${CLAUDE_PLUGIN_ROOT}/templates/ticket.md`; si no la tenés a mano, `plugins/dark-factory/templates/ticket.md` en https://github.com/EnmanuelVarelaPividori/dark-factory): metadatos, Historia, Descripción con ejemplo, Criterios de aceptación y Stakeholders. En español salvo que el proyecto diga otra cosa.
+Usá la plantilla de ticket (`factory/templates/ticket.md`; si no está, `${CLAUDE_PLUGIN_ROOT}/template/factory/templates/ticket.md` o `plugins/dark-factory/template/factory/templates/ticket.md` en https://github.com/EnmanuelVarelaPividori/dark-factory): metadatos, Historia, Descripción con ejemplo, Criterios de aceptación y Stakeholders. En español salvo que el proyecto diga otra cosa.
 
 - Cada criterio de aceptación tiene que poder verificarse mirando el sistema o un test. Reescribí los vagos ("funciona bien", "es rápido").
 - Cada criterio define una sola condición.
@@ -63,7 +63,7 @@ Si todo está OK, el ticket lleva la etiqueta `factory:ready`. Si falta algo, se
 ## 6. Capacidad y destino
 
 - Por defecto, el ticket va al **backlog**, no al sprint activo.
-- Si piden meterlo en el sprint activo: sumá los SP actuales del sprint y compará con la capacidad de `config.md`. Si la supera, decilo y proponé qué sacar. Agregar al sprint en curso es un cambio de alcance: dejalo dicho en el comentario.
+- Si piden meterlo en el sprint activo: sumá los SP actuales del sprint y compará con la capacidad (`equipo.cantidad` × `sprint.velocidad_por_persona` del config). Si la supera, decilo y proponé qué sacar. Agregar al sprint en curso es un cambio de alcance: dejalo dicho en el comentario.
 
 ## 7. Mostrar y crear
 

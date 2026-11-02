@@ -9,9 +9,9 @@ Revisás como alguien que no vio cómo se escribió el código. No confíes en l
 
 ## 1. Juntar el contexto
 
-1. `CLAUDE.md`, `factory/config.md`.
+1. `CLAUDE.md`, `factory/ESTRUCTURA.md`, `factory/reglas.md` y `factory/proyecto/config.md`.
 2. El ticket: criterios de aceptación, requisitos `R-x.y`, tipo (núcleo / config / cliente).
-3. La story del backlog y los requisitos citados.
+3. La story en `factory/proyecto/docs/02-product-backlog.md` y los requisitos citados en `factory/proyecto/docs/01-analisis-requerimientos.md`.
 4. El diff completo y los tests. Si podés, corré `repo.tests`.
 5. Las rondas anteriores de review en el PR: no repitas hallazgos ya resueltos ni cambies de criterio entre rondas.
 

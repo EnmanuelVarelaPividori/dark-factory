@@ -7,7 +7,7 @@ description: Implementar en Claude Code un ticket de Jira marcado factory:ready 
 
 ## 1. Pre-flight (no escribas código hasta pasarlo)
 
-1. Leé `CLAUDE.md` y `factory/config.md`.
+1. Leé `CLAUDE.md`, `factory/ESTRUCTURA.md`, `factory/reglas.md` y `factory/proyecto/config.md`.
 2. Traé el ticket: resumen, descripción, criterios, etiquetas, dependencias y estado.
 3. Verificá:
    - [ ] Tiene `factory:ready` y `factory:go`.
@@ -19,7 +19,7 @@ description: Implementar en Claude Code un ticket de Jira marcado factory:ready 
 
 ## 2. Contexto
 
-- Leé la story en el backlog y los requisitos `R-x.y` que cita.
+- Leé la story en `factory/proyecto/docs/02-product-backlog.md` y los requisitos `R-x.y` que cita en `factory/proyecto/docs/01-analisis-requerimientos.md`.
 - Explorá el código relacionado antes de diseñar. Reutilizá lo que existe: no abras caminos paralelos a un flujo que ya hace lo mismo.
 - Si el ticket contradice los docs o el código existente, comentalo en el ticket y en el PR; no elijas en silencio.
 
