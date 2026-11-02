@@ -1,0 +1,14 @@
+{
+  "name": "dark-factory",
+  "description": "Dark Factory: del plan al PR con Claude. Calidad de tickets, implementación y review contra el ticket.",
+  "owner": {
+    "name": "Enmanuel Varela Pividori"
+  },
+  "plugins": [
+    {
+      "name": "dark-factory",
+      "source": "./plugins/dark-factory",
+      "description": "Skills ticket-quality, factory-implement y factory-review."
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "name": "dark-factory",
+  "displayName": "Dark Factory",
+  "version": "0.1.0",
+  "description": "Calidad de tickets, implementación de tickets Ready y review de PRs contra su ticket.",
+  "author": {
+    "name": "Enmanuel Varela Pividori"
+  },
+  "repository": "https://github.com/EnmanuelVarelaPividori/dark-factory",
+  "keywords": ["jira", "tickets", "review", "scrum"]
+}

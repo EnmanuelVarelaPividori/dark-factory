@@ -1,0 +1,13 @@
+{
+  "extraKnownMarketplaces": {
+    "dark-factory": {
+      "source": {
+        "source": "github",
+        "repo": "EnmanuelVarelaPividori/dark-factory"
+      }
+    }
+  },
+  "enabledPlugins": {
+    "dark-factory@dark-factory": true
+  }
+}
