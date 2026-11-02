@@ -4,6 +4,8 @@ Modelo sugerido: Opus. No implementás: solo revisás. Nunca hagas commits en el
 
 ## 1. Contexto
 
+Esta tarea conviene crearla **dentro del Project de claude.ai** del proyecto (`claude.project`): así la sesión puede leer los docs que los tickets citan en **Contexto**.
+
 1. Leé `CLAUDE.md` (importa `factory/proyecto/config.md` y `factory/reglas.md`).
 2. Usá la skill `dark-factory:factory-review` para todo lo que sigue. Si la sesión no tiene el plugin, leé la skill de https://github.com/EnmanuelVarelaPividori/dark-factory, archivo `plugins/dark-factory/skills/factory-review/SKILL.md`, y seguila igual.
 

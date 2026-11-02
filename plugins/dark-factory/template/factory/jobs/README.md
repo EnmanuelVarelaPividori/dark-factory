@@ -52,7 +52,7 @@ A mano, para cada job que corresponda:
 
 1. Nueva tarea programada con el nombre y el prompt de la sección 1.
 2. Horario según la sección 2.
-3. Conectores: Atlassian. Repo del proyecto con lectura (controles) o con push (runners). Repo dark-factory con lectura si es privado.
+3. Para los dos runners: crear la tarea **dentro del Project de claude.ai** del proyecto, para que lean los docs que los tickets citan en Contexto. Conectores: Atlassian. Repo del proyecto con lectura (controles) o con push (runners). Repo dark-factory con lectura si es privado.
 4. Modelo: el de la tabla de arriba, en la configuración de la tarea.
 5. Notificaciones según `reportes.canales`.
 6. Aprobación automática en los tres controles (solo leen).

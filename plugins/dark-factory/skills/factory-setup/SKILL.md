@@ -49,7 +49,7 @@ La estructura esperada y las reglas para agentes están en `template/factory/EST
 
 Llená `factory/proyecto/config.md` con lo detectado. Preguntá el resto en **un solo mensaje**, con tu mejor propuesta en cada punto para que la respuesta pueda ser "sí":
 
-- Proyecto: nombre, objetivo en una frase, fecha objetivo.
+- Proyecto: nombre, objetivo en una frase, fecha objetivo, y el nombre del Project de claude.ai con la investigación (`claude.project`).
 - Jira: clave del proyecto si no quedó clara.
 - Equipo: cantidad y cuentas de Jira.
 - Sprint: duración en semanas, día de inicio, fecha de inicio de un sprint real, hora de la daily, zona horaria.
@@ -70,8 +70,9 @@ Con `factory/jobs/README.md`:
 1. Calculá el calendario desde el config. Con N = 1 no va la de mitad de sprint; si `fabrica.disparo` ≠ A, no van los runners.
 2. Cada tarea usa el prompt corto del README (repo + rama + job). No pegues valores del config en el prompt: el job los lee al correr.
 3. Mostrá una tabla: nombre, cron, hora local, modelo sugerido, conectores.
-4. Si la sesión puede crear tareas programadas: crealas después de que el usuario confirme, con notificaciones según `reportes.canales`, y ejecutá cada una una vez para probarla. Si no puede: dejá la tabla y el prompt listos para pegar.
-5. El modelo se elige en la configuración de cada tarea: recordalo.
+4. Los dos runners van **dentro del Project de claude.ai** (`claude.project`) para que lean los docs que citan los tickets. Si la sesión no puede crearlas ahí, decí cómo moverlas al Project.
+5. Si la sesión puede crear tareas programadas: crealas después de que el usuario confirme, con notificaciones según `reportes.canales`, y ejecutá cada una una vez para probarla. Si no puede: dejá la tabla y el prompt listos para pegar.
+6. El modelo se elige en la configuración de cada tarea: recordalo.
 
 ## 6. Verificar
 
@@ -88,7 +89,8 @@ Reportá ✅ / ❌ / ⏳ (requiere a una persona):
 | Jira accesible | Una JQL simple sobre `jira.proyecto` responde |
 | Etiquetas GitHub | `gh label list` |
 | Tareas programadas | Existen (si se pueden listar) |
-| Project de claude.ai | ⏳ `factory/proyecto/config.md` y los docs subidos con las mismas rutas |
+| Project de claude.ai | ⏳ `factory/proyecto/config.md` y los docs subidos con las mismas rutas; investigación en `investigacion/`, `decisiones/`, `diagramas/` |
+| Runners dentro del Project | ⏳ Las tareas implementar y revisar pertenecen al Project |
 | `ticket-quality` en claude.ai | ⏳ Guardada como skill de la cuenta |
 | Rama base protegida | ⏳ Merge solo con review humano |
 | Smoke test | ⏳ Ver bloque 6 de `factory/CHECKLIST.md` |

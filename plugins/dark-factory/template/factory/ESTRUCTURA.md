@@ -42,9 +42,10 @@ Este repo usa **Dark Factory**. Este archivo le dice a cualquier agente de IA (C
 2. **Lo propio del proyecto va solo en `factory/proyecto/`.** Valores en `config.md`; alcance en `docs/`. No crees archivos de configuración de la fábrica en otro lugar.
 3. **Rutas y nombres fijos.** Los archivos genéricos referencian `factory/proyecto/config.md` y `factory/proyecto/docs/0X-*.md` por nombre. No los renombres ni los muevas.
 4. **Leé el config antes de actuar.** Cualquier valor (clave de Jira, rama base, comandos de tests, umbrales) sale de `factory/proyecto/config.md`. No asumas valores ni los copies a otros archivos.
-5. **Docs = fuente de verdad del alcance.** Antes de implementar, leé la story en `02-product-backlog.md` y sus requisitos en `01-analisis-requerimientos.md`. Si el ticket contradice los docs, comentalo en el ticket y en el PR; no elijas en silencio.
-6. **Reglas de trabajo en `factory/reglas.md`.** En particular: solo tickets con `factory:ready` y `factory:go`, un ticket = una rama = un PR, sin cambios de alcance, nunca mergear.
-7. **Archivos fuera de `factory/`.** `CLAUDE.md`, `AGENTS.md` y `.claude/settings.json` pueden tener contenido propio del repo además de lo de la fábrica: agregá, no reemplaces.
+5. **Investigación detallada no va en el repo.** Vive en el Project de claude.ai (`claude.project`). Si un ticket cita docs del Project en su sección **Contexto**, leelos si tenés acceso; si un doc obligatorio no es accesible y el ticket no alcanza, no adivines: marcá el ticket como bloqueado con un comentario. No copies investigación al repo.
+6. **Docs = fuente de verdad del alcance.** Antes de implementar, leé la story en `02-product-backlog.md` y sus requisitos en `01-analisis-requerimientos.md`. Si el ticket contradice los docs, comentalo en el ticket y en el PR; no elijas en silencio.
+7. **Reglas de trabajo en `factory/reglas.md`.** En particular: solo tickets con `factory:ready` y `factory:go`, un ticket = una rama = un PR, sin cambios de alcance, nunca mergear.
+8. **Archivos fuera de `factory/`.** `CLAUDE.md`, `AGENTS.md` y `.claude/settings.json` pueden tener contenido propio del repo además de lo de la fábrica: agregá, no reemplaces.
 
 ## Si falta algo
 

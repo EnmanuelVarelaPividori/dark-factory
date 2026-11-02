@@ -25,9 +25,21 @@ Ejemplo: <caso concreto con datos reales: quién, qué carga, qué ve después.>
 ## 4. Stakeholders
 <Quién valida y quién usa el resultado.>
 
+## 5. Contexto
+- Requisitos: R-x.y — <título> (`factory/proyecto/docs/01-analisis-requerimientos.md`)
+- Project «<claude.project>» › `<ruta/del/doc.md>` — <qué mirar ahí y por qué> · obligatorio | referencia
+- Project «<claude.project>» › `<ruta/del/doc.md>` — …
+
 ## Notas para la fábrica (opcional)
 <Módulos o archivos tocados, restricciones técnicas, fuera de alcance de este ticket.>
 ```
+
+## Sección Contexto
+
+- La investigación detallada (research, decisiones, diagramas, actas) vive en el Project de claude.ai, no en el repo. El ticket la nombra por **ruta dentro del Project**.
+- **Lo imprescindible va en el ticket.** Si una decisión del Project define cómo se implementa, resumila en la descripción o en un criterio de aceptación; el doc es para profundizar.
+- Marcá cada doc como **obligatorio** (sin leerlo no se puede implementar bien) o **referencia** (ayuda, pero el ticket alcanza).
+- Sin docs relevantes en el Project: `- Project: no aplica`.
 
 ## Criterios verificables
 

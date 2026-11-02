@@ -37,6 +37,7 @@ Usá la plantilla de ticket (`factory/templates/ticket.md`; si no está, `${CLAU
 - Cada criterio de aceptación tiene que poder verificarse mirando el sistema o un test. Reescribí los vagos ("funciona bien", "es rápido").
 - Cada criterio define una sola condición.
 - Trazá a requisitos `R-x.y`. Si no hay requisito, escribí por qué existe el ticket.
+- Armá la sección **Contexto**: si estás en un Project de claude.ai, buscá (`project_search`) investigación, decisiones o diagramas relacionados con el pedido. Listá cada doc con su ruta, qué mirar y si es obligatorio o referencia. Resumí en la descripción o en los criterios lo imprescindible de cada doc obligatorio: los runners pueden no tener acceso al Project. Si no hay nada relevante, `Project: no aplica`.
 - Clasificá: núcleo, configuración o específico de cliente. Si un pedido de cliente empuja lógica específica al núcleo, señalalo y proponé resolverlo por configuración.
 
 ## 4. Preguntar lo que falta
@@ -56,6 +57,7 @@ Revisá el borrador contra esta lista y mostrá el resultado:
 - [ ] Épica y dependencias
 - [ ] ≤5 SP. Si es 8 o más, proponé la división antes de seguir.
 - [ ] Tipo (núcleo / configuración / cliente)
+- [ ] Sección Contexto completa (o `no aplica`)
 - [ ] Sin duplicados
 
 Si todo está OK, el ticket lleva la etiqueta `factory:ready`. Si falta algo, se crea sin la etiqueta y con un comentario que diga qué falta.

@@ -14,6 +14,7 @@ Un ticket puede entrar a un sprint y a la fábrica solo si cumple todo:
 - [ ] Estimación ≤ `reglas.sp_max_ticket`. Si es mayor, se divide antes de entrar.
 - [ ] Tipo: núcleo, configuración o específico de cliente.
 - [ ] Sin duplicados en el backlog.
+- [ ] Sección **Contexto** con los docs del Project que el implementador tiene que mirar (ruta + para qué + obligatorio / referencia), o `no aplica`. Lo imprescindible de esos docs está resumido en el ticket.
 
 Solo un ticket que cumple todo recibe `factory:ready`. Sin esa etiqueta, la fábrica no lo toca.
 
@@ -53,6 +54,15 @@ Solo un ticket que cumple todo recibe `factory:ready`. Sin esa etiqueta, la fáb
 3. Con `CAMBIOS` pone `factory:changes`; el implementador corrige solo esos hallazgos y vuelve a `factory:review`.
 4. Máximo `fabrica.rondas_review` rondas. Sin aprobación en la última: `factory:needs-human` y resumen del desacuerdo. Sin límite, dos agentes pueden discutir sin fin.
 5. Con `APROBADO`: `factory:approved`, y el developer revisa y mergea.
+
+## Dónde vive cada tipo de información
+
+| Información | Dónde | Quién la lee |
+|---|---|---|
+| Valores del proyecto (Jira, equipo, repo, reglas) | `factory/proyecto/config.md` | Todos |
+| Alcance general: problema, requisitos `R-x.y`, backlog, plan | `factory/proyecto/docs/` (repo) y su copia en el Project | Todos |
+| Investigación detallada, decisiones, diagramas, actas | Project de claude.ai (`claude.project` del config) | Quien planifica; los runners cuando el ticket lo pide en **Contexto** |
+| Lo necesario para implementar un ticket | El ticket | Implementador y reviewer |
 
 ## Nunca
 

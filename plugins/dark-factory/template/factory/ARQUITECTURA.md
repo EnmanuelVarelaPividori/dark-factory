@@ -22,18 +22,29 @@ Los archivos genéricos nunca nombran un proyecto: leen `factory/proyecto/config
 
 Si el repo ya tenía `CLAUDE.md`, `AGENTS.md` o `.claude/settings.json`, el setup les agrega lo necesario sin pisar nada. La estructura completa y las reglas para agentes están en `factory/ESTRUCTURA.md`.
 
-## Project de claude.ai
+## Repo y Project: qué va en cada uno
 
-El Project del proyecto replica las mismas rutas, para que las skills funcionen igual en los dos lados:
+| | Repo (`factory/proyecto/`) | Project de claude.ai (`claude.project`) |
+|---|---|---|
+| Para qué | Lo que necesita el código: general y estable | Todo el trabajo de planificación, con el detalle |
+| Contenido | `config.md` y los 4 docs generales (problema, requisitos `R-x.y`, backlog, plan) | Los mismos 4 docs + investigación detallada, decisiones, diagramas, actas, borradores |
+| Quién lo lee | Todos los agentes y runners | Quien planifica; los runners cuando un ticket cita un doc en **Contexto** |
+
+El **ticket** es el puente: trae lo imprescindible para implementar y, en la sección **Contexto**, nombra los docs del Project que hay que mirar (ruta + para qué + obligatorio / referencia).
+
+Convención de carpetas sugerida en el Project, para que las rutas citadas sean estables:
 
 ```
 <Project>
-├── Instrucciones        rol, producto, cliente, reglas de tickets
-├── factory/proyecto/config.md
-└── factory/proyecto/docs/00…03-*.md
+├── Instrucciones
+├── factory/proyecto/config.md          copia del repo
+├── factory/proyecto/docs/00…03-*.md    copia del repo (o sincronizado desde GitHub)
+├── investigacion/<tema>.md             research detallado
+├── decisiones/<AAAA-MM-DD>-<tema>.md   decisiones con su porqué
+└── diagramas/<tema>.md                 diagramas y flujos
 ```
 
-Cuando un doc cambia en el Project, se copia al repo (y al revés). El repo es lo que leen los runners.
+Si una ruta del Project cambia, los tickets abiertos que la citan quedan desactualizados: conviene no mover docs citados.
 
 ## Quién carga qué
 
@@ -42,6 +53,7 @@ Cuando un doc cambia en el Project, se copia al repo (y al revés). El repo es l
 | Project de claude.ai | Docs `factory/proyecto/…` del Project | `ticket-quality` como skill de la cuenta | La conversación |
 | Claude Code de un developer | `CLAUDE.md` importa config y reglas | Plugin (Claude Code ofrece instalarlo al abrir el repo) | El developer |
 | Tarea programada (cualquier job) | Clona el repo: `CLAUDE.md` + `factory/` | Plugin; si falta, el job lee la skill del repo dark-factory | `factory/jobs/<job>.md` |
+| Runners creados dentro del Project | Lo anterior + los docs del Project que cite el ticket (`project_read`) | Ídem | Ídem |
 
 ## Prompt de cada tarea programada
 

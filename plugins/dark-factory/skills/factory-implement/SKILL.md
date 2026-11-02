@@ -15,11 +15,15 @@ description: Implementar en Claude Code un ticket de Jira marcado factory:ready 
    - [ ] Las dependencias bloqueantes están Done (o mergeadas).
    - [ ] ≤5 SP.
    - [ ] No hay otro PR abierto para el mismo ticket.
+   - [ ] Los docs del Project marcados **obligatorio** en la sección Contexto se pueden leer (ver paso 2), o el ticket resume lo necesario.
 4. Si algo falla: comentá en el ticket qué falta, poné la etiqueta `factory:blocked` y terminá. No adivines requisitos.
 
 ## 2. Contexto
 
 - Leé la story en `factory/proyecto/docs/02-product-backlog.md` y los requisitos `R-x.y` que cita en `factory/proyecto/docs/01-analisis-requerimientos.md`.
+- Docs del Project en la sección **Contexto** del ticket: si la sesión tiene acceso al Project (herramienta Projects), leé cada uno por su ruta (`project_read`; si la ruta no existe, `project_search` con el título). Los **obligatorio** se leen siempre; los **referencia**, si el ticket deja dudas.
+- Si un doc **obligatorio** no se puede leer y el ticket no alcanza para implementar sin adivinar: comentá en el ticket qué doc falta, poné `factory:blocked` y terminá.
+- Si un doc del Project contradice el ticket o `factory/proyecto/docs/`: manda el ticket; comentá la contradicción en el ticket y en el PR.
 - Explorá el código relacionado antes de diseñar. Reutilizá lo que existe: no abras caminos paralelos a un flujo que ya hace lo mismo.
 - Si el ticket contradice los docs o el código existente, comentalo en el ticket y en el PR; no elijas en silencio.
 
@@ -37,6 +41,7 @@ Cuerpo del PR:
 ```markdown
 Ticket: {KEY} — {título}
 Requisitos: R-x.y, …
+Contexto leído: <docs del Project que leíste> · No accesibles: <si alguno>
 
 ## Criterios de aceptación
 - [x] CA1 — <cómo se verifica: test `…`, ruta, captura>

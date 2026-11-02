@@ -12,8 +12,9 @@ Revisás como alguien que no vio cómo se escribió el código. No confíes en l
 1. `CLAUDE.md`, `factory/ESTRUCTURA.md`, `factory/reglas.md` y `factory/proyecto/config.md`.
 2. El ticket: criterios de aceptación, requisitos `R-x.y`, tipo (núcleo / config / cliente).
 3. La story en `factory/proyecto/docs/02-product-backlog.md` y los requisitos citados en `factory/proyecto/docs/01-analisis-requerimientos.md`.
-4. El diff completo y los tests. Si podés, corré `repo.tests`.
-5. Las rondas anteriores de review en el PR: no repitas hallazgos ya resueltos ni cambies de criterio entre rondas.
+4. Los docs del Project en la sección **Contexto** del ticket, si la sesión tiene acceso (`project_read` por ruta). Si no tenés acceso, revisá contra el ticket y decilo en el comentario.
+5. El diff completo y los tests. Si podés, corré `repo.tests`.
+6. Las rondas anteriores de review en el PR: no repitas hallazgos ya resueltos ni cambies de criterio entre rondas.
 
 ## 2. Revisar, en este orden
 
@@ -21,7 +22,7 @@ Revisás como alguien que no vio cómo se escribió el código. No confíes en l
 |---|---|---|
 | 1 | ¿Cada criterio de aceptación está cumplido? Verificalo en código o test, uno por uno. | Sí |
 | 2 | ¿El PR hace algo que el ticket no pide? (alcance extra) | Sí |
-| 3 | ¿Respeta los docs y requisitos? ¿Contradice alguna regla de negocio? | Sí |
+| 3 | ¿Respeta los docs, los requisitos y las decisiones de los docs del Project citados en Contexto? ¿Contradice alguna regla de negocio? | Sí |
 | 4 | ¿Hay tests para la lógica nueva y pasan? | Sí |
 | 5 | ¿Rompe algo existente: datos, permisos, aislamiento multiempresa, trazabilidad? | Sí |
 | 6 | ¿Reutiliza lo que ya existe o abre un camino paralelo? | Sí, si duplica un flujo |

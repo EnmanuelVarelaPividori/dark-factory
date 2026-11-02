@@ -8,6 +8,7 @@
 - [ ] Docs en Markdown en el Project con las rutas de `factory/proyecto/docs/` (ver `factory/proyecto/docs/README.md`).
 - [ ] Requerimientos con IDs `R-x.y`; cada story del backlog con su campo `Requisitos`.
 - [ ] Contradicciones entre docs resueltas y anotadas.
+- [ ] Investigación detallada en el Project con rutas estables (`investigacion/`, `decisiones/`, `diagramas/`); `claude.project` en el config con el nombre del Project.
 - [ ] **Verificación:** en el Project, "¿qué requisitos cubre US-xxx?" responde lo mismo que el backlog.
 
 ## 2. Repo
@@ -40,7 +41,7 @@
 
 - [ ] Horarios calculados con `factory/jobs/README.md` a partir del config.
 - [ ] Control diario (Haiku), review de mitad de sprint (Sonnet; solo con sprints de 2+ semanas), evaluación de cierre (Opus).
-- [ ] Si `fabrica.disparo` = A: runner implementar (Sonnet) y runner revisar (Opus), con acceso de push al repo.
+- [ ] Si `fabrica.disparo` = A: runner implementar (Sonnet) y runner revisar (Opus), con acceso de push al repo, creados **dentro del Project** para que lean los docs citados en Contexto.
 - [ ] Todas con el prompt corto de `factory/jobs/README.md`, conector de Atlassian, acceso al repo y notificaciones según `reportes.canales`.
 - [ ] Aprobación automática en los controles de tablero (solo leen).
 - [ ] **Verificación:** cada tarea ejecutada una vez a mano; el reporte llega con datos correctos.
@@ -48,6 +49,7 @@
 ## 6. Smoke test de la fábrica
 
 - [ ] Un ticket chico (1–2 SP), Ready y con `factory:go`, recorre todo: PR con checklist de criterios → review con veredicto → corrección si hace falta → `factory:approved` → merge humano → ticket en Done.
+- [ ] Un ticket que cita un doc del Project como obligatorio: el runner lo lee (el PR dice "Contexto leído").
 - [ ] Un ticket sin `factory:ready` pero con `factory:go` termina en `factory:blocked` con un comentario de qué falta, sin código.
 
 ## 7. Equipo

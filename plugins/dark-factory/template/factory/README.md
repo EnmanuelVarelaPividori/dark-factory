@@ -53,6 +53,8 @@ En la raíz del repo, además: `CLAUDE.md` y `AGENTS.md` (instrucciones para age
 
 Las reglas de cada paso están en `reglas.md`.
 
+**Repo vs. Project:** `proyecto/` tiene lo general que necesita el código. La investigación detallada vive en el Project de claude.ai; cada ticket nombra en su sección **Contexto** qué docs del Project mirar. Ver `ARQUITECTURA.md`.
+
 ## Tareas programadas
 
 | Job | Frecuencia (derivada del largo del sprint) | Modelo sugerido | Qué responde |

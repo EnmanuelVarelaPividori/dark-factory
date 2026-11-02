@@ -27,6 +27,12 @@ descripcion: Configuración Dark Factory de este proyecto. Lo leen las skills, l
 | `jira.prioridad` | COMPLETAR | MUST / SHOULD / COULD → id de prioridad |
 | `jira.prefijos_titulo` | — | Prefijos de capa en el título, si se usan (ej. `[BE]`, `[FE]`) |
 
+## Project de claude.ai
+
+| Clave | Valor | Qué va |
+|---|---|---|
+| `claude.project` | COMPLETAR | Nombre del Project de claude.ai con la investigación detallada. Los tickets lo citan en **Contexto** |
+
 ## Equipo y sprint
 
 | Clave | Valor | Qué va |
