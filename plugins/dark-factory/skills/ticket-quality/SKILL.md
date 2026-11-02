@@ -32,7 +32,7 @@ Si hay coincidencias, mostralas y preguntá si es duplicado, extensión del exis
 
 ## 3. Redactar con la plantilla
 
-Usá la plantilla de ticket (`templates/ticket.md` del repo dark-factory): metadatos, Historia, Descripción con ejemplo, Criterios de aceptación y Stakeholders. En español salvo que el proyecto diga otra cosa.
+Usá la plantilla de ticket (`${CLAUDE_PLUGIN_ROOT}/templates/ticket.md`; si no la tenés a mano, `plugins/dark-factory/templates/ticket.md` en https://github.com/EnmanuelVarelaPividori/dark-factory): metadatos, Historia, Descripción con ejemplo, Criterios de aceptación y Stakeholders. En español salvo que el proyecto diga otra cosa.
 
 - Cada criterio de aceptación tiene que poder verificarse mirando el sistema o un test. Reescribí los vagos ("funciona bien", "es rápido").
 - Cada criterio define una sola condición.

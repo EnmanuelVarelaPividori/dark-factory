@@ -1,4 +1,4 @@
-<!-- Ejemplo de ticket con la plantilla templates/ticket.md de dark-factory, a partir de US-064 del backlog.
+<!-- Ejemplo de ticket con la plantilla plugins/dark-factory/templates/ticket.md, a partir de US-064 del backlog.
      Título en Jira: [BE] US-064 — Dashboard inicial -->
 
 **Épica:** EP-06 Datos Maestros y Reportería · **Requisitos:** §11 Dashboard · **Tipo:** núcleo

@@ -10,8 +10,14 @@ Sistema reutilizable para pasar de la planificación al código con Claude, sin 
   /plugin install dark-factory --marketplace EnmanuelVarelaPividori/dark-factory
   ```
 
-  En un repo de proyecto no hace falta instalarlo a mano: `.claude/settings.json` (copiado de `templates/settings.json`) lo declara y Claude Code ofrece instalarlo al abrir el repo.
-- **Proyecto nuevo:** seguir `CHECKLIST.md`. Referencia completa: `examples/hiqual/`.
+  En un repo de proyecto no hace falta instalarlo a mano: `.claude/settings.json` (copiado de `plugins/dark-factory/templates/settings.json`) lo declara y Claude Code ofrece instalarlo al abrir el repo.
+- **Proyecto nuevo:** con el plugin instalado, en el repo del proyecto:
+
+  ```
+  /dark-factory:factory-setup
+  ```
+
+  Detecta lo que puede del repo y de Jira, pregunta el resto, escribe `factory/config.md`, `CLAUDE.md` y `.claude/settings.json`, arma las tareas programadas y corre la checklist. Lo que queda para una persona está en `CHECKLIST.md`. Referencia completa: `examples/hiqual/`.
 
 ## El flujo
 
@@ -27,15 +33,15 @@ Sistema reutilizable para pasar de la planificación al código con Claude, sin 
 5. MERGEAR         Un developer revisa la versión final y mergea. Nada se mergea sin humano.
 ```
 
-Por encima corren tres controles recurrentes (ver `jobs/`):
+Por encima corren tres controles recurrentes (ver `plugins/dark-factory/jobs/`):
 
 | Job | Frecuencia (derivada de `sprint.duracion_semanas`) | Modelo sugerido | Qué responde |
 |---|---|---|---|
-| `jobs/daily-check.md` | Días hábiles, antes de la daily | Haiku | ¿Se rompió alguna regla de tablero hoy? (WIP, capacidad, tickets no Ready en sprint) |
-| `jobs/weekly-review.md` | Semanal, a mitad de semana. No se crea con sprints de 1 semana. | Sonnet | ¿Cómo va el sprint y qué haría un scrum master esta semana? |
-| `jobs/sprint-review.md` | Al cierre de cada sprint (corre semanal y solo reporta cuando cerró uno) | Opus | ¿Avanzamos contra el plan y los requisitos? ¿Llegamos a la fecha? |
+| `plugins/dark-factory/jobs/daily-check.md` | Días hábiles, antes de la daily | Haiku | ¿Se rompió alguna regla de tablero hoy? (WIP, capacidad, tickets no Ready en sprint) |
+| `plugins/dark-factory/jobs/weekly-review.md` | Semanal, a mitad de semana. No se crea con sprints de 1 semana. | Sonnet | ¿Cómo va el sprint y qué haría un scrum master esta semana? |
+| `plugins/dark-factory/jobs/sprint-review.md` | Al cierre de cada sprint (corre semanal y solo reporta cuando cerró uno) | Opus | ¿Avanzamos contra el plan y los requisitos? ¿Llegamos a la fecha? |
 
-Cómo crearlas, horarios por largo de sprint y prompt para que Claude las cree: `jobs/README.md`.
+Cómo crearlas, horarios por largo de sprint y prompt para que Claude las cree: `plugins/dark-factory/jobs/README.md`.
 
 **Por qué esos modelos:** el diario son reglas mecánicas (contar, comparar contra umbrales), así que Haiku alcanza y es barato. El semanal lee el tablero y da recomendaciones: Sonnet es suficiente, y Opus no cambia mucho el resultado. El de fin de sprint cruza requisitos, backlog, plan y estado real, y de sus conclusiones salen decisiones de alcance; corre cada 2 semanas, así que Opus vale lo que cuesta. El modelo se elige en la configuración de cada tarea programada.
 
@@ -108,13 +114,13 @@ En ambos casos la etiqueta `factory:go` la pone una persona: la fábrica nunca s
 | `README.md` | Este playbook. |
 | `ARQUITECTURA.md` | Qué vive acá y qué en cada proyecto, quién carga config y skills, ciclo de etiquetas. |
 | `CHECKLIST.md` | Puesta en marcha en un proyecto nuevo y verificación de que funciona. |
-| `config.example.md` | Variables por proyecto. Se copia al proyecto como `factory/config.md`. |
+| `plugins/dark-factory/templates/config.example.md` | Variables por proyecto. Se copia al proyecto como `factory/config.md`. |
 | `.claude-plugin/marketplace.json` | Hace de este repo un marketplace de plugins de Claude Code. |
-| `plugins/dark-factory/` | El plugin: skills `ticket-quality`, `factory-implement`, `factory-review`. |
-| `templates/CLAUDE.md` | Base del `CLAUDE.md` de cada repo. |
-| `templates/settings.json` | `.claude/settings.json` que activa el plugin en cada repo. |
-| `templates/ticket.md` | Formato de ticket. |
-| `jobs/README.md` | Guía de creación de las tareas programadas: variables, calendario, cron, pasos. |
-| `jobs/daily-check.md`, `weekly-review.md`, `sprint-review.md` | Prompts de los controles de tablero. |
-| `jobs/factory-implement.md`, `jobs/factory-review.md` | Prompts de los runners de la fábrica (opción A de disparo). |
+| `plugins/dark-factory/` | El plugin: skills `factory-setup`, `ticket-quality`, `factory-implement`, `factory-review`, más las plantillas y los prompts que usan. |
+| `plugins/dark-factory/templates/CLAUDE.md` | Base del `CLAUDE.md` de cada repo. |
+| `plugins/dark-factory/templates/settings.json` | `.claude/settings.json` que activa el plugin en cada repo. |
+| `plugins/dark-factory/templates/ticket.md` | Formato de ticket. |
+| `plugins/dark-factory/jobs/README.md` | Guía de creación de las tareas programadas: variables, calendario, cron, pasos. |
+| `plugins/dark-factory/jobs/daily-check.md`, `weekly-review.md`, `sprint-review.md` | Prompts de los controles de tablero. |
+| `plugins/dark-factory/jobs/factory-implement.md`, `plugins/dark-factory/jobs/factory-review.md` | Prompts de los runners de la fábrica (opción A de disparo). |
 | `examples/hiqual/` | Instalación completa en HiQual, lista para copiar: config, `CLAUDE.md`, `settings.json`, prompts con variables reemplazadas y un ticket de ejemplo. |

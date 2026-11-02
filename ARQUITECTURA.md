@@ -9,27 +9,28 @@ dark-factory/
 ├── README.md                     Playbook: flujo, reglas, Definition of Ready / Done
 ├── ARQUITECTURA.md               Este documento
 ├── CHECKLIST.md                  Puesta en marcha por proyecto
-├── config.example.md             Variables a completar por proyecto
 ├── .claude-plugin/
 │   └── marketplace.json          Convierte el repo en un marketplace de plugins
 ├── plugins/
-│   └── dark-factory/             El plugin (se instala, no se copia)
+│   └── dark-factory/             El plugin: todo lo que usa Claude (se instala, no se copia)
 │       ├── .claude-plugin/plugin.json
-│       └── skills/
-│           ├── ticket-quality/SKILL.md
-│           ├── factory-implement/SKILL.md
-│           └── factory-review/SKILL.md
-├── templates/
-│   ├── CLAUDE.md                 Base del CLAUDE.md de cada repo
-│   ├── settings.json             .claude/settings.json que activa el plugin
-│   └── ticket.md                 Formato de ticket
-├── jobs/
-│   ├── README.md                 Cómo crear las tareas programadas, calendario y cron
-│   ├── daily-check.md            Control diario (Haiku)
-│   ├── weekly-review.md          Review de mitad de sprint (Sonnet)
-│   ├── sprint-review.md          Evaluación de cierre (Opus)
-│   ├── factory-implement.md      Runner implementar (Sonnet)
-│   └── factory-review.md         Runner revisar (Opus)
+│       ├── skills/
+│       │   ├── factory-setup/SKILL.md      Instala y verifica la fábrica en un repo
+│       │   ├── ticket-quality/SKILL.md     Crear tickets con calidad
+│       │   ├── factory-implement/SKILL.md  Implementar un ticket Ready
+│       │   └── factory-review/SKILL.md     Revisar un PR contra su ticket
+│       ├── templates/
+│       │   ├── config.example.md Variables a completar por proyecto
+│       │   ├── CLAUDE.md         Base del CLAUDE.md de cada repo
+│       │   ├── settings.json     .claude/settings.json que activa el plugin
+│       │   └── ticket.md         Formato de ticket
+│       └── jobs/
+│           ├── README.md         Calendario, cron y cómo crear las tareas programadas
+│           ├── daily-check.md    Control diario (Haiku)
+│           ├── weekly-review.md  Review de mitad de sprint (Sonnet)
+│           ├── sprint-review.md  Evaluación de cierre (Opus)
+│           ├── factory-implement.md  Runner implementar (Sonnet)
+│           └── factory-review.md     Runner revisar (Opus)
 └── examples/
     └── hiqual/                   Instalación completa de referencia
 ```
@@ -52,7 +53,7 @@ Solo esto se agrega al repo del proyecto:
     └── 03-planificacion-sprints.md
 ```
 
-Los prompts de las tareas programadas **no** viven en el repo del proyecto: se generan desde `jobs/` del repo central al crear las tareas, con los valores del config.
+Los prompts de las tareas programadas **no** viven en el repo del proyecto: se generan desde `plugins/dark-factory/jobs/` del repo central al crear las tareas, con los valores del config.
 
 ## Project de claude.ai
 
@@ -70,10 +71,10 @@ Los prompts de las tareas programadas **no** viven en el repo del proyecto: se g
 |---|---|---|---|
 | Project de claude.ai (planificar, crear tickets) | Doc `factory/config.md` del Project | `ticket-quality` como skill de la cuenta | La conversación |
 | Claude Code de un developer en el repo | `CLAUDE.md` → `@factory/config.md` | Plugin `dark-factory` (activado por `.claude/settings.json`; al abrir el repo Claude Code ofrece instalarlo) | El developer |
-| Runner implementar / revisar (tarea programada) | Clona el repo del proyecto: `CLAUDE.md` → config | Plugin `dark-factory`; si la sesión no lo tiene instalado, el prompt lee la skill directo del repo central | `jobs/factory-*.md` con variables reemplazadas |
-| Controles de tablero (tarea programada) | Valores pegados en el prompt al crear la tarea | No usan skills | `jobs/daily-check.md`, `weekly-review.md`, `sprint-review.md` |
+| Runner implementar / revisar (tarea programada) | Clona el repo del proyecto: `CLAUDE.md` → config | Plugin `dark-factory`; si la sesión no lo tiene instalado, el prompt lee la skill directo del repo central | `plugins/dark-factory/jobs/factory-*.md` con variables reemplazadas |
+| Controles de tablero (tarea programada) | Valores pegados en el prompt al crear la tarea | No usan skills | `plugins/dark-factory/jobs/daily-check.md`, `weekly-review.md`, `sprint-review.md` |
 
-Las skills del plugin se invocan con el prefijo del plugin: `dark-factory:ticket-quality`, `dark-factory:factory-implement`, `dark-factory:factory-review`.
+Las skills del plugin se invocan con el prefijo del plugin: `dark-factory:factory-setup`, `dark-factory:ticket-quality`, `dark-factory:factory-implement`, `dark-factory:factory-review`. Las plantillas y prompts viven dentro del plugin para que `factory-setup` los tenga disponibles en cualquier máquina sin clonar este repo.
 
 ## Fuente única de cada cosa
 
@@ -82,7 +83,7 @@ Las skills del plugin se invocan con el prefijo del plugin: `dark-factory:ticket
 | Playbook, checklist, plantillas, prompts | Repo central | Ninguna | Commit en el repo central. |
 | Skills | `plugins/dark-factory/skills/` | Caché del plugin en cada máquina | Subir `version` en `plugin.json`; Claude Code actualiza el plugin. |
 | `ticket-quality` en claude.ai | `plugins/dark-factory/skills/ticket-quality/` | Skill de la cuenta | Volver a guardar la skill desde el archivo del repo. |
-| Config del proyecto | `factory/config.md` del repo del proyecto | Doc del Project + valores en los controles de tablero | Copiar al Project; volver a correr el prompt de creación de `jobs/README.md`. |
+| Config del proyecto | `factory/config.md` del repo del proyecto | Doc del Project + valores en los controles de tablero | Copiar al Project; volver a correr el prompt de creación de `plugins/dark-factory/jobs/README.md`. |
 
 ## El ciclo implementar ↔ revisar
 

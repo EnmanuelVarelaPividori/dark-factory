@@ -59,11 +59,15 @@ Los minutos no caen en :00 ni en :30 a propósito: a esas horas se acumulan las 
 
 ## 3. Crear las tareas
 
-### Opción rápida: pedírselo a Claude
+### Opción rápida: skill de setup
+
+En Claude Code, en el repo del proyecto y con el plugin instalado: `/dark-factory:factory-setup`. Calcula el calendario, genera los prompts y crea las tareas después de mostrarte la tabla.
+
+### Opción rápida sin plugin: pedírselo a Claude
 
 En una sesión con acceso al repo y a Jira, pegá:
 
-> Creá las tareas programadas de la fábrica para este proyecto. Leé `factory/config.md` de este repo y, del repo https://github.com/EnmanuelVarelaPividori/dark-factory, `jobs/README.md`. Para cada job de `jobs/` (salvo el de mitad de sprint si `sprint.duracion_semanas` = 1, y los dos runners si `fabrica.disparo` no es A): reemplazá todos los `{{...}}` del prompt con los valores del config, calculá el cron con la tabla de la sección 2, y creá la tarea con nombre `[{{jira.proyecto}}] <job>`, conector Atlassian (y el repo de GitHub para los runners) y notificaciones push + email. Antes de crear, mostrame una tabla con nombre, cron, hora local y modelo sugerido, y el prompt final de cada una. Después de crearlas, ejecutá cada una una vez para probarla.
+> Creá las tareas programadas de la fábrica para este proyecto. Leé `factory/config.md` de este repo y, del repo https://github.com/EnmanuelVarelaPividori/dark-factory, `plugins/dark-factory/jobs/README.md`. Para cada job de `plugins/dark-factory/jobs/` (salvo el de mitad de sprint si `sprint.duracion_semanas` = 1, y los dos runners si `fabrica.disparo` no es A): reemplazá todos los `{{...}}` del prompt con los valores del config, calculá el cron con la tabla de la sección 2, y creá la tarea con nombre `[{{jira.proyecto}}] <job>`, conector Atlassian (y el repo de GitHub para los runners) y notificaciones push + email. Antes de crear, mostrame una tabla con nombre, cron, hora local y modelo sugerido, y el prompt final de cada una. Después de crearlas, ejecutá cada una una vez para probarla.
 
 ### A mano
 

@@ -53,7 +53,9 @@ Proyecto ISO (Project)
 
 ## Para otro proyecto
 
-1. Copiar `config.example.md` al repo del proyecto como `factory/config.md` y completarlo. Este ejemplo sirve de referencia.
-2. Copiar `templates/settings.json` a `.claude/settings.json`.
-3. Generar `CLAUDE.md` desde `templates/CLAUDE.md` y los prompts de las tareas desde `jobs/`, reemplazando las variables, o pedírselo a Claude con el prompt de `jobs/README.md`.
+Lo más rápido: instalar el plugin y correr `/dark-factory:factory-setup` en el repo del proyecto. A mano:
+
+1. Copiar `plugins/dark-factory/templates/config.example.md` al repo del proyecto como `factory/config.md` y completarlo. Este ejemplo sirve de referencia.
+2. Copiar `plugins/dark-factory/templates/settings.json` a `.claude/settings.json`.
+3. Generar `CLAUDE.md` desde `plugins/dark-factory/templates/CLAUDE.md` y los prompts de las tareas desde `plugins/dark-factory/jobs/`, reemplazando las variables, o pedírselo a Claude con el prompt de `plugins/dark-factory/jobs/README.md`.
 4. Seguir `CHECKLIST.md`.

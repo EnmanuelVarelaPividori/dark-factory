@@ -13,9 +13,11 @@ Copiar al proyecto nuevo y marcar en orden. Cada bloque termina con una verifica
 
 ## 2. Configuración
 
-- [ ] `factory/config.md` creado en el repo del proyecto a partir de `config.example.md` de dark-factory (Jira, equipo, velocidad, repo, reportes). Es lo único de la fábrica que vive en el repo del proyecto.
+> Atajo: instalar el plugin y correr `/dark-factory:factory-setup` en el repo del proyecto. Cubre los bloques 2, 4, 5 y 6 salvo los ítems que requieren a una persona, y al final reporta qué falta.
+
+- [ ] `factory/config.md` creado en el repo del proyecto a partir de `plugins/dark-factory/templates/config.example.md` de dark-factory (Jira, equipo, velocidad, repo, reportes). Es lo único de la fábrica que vive en el repo del proyecto.
 - [ ] Los mismos docs de planificación copiados al repo en `docs.ruta`.
-- [ ] `CLAUDE.md` del repo creado desde `templates/CLAUDE.md`, con la línea `@factory/config.md` que importa el config.
+- [ ] `CLAUDE.md` del repo creado desde `plugins/dark-factory/templates/CLAUDE.md`, con la línea `@factory/config.md` que importa el config.
 - [ ] Copia de `factory/config.md` subida al Project como doc `factory/config.md` (para `ticket-quality`).
 - [ ] **Verificación:** una sesión de Claude Code nueva en el repo responde correctamente "¿dónde está el backlog y cómo se nombra una rama?".
 
@@ -30,14 +32,14 @@ Copiar al proyecto nuevo y marcar en orden. Cada bloque termina con una verifica
 ## 4. Skills
 
 - [ ] `ticket-quality` guardada como skill de la cuenta en claude.ai (desde `plugins/dark-factory/skills/ticket-quality/SKILL.md`).
-- [ ] `.claude/settings.json` del repo creado desde `templates/settings.json` (activa el plugin `dark-factory`) y commiteado.
+- [ ] `.claude/settings.json` del repo creado desde `plugins/dark-factory/templates/settings.json` (activa el plugin `dark-factory`) y commiteado.
 - [ ] Al abrir el repo en Claude Code, el plugin se instala; `/plugin` lo muestra habilitado y las skills aparecen como `dark-factory:factory-implement` y `dark-factory:factory-review`.
 - [ ] **Verificación:** se pide crear un ticket a propósito incompleto y la skill pregunta lo que falta en vez de crearlo; se pide uno duplicado y lo detecta.
 
 ## 5. Fábrica
 
 - [ ] Disparo elegido (A: etiqueta + tarea programada · B: automatización) y anotado en `config.md`.
-- [ ] Si es A: tareas `Fábrica — implementar` (Sonnet) y `Fábrica — revisar` (Opus) creadas desde `jobs/factory-implement.md` y `jobs/factory-review.md`, con Atlassian, el repo del proyecto (push) y el repo dark-factory (lectura) conectados.
+- [ ] Si es A: tareas `Fábrica — implementar` (Sonnet) y `Fábrica — revisar` (Opus) creadas desde `plugins/dark-factory/jobs/factory-implement.md` y `plugins/dark-factory/jobs/factory-review.md`, con Atlassian, el repo del proyecto (push) y el repo dark-factory (lectura) conectados.
 - [ ] Etiquetas del ciclo creadas en Jira y GitHub: `factory:wip`, `factory:review`, `factory:changes`, `factory:approved`, `factory:needs-human`, `factory:blocked`.
 - [ ] Si es B: Jira Automation → webhook → CI con Claude Code; secretos configurados.
 - [ ] Límite de rondas de review fijado (`fabrica.rondas_review`).
@@ -49,7 +51,7 @@ Copiar al proyecto nuevo y marcar en orden. Cada bloque termina con una verifica
 ## 6. Controles recurrentes
 
 - [ ] Variables de sprint completas en `config.md`: `sprint.duracion_semanas`, `sprint.dia_inicio`, `sprint.fecha_referencia`, `equipo.zona_horaria`, `equipo.hora_daily`.
-- [ ] Horarios calculados con la tabla de `jobs/README.md`.
+- [ ] Horarios calculados con la tabla de `plugins/dark-factory/jobs/README.md`.
 - [ ] Control diario creado (Haiku, push + email).
 - [ ] Review de mitad de sprint creado (Sonnet, push + email); solo si el sprint dura 2 semanas o más.
 - [ ] Evaluación de cierre creada (Opus, push + email).
