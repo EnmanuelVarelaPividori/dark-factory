@@ -36,7 +36,7 @@ Convención de carpetas sugerida en el Project, para que las rutas citadas sean 
 
 ```
 <Project>
-├── Instrucciones
+├── Descripción e instrucciones         qué es el proyecto y contexto del dominio (no reglas de tickets ni Jira)
 ├── factory/proyecto/config.md          copia del repo
 ├── factory/proyecto/docs/00…03-*.md    copia del repo (o sincronizado desde GitHub)
 ├── investigacion/<tema>.md             research detallado

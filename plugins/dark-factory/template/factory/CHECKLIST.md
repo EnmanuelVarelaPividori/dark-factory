@@ -4,7 +4,7 @@
 
 ## 1. Planificación (Project de claude.ai)
 
-- [ ] Project creado con instrucciones: rol, producto, cliente, reglas de tickets, Jira.
+- [ ] Project creado con una descripción del proyecto: qué es, para quién, objetivo. En las instrucciones va solo contexto del dominio (glosario, reglas del negocio o del cliente), no reglas de tickets ni datos de Jira: eso lo dan `factory/reglas.md`, las skills y `factory/proyecto/config.md`.
 - [ ] Docs en Markdown en el Project con las rutas de `factory/proyecto/docs/` (ver `factory/proyecto/docs/README.md`).
 - [ ] Requerimientos con IDs `R-x.y`; cada story del backlog con su campo `Requisitos`.
 - [ ] Contradicciones entre docs resueltas y anotadas.

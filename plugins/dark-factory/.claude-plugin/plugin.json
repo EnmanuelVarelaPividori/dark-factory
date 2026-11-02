@@ -1,7 +1,7 @@
 {
   "name": "dark-factory",
   "displayName": "Dark Factory",
-  "version": "0.5.0",
+  "version": "0.5.1",
   "description": "Plantilla genérica factory/ para cada repo, setup, calidad de tickets, implementación de tickets Ready y review de PRs contra su ticket.",
   "author": {
     "name": "Enmanuel Varela Pividori"
