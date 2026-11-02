@@ -40,7 +40,7 @@ La estructura esperada y las reglas para agentes están en `template/factory/EST
 ## 2. Copiar la plantilla
 
 1. Copiá todo `${CLAUDE_PLUGIN_ROOT}/template/factory/` a `factory/`, **excepto `factory/proyecto/`** si ya existe. En modo actualizar, los archivos genéricos se reemplazan; mostrá qué cambió.
-2. Si `factory/proyecto/` no existe: copiá `template/factory/proyecto/` (config vacío y `docs/README.md`).
+2. Si `factory/proyecto/` no existe: copiá `template/factory/proyecto/` (config vacío, `estado.md` y `docs/README.md`). Si existe pero le falta `estado.md` (proyectos instalados antes de 0.5.0), copiá solo ese archivo.
 3. Si encontraste docs de planificación en otra carpeta: proponé moverlos a `factory/proyecto/docs/` con los nombres fijos (`00-analisis-problema.md`, `01-analisis-requerimientos.md`, `02-product-backlog.md`, `03-planificacion-sprints.md`). No muevas sin confirmación.
 4. `CLAUDE.md` y `AGENTS.md`: si no existen, copiá los de la plantilla. Si existen y no tienen el bloque de Dark Factory, agregalo al final. Nunca borres contenido.
 5. `.claude/settings.json`: si no existe, copiá la plantilla. Si existe, combiná `extraKnownMarketplaces` y `enabledPlugins` sin tocar el resto.
@@ -95,7 +95,7 @@ Reportá ✅ / ❌ / ⏳ (requiere a una persona):
 | Rama base protegida | ⏳ Merge solo con review humano |
 | Smoke test | ⏳ Ver bloque 6 de `factory/CHECKLIST.md` |
 
-Terminá con la lista de pendientes para una persona.
+Terminá con la lista de pendientes para una persona y actualizá los checks en `factory/proyecto/estado.md`. Si el usuario prefiere que le preguntes todo paso a paso, usá `dark-factory:factory-kickoff`.
 
 ## No hacer
 

@@ -22,3 +22,4 @@ Este repo es el **sistema**, no un proyecto. Contiene el plugin de Claude Code y
 | Claves del config | `plugins/dark-factory/template/factory/proyecto/config.md` + las skills y jobs que las usan |
 | Comportamiento de una skill | `plugins/dark-factory/skills/<skill>/SKILL.md` |
 | Cómo se instala o actualiza | `plugins/dark-factory/skills/factory-setup/SKILL.md` |
+| Preguntas de la entrevista de arranque | `plugins/dark-factory/skills/factory-kickoff/SKILL.md` + `template/factory/proyecto/estado.md` |

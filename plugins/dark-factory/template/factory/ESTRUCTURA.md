@@ -28,6 +28,7 @@ Este repo usa **Dark Factory**. Este archivo le dice a cualquier agente de IA (C
     │   └── factory-review.md     GENÉRICO · Job: runner revisar
     └── proyecto/              PROPIO DEL PROYECTO
         ├── config.md          Valores del proyecto: Jira, equipo, sprint, reglas, repo, reportes
+        ├── estado.md          Estado de la puesta en marcha: rondas, checks, decisiones, pendientes
         └── docs/
             ├── README.md                       GENÉRICO · Qué va en cada doc y con qué formato
             ├── 00-analisis-problema.md
@@ -54,4 +55,5 @@ Este repo usa **Dark Factory**. Este archivo le dice a cualquier agente de IA (C
 | No existe `factory/` o falta un archivo genérico | Correr `/dark-factory:factory-setup` (o pedirle a una persona que lo haga). |
 | `factory/VERSION` distinta a la del plugin | Correr `/dark-factory:factory-setup` para actualizar. |
 | `config.md` tiene filas `COMPLETAR` que necesitás | Pedirle el valor a una persona; no inventarlo. |
+| Querés saber qué falta para que la fábrica funcione | Leer `factory/proyecto/estado.md`, o correr `/dark-factory:factory-kickoff` para retomar la entrevista. |
 | Faltan docs en `factory/proyecto/docs/` | Se escriben en el Project de claude.ai y se copian acá. |

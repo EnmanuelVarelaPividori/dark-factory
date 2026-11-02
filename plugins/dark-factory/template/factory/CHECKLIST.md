@@ -1,6 +1,6 @@
 # Checklist de puesta en marcha
 
-`/dark-factory:factory-setup` hace y verifica todo lo que puede, y al final lista lo que necesita a una persona. Esta lista es la referencia completa. Cada bloque termina con una verificación.
+`/dark-factory:factory-kickoff` recorre esta lista como entrevista guiada y guarda el avance en `factory/proyecto/estado.md`. `/dark-factory:factory-setup` instala y verifica sin entrevista. Esta lista es la referencia completa. Cada bloque termina con una verificación.
 
 ## 1. Planificación (Project de claude.ai)
 

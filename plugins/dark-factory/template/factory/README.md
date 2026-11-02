@@ -25,6 +25,7 @@ factory/
 │   └── factory-review.md     Runner: revisar un PR
 └── proyecto/               ← LO ÚNICO PROPIO DE ESTE PROYECTO
     ├── config.md           Jira, equipo, sprint, repo, reglas, reportes
+    ├── estado.md           Qué está hecho y qué falta en la puesta en marcha
     └── docs/
         ├── README.md           Qué va en cada doc y con qué formato (genérico)
         ├── 00-analisis-problema.md
@@ -73,6 +74,7 @@ Cada tarea programada lleva el mismo prompt corto: el repo del proyecto y qué j
 
 | Skill | Para qué |
 |---|---|
+| `dark-factory:factory-kickoff` | Arrancar la fábrica con una entrevista guiada que deja todo chequeado (y retomarla). |
 | `dark-factory:factory-setup` | Instalar, actualizar o verificar la fábrica en un repo. |
 | `dark-factory:ticket-quality` | Crear o refinar tickets que cumplan el Definition of Ready. |
 | `dark-factory:factory-implement` | Implementar un ticket Ready y corregir hallazgos del review. |

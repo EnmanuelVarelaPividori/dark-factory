@@ -4,13 +4,24 @@ Plantilla y plugin de Claude Code para pasar de la planificación al código con
 
 El sistema es **genérico**: no nombra ningún proyecto. Cada proyecto recibe la misma carpeta `factory/` y pone lo propio en `factory/proyecto/`.
 
-## Instalar en un proyecto
+## Arrancar en un proyecto
 
-En Claude Code, dentro del repo del proyecto:
+**Desde un Project de claude.ai** (con la carpeta del repo conectada y Jira disponible), pegá:
+
+```
+Arrancá la dark factory para este proyecto.
+Sistema: https://github.com/EnmanuelVarelaPividori/dark-factory — seguí plugins/dark-factory/skills/factory-kickoff/SKILL.md.
+Repo del proyecto: <carpeta local o URL de GitHub>.
+```
+
+Claude hace una entrevista por rondas, instala todo, convierte los docs del Project al formato de la fábrica y deja el avance en `factory/proyecto/estado.md`. Para seguir otro día: "retomá el setup de la fábrica".
+
+**Desde Claude Code**, dentro del repo del proyecto:
 
 ```
 /plugin install dark-factory --marketplace EnmanuelVarelaPividori/dark-factory
-/dark-factory:factory-setup
+/dark-factory:factory-kickoff   # entrevista guiada
+/dark-factory:factory-setup     # o: instalar sin entrevista
 ```
 
 El setup copia la plantilla, detecta lo que puede del repo y de Jira, pregunta el resto, conecta `CLAUDE.md`, `AGENTS.md` y `.claude/settings.json`, arma las tareas programadas y verifica la checklist. Volver a correrlo actualiza la plantilla sin tocar `factory/proyecto/`.
@@ -29,6 +40,7 @@ El setup copia la plantilla, detecta lo que puede del repo y de Jira, pregunta e
     │          factory-implement.md  factory-review.md                              genéricos
     └── proyecto/                                                                   propio del proyecto
         ├── config.md
+        ├── estado.md
         └── docs/  00-analisis-problema.md  01-analisis-requerimientos.md
                    02-product-backlog.md    03-planificacion-sprints.md
 ```
@@ -45,6 +57,7 @@ dark-factory/
 └── plugins/dark-factory/
     ├── .claude-plugin/plugin.json     Manifiesto y versión del plugin
     ├── skills/
+    │   ├── factory-kickoff/           Entrevista guiada de arranque
     │   ├── factory-setup/             Instalar, actualizar, verificar
     │   ├── ticket-quality/            Tickets que cumplen el Definition of Ready
     │   ├── factory-implement/         Implementar un ticket Ready
@@ -59,6 +72,7 @@ dark-factory/
 
 | Skill | Dónde se usa | Para qué |
 |---|---|---|
+| `dark-factory:factory-kickoff` | Project de claude.ai o Claude Code | Entrevista guiada: instala, configura, chequea y deja el estado para retomar. |
 | `dark-factory:factory-setup` | Claude Code en el repo | Instalar, actualizar o verificar la fábrica. |
 | `dark-factory:ticket-quality` | Project de claude.ai (como skill de la cuenta) o Claude Code | Crear o refinar tickets. |
 | `dark-factory:factory-implement` | Tarea programada o Claude Code | Implementar un ticket y corregir hallazgos. |
