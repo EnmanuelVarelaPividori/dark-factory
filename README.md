@@ -1,68 +1,75 @@
 # Dark Factory
 
-Plantilla y plugin de Claude Code para pasar de la planificación al código con Claude: docs de planificación → tickets con calidad → implementación → review contra el ticket → merge humano. Con controles de tablero automáticos (diario, mitad de sprint, cierre).
+Template and Claude Code plugin to go from planning to code with Claude: planning docs → quality tickets → implementation → review against the ticket → human merge. With automatic board checks (daily, weekly, close review), for scrum, kanban or waterfall teams.
 
-El sistema es **genérico**: no nombra ningún proyecto. Cada proyecto recibe la misma carpeta `factory/` y pone lo propio en `factory/proyecto/`.
+The system is **generic**: it names no project and is written in English. Each project gets the same `factory/` folder and keeps its own things in `factory/project/`, including the language its agents write in (`project.language`).
 
-## Arrancar en un proyecto
+## Start in a project
 
-**Desde un Project de claude.ai** (con la carpeta del repo conectada y Jira disponible), pegá:
-
-```
-Arrancá la dark factory para este proyecto.
-Sistema: https://github.com/EnmanuelVarelaPividori/dark-factory — seguí plugins/dark-factory/skills/factory-kickoff/SKILL.md.
-Repo del proyecto: <carpeta local o URL de GitHub>.
-```
-
-Claude hace una entrevista por rondas, instala todo, convierte los docs del Project al formato de la fábrica y deja el avance en `factory/proyecto/estado.md`. Para seguir otro día: "retomá el setup de la fábrica".
-
-**Desde Claude Code**, dentro del repo del proyecto:
+**From Claude Code**, inside the project repo:
 
 ```
 /plugin install dark-factory --marketplace EnmanuelVarelaPividori/dark-factory
-/dark-factory:factory-kickoff   # entrevista guiada
-/dark-factory:factory-setup     # o: instalar sin entrevista
+/dark-factory:factory-kickoff
 ```
 
-El setup copia la plantilla, detecta lo que puede del repo y de Jira, pregunta el resto, conecta `CLAUDE.md`, `AGENTS.md` y `.claude/settings.json`, arma las tareas programadas y verifica la checklist. Volver a correrlo actualiza la plantilla sin tocar `factory/proyecto/`.
+**From a claude.ai Project** (with the repo folder connected and Jira available), paste:
 
-## Qué queda en cada proyecto
+```
+Start the dark factory for this project.
+System: https://github.com/EnmanuelVarelaPividori/dark-factory — follow plugins/dark-factory/skills/factory-kickoff/SKILL.md.
+Project repo: <local folder or GitHub URL>.
+```
+
+The kickoff is a setup assistant. It interviews you in short rounds, in your language, and then:
+
+- installs and configures `factory/`, `CLAUDE.md`, `AGENTS.md` and `.claude/settings.json`;
+- does the organization setup itself when the session has the tools: scheduled tasks, GitHub labels, branch protection;
+- writes step-by-step guides for what only a person can do (the claude.ai Project, task models, the account skill);
+- keeps everything on a shared status board, `factory/project/status.md`.
+
+Run it again any time to resume, update the template, check the status ("check the factory status") or change something ("add a hotfix flow", "use Sentry for bug tickets"). Once every *Required to run* row on the board is ✅, the runners start on their own schedule; a person still decides which tickets go in (`factory:go`) and merges.
+
+## What each project gets
 
 ```
 <repo>/
-├── CLAUDE.md                  importa factory/ESTRUCTURA.md, factory/reglas.md, factory/proyecto/config.md
-├── AGENTS.md                  lo mismo para otros agentes
-├── .claude/settings.json      activa el plugin
+├── CLAUDE.md                  imports factory/STRUCTURE.md, factory/rules.md, factory/project/config.md
+├── AGENTS.md                  the same for other agents
+├── .claude/settings.json      enables the plugin
 └── factory/
-    ├── README.md  ESTRUCTURA.md  ARQUITECTURA.md  CHECKLIST.md  reglas.md  VERSION    genéricos
-    ├── templates/ticket.md                                                         genérico
+    ├── README.md  STRUCTURE.md  ARCHITECTURE.md  CHECKLIST.md  rules.md  VERSION    generic
+    ├── templates/ticket.md                                                       generic
     ├── jobs/  README.md  daily-check.md  weekly-review.md  sprint-review.md
-    │          factory-implement.md  factory-review.md                              genéricos
-    └── proyecto/                                                                   propio del proyecto
-        ├── config.md
-        ├── estado.md
-        └── docs/  00-analisis-problema.md  01-analisis-requerimientos.md
-                   02-product-backlog.md    03-planificacion-sprints.md
+    │          factory-implement.md  factory-review.md                            generic
+    └── project/                                                                  the project's own
+        ├── config.md          settings, incl. project.language
+        ├── status.md          status board: repo + organization, owner, date
+        ├── setup/             claude-project.md, scheduled-tasks.md
+        ├── context.md · extensions/ · flows/   optional customizations
+        └── docs/  00-problem-analysis.md  01-requirements.md
+                   02-product-backlog.md   03-delivery-plan.md
 ```
 
-Detalle: [`factory/ESTRUCTURA.md`](plugins/dark-factory/template/factory/ESTRUCTURA.md) (para agentes) y [`factory/README.md`](plugins/dark-factory/template/factory/README.md) (flujo).
+A project customizes the generic factory without forking it: in `factory/project/` it can add to or replace sections of a skill, job or the ticket template (`extensions/`), add its own procedures (`flows/`) and name the connectors to use for context (`context.md`). A few safety rules are locked. All of it is changed through chat, following [`factory/EXTENDING.md`](plugins/dark-factory/template/factory/EXTENDING.md).
 
-## Este repo
+Everything under `factory/` is pushed and shared by the team, so it never holds secrets. Details: [`factory/STRUCTURE.md`](plugins/dark-factory/template/factory/STRUCTURE.md) (for agents) and [`factory/README.md`](plugins/dark-factory/template/factory/README.md) (flow).
+
+## This repo
 
 ```
 dark-factory/
-├── README.md                          Este archivo
-├── CLAUDE.md, AGENTS.md               Instrucciones para agentes que mantienen la plantilla
-├── .claude-plugin/marketplace.json    Marketplace de plugins de Claude Code
+├── README.md                          This file
+├── CLAUDE.md, AGENTS.md               Instructions for agents that maintain the template
+├── .claude-plugin/marketplace.json    Claude Code plugin marketplace
 └── plugins/dark-factory/
-    ├── .claude-plugin/plugin.json     Manifiesto y versión del plugin
+    ├── .claude-plugin/plugin.json     Plugin manifest and version
     ├── skills/
-    │   ├── factory-kickoff/           Entrevista guiada de arranque
-    │   ├── factory-setup/             Instalar, actualizar, verificar
-    │   ├── ticket-quality/            Tickets que cumplen el Definition of Ready
-    │   ├── factory-implement/         Implementar un ticket Ready
-    │   └── factory-review/            Revisar un PR contra su ticket
-    └── template/                      Lo que se copia a cada repo, con la misma forma que la raíz del repo
+    │   ├── factory-kickoff/           Setup assistant: install, organization setup, status, update (+ migrations.md)
+    │   ├── ticket-quality/            Tickets that meet the Definition of Ready
+    │   ├── factory-implement/         Implement a Ready ticket
+    │   └── factory-review/            Review a PR against its ticket
+    └── template/                      What gets copied to each repo, shaped like the repo root
         ├── CLAUDE.md, AGENTS.md
         ├── .claude/settings.json
         └── factory/
@@ -70,16 +77,15 @@ dark-factory/
 
 ## Skills
 
-| Skill | Dónde se usa | Para qué |
+| Skill | Where it is used | For |
 |---|---|---|
-| `dark-factory:factory-kickoff` | Project de claude.ai o Claude Code | Entrevista guiada: instala, configura, chequea y deja el estado para retomar. |
-| `dark-factory:factory-setup` | Claude Code en el repo | Instalar, actualizar o verificar la fábrica. |
-| `dark-factory:ticket-quality` | Project de claude.ai (como skill de la cuenta) o Claude Code | Crear o refinar tickets. |
-| `dark-factory:factory-implement` | Tarea programada o Claude Code | Implementar un ticket y corregir hallazgos. |
-| `dark-factory:factory-review` | Tarea programada | Revisar un PR en una sesión independiente. |
+| `dark-factory:factory-kickoff` | Claude Code or a claude.ai Project | Setup assistant: interview, install, organization setup, status board, updates. |
+| `dark-factory:ticket-quality` | claude.ai Project (as an account skill) or Claude Code | Create or refine tickets. |
+| `dark-factory:factory-implement` | Scheduled task or Claude Code | Implement a ticket and fix findings. |
+| `dark-factory:factory-review` | Scheduled task | Review a PR in an independent session. |
 
-Para usar `ticket-quality` en claude.ai, guardá `plugins/dark-factory/skills/ticket-quality/SKILL.md` como skill de tu cuenta.
+To use `ticket-quality` in claude.ai, save `plugins/dark-factory/skills/ticket-quality/SKILL.md` as a skill of your account.
 
-## Acceso
+## Access
 
-Si este repo es privado, cada persona y cada tarea programada que use el plugin necesita acceso de lectura.
+If this repo is private, every person and scheduled task that uses the plugin needs read access.

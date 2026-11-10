@@ -1,46 +1,55 @@
-# Job: review de mitad de sprint
+# Job: weekly review
 
-Modelo sugerido: Sonnet. Actuás como scrum master. Solo lectura: no modifiques tickets.
+Suggested model: Sonnet. You act as a scrum master, flow coach or project lead, depending on `work.method`. Read only: don't modify tickets.
 
-## Contexto
+## Project extensions
 
-Leé `factory/proyecto/config.md` (Jira, equipo, sprint, reglas). Capacidad = `equipo.cantidad` × `sprint.velocidad_por_persona` SP.
+If they exist, apply `factory/project/extensions/weekly-review.md` and `factory/project/context.md` as `factory/EXTENDING.md` says. A block whose heading doesn't exist is ignored and reported in the output.
 
-## Datos
+## Context
 
-En Jira (`jira.cloud_id`, `jira.proyecto`), con JQL acotada y máximo 100 por consulta:
+Read `factory/project/config.md` (Jira, team, `work.method`, rules, `project.language`) and the *Required to run* section of `factory/project/status.md`. In waterfall, also `factory/project/docs/03-delivery-plan.md` (milestones and dates).
 
-- Sprint activo: tickets, estado, SP, responsable, fechas de cambio de estado.
-- Completados y agregados al sprint en los últimos 7 días.
-- Bloqueados, estancados (más de `reglas.dias_estancado` días hábiles sin cambio) y sin dueño.
-- Fábrica: tickets con `factory:go` pendientes, PRs en `factory:review`, `factory:changes`, `factory:needs-human`; tickets `factory:blocked`.
+## Data
 
-## Análisis
+In Jira (`jira.cloud_id`, `jira.project`), with a narrow JQL and at most 100 per query:
 
-1. **Posición:** día hábil `d` de `sprint.dias_habiles` y semana `s` de `sprint.duracion_semanas`.
-2. **Burndown:** SP Done vs. esperados a esta altura (lineal: comprometidos × d / `sprint.dias_habiles`). Pronóstico: llega / en riesgo / no llega.
-3. **Flujo:** dónde se acumula el trabajo (To Do, In Progress, Review).
-4. **Alcance:** SP agregados después del inicio y por quién.
-5. **Calidad del backlog:** % del sprint con `factory:ready`; tickets que parecen bitácora (creados ya en Done o con título de tarea hecha).
-6. **Fábrica:** tickets procesados, rondas de review promedio, casos escalados.
+- What is in progress: tickets, status, SP (if estimated), assignee, status change dates. Scrum: the active sprint. Waterfall: the current milestone.
+- Completed and added in the last 7 days.
+- Blocked, stale (more than `rules.stale_days` working days without change) and unowned.
+- Factory: pending tickets with `factory:go`, PRs in `factory:review`, `factory:changes`, `factory:needs-human`; tickets with `factory:blocked`.
 
-En la **última semana** del sprint (`s` = `sprint.duracion_semanas`), las recomendaciones apuntan a cerrar: qué terminar, qué sacar ahora y qué preparar para la planning.
+## Analysis
 
-## Salida
+| | Scrum | Kanban | Waterfall |
+|---|---|---|---|
+| **Position** | Working day `d` of `sprint.working_days`, week `w` of `sprint.weeks` | — | Current milestone, days left to its date |
+| **Progress** | Burndown: SP Done vs. expected (committed × d / `sprint.working_days`). Forecast: on track / at risk / won't make it | Throughput this week vs. `kanban.throughput_per_week`; cycle time (median, slowest 3) | Milestone tickets Done vs. total; at the recent pace, does it make the date? |
+| **Scope** | SP added after the start, and by whom | Backlog: what moved to the top and why | Tickets added to the milestone after it was planned |
 
-En `reportes.idioma`, máximo 30 líneas:
+All methods also look at:
+
+1. **Flow:** where work piles up (To Do, In Progress, Review).
+2. **Backlog quality:** % of started work with `factory:ready`; tickets that look like logs (created already Done or titled as finished work).
+3. **Factory:** tickets processed, average review rounds, escalated cases, and setup gaps on the status board.
+
+Scrum, in the **last week** of the sprint (`w` = `sprint.weeks`): recommendations aim at closing — what to finish, what to drop now and what to prepare for planning. Waterfall, in the last week before a milestone: the same, aimed at the milestone.
+
+## Output
+
+In `project.language`, at most 30 lines:
 
 ```
-Review de mitad de sprint <jira.proyecto> — semana <s>/<N>, día <d>/<dias_habiles>
-Pronóstico: llega | en riesgo | no llega (Done X / esperado Y / comprometido Z SP)
+Weekly review <jira.project> — <scrum: week w/N, day d/working_days | kanban: week of <date> | waterfall: <milestone>, n days left>
+Forecast: on track | at risk | won't make it (<the numbers behind it>)
 
-Números clave
+Key numbers
 - …
 
-3 recomendaciones
-1. <acción concreta, quién, sobre qué tickets>
+3 recommendations
+1. <concrete action, who, on which tickets>
 2. …
 3. …
 ```
 
-Las recomendaciones son acciones ("sacar ABC-12 y ABC-15 del sprint", "pareo en el review de X"), no principios genéricos de scrum.
+Recommendations are actions ("drop ABC-12 and ABC-15 from the sprint", "stop starting, finish ABC-20 first", "pair on X's review"), not generic process principles.

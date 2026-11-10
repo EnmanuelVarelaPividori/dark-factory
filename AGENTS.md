@@ -1,5 +1,5 @@
-# Instrucciones para agentes
+# Instructions for agents
 
-Este repo es el sistema Dark Factory (plugin + plantilla), no un proyecto. Antes de cambiar algo, leé `CLAUDE.md`: reglas de mantenimiento, versionado y dónde está cada cosa.
+This repo is the Dark Factory system (plugin + template), not a project. Before changing anything, read `CLAUDE.md`: maintenance rules, versioning and where each thing is.
 
-La estructura que la plantilla crea en cada proyecto está en `plugins/dark-factory/template/factory/ESTRUCTURA.md`.
+The structure the template creates in each project is in `plugins/dark-factory/template/factory/STRUCTURE.md`.

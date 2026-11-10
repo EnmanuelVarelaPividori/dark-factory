@@ -1,25 +1,33 @@
-# Mantener Dark Factory
+# Maintaining Dark Factory
 
-Este repo es el **sistema**, no un proyecto. Contiene el plugin de Claude Code y la plantilla que se copia a cada repo de proyecto.
+This repo is the **system**, not a project. It holds the Claude Code plugin and the template copied into each project repo.
 
-## Reglas
+## Rules
 
-1. **Nada específico de un proyecto.** Ni nombres de clientes, ni claves de Jira, ni URLs de repos de proyecto, ni stacks concretos. Los ejemplos usan valores neutros (`ABC`, `miempresa.atlassian.net`).
-2. **Los archivos genéricos referencian lo propio del proyecto solo por rutas fijas:** `factory/proyecto/config.md` (por clave, ej. `repo.rama_base`) y `factory/proyecto/docs/0X-*.md`. Nunca con valores pegados ni placeholders `{{...}}`.
-3. **`template/` tiene la misma forma que la raíz de un repo de proyecto.** Lo que agregues ahí aparece en todos los proyectos al actualizar.
-4. **`template/factory/proyecto/` es la plantilla inicial del proyecto:** se copia una sola vez y el setup nunca la sobrescribe. Cambios ahí no llegan a proyectos existentes; si hace falta migrar, documentalo en `factory-setup`.
-5. **Rutas y nombres fijos.** Renombrar o mover un archivo de `template/` rompe referencias en skills, jobs y en `ESTRUCTURA.md`. Si es necesario, actualizá todas las referencias y la migración en `factory-setup`.
-6. **Versionado.** Cualquier cambio en `template/` o `skills/` sube la versión en `plugins/dark-factory/.claude-plugin/plugin.json` y en `plugins/dark-factory/template/factory/VERSION` (la misma).
-7. **Validar antes de commitear:** `claude plugin validate .` y `claude plugin validate plugins/dark-factory`.
+1. **Nothing project-specific.** No client names, Jira keys, project repo URLs or concrete stacks. Examples use neutral values (`ABC`, `mycompany.atlassian.net`).
+2. **English only.** Skills, template, keys, file names and examples are in English. What agents write for people follows each project's `project.language`; never hard-code another language.
+3. **Generic files refer to the project only by fixed paths:** `factory/project/config.md` (by key, ex. `repo.base_branch`), `factory/project/status.md`, `factory/project/setup/` and `factory/project/docs/0X-*.md`. Never pasted values or `{{...}}` placeholders.
+4. **`template/` has the same shape as a project repo root.** Whatever you add there shows up in every project on update.
+5. **`template/factory/project/` is the project's starting skeleton:** copied once, never overwritten by the kickoff. Changes there don't reach existing projects; if they need migrating, add an entry to `plugins/dark-factory/skills/factory-kickoff/migrations.md`.
+6. **Fixed paths and names.** Renaming or moving a file in `template/`, or renaming a config key, breaks references in skills, jobs and `STRUCTURE.md`. If needed, update every reference, add the migration, and add the old name to *Legacy names* in `STRUCTURE.md` when tickets or PRs may still cite it.
+7. **Headings are an interface.** Project extensions target sections of skills, jobs, `rules.md` and `templates/ticket.md` by their exact heading. Renaming or removing a heading needs a migration that rewrites extension targets, and the locked list in `template/factory/EXTENDING.md` must match the real headings.
+8. **Keep it simple and hard to break.** Prefer one clear mechanism over several; add a new extension point, job, label or status row only when an extension can't express it. Generic skills stay short; projects stay within the limits in `EXTENDING.md`.
+9. **Status board rows are a contract.** The runners gate on the *Required to run* IDs of `template/factory/project/status.md`, and the kickoff's *Verify* table checks them. Change both together.
+10. **No secrets, ever.** Every project file is pushed and shared. Nothing in the template may ask for or store passwords, tokens or keys.
+11. **Versioning.** Any change in `template/` or `skills/` bumps the version in `plugins/dark-factory/.claude-plugin/plugin.json` and in `plugins/dark-factory/template/factory/VERSION` (the same).
+12. **Validate before committing:** `claude plugin validate .` and `claude plugin validate plugins/dark-factory`.
 
-## Dónde está cada cosa
+## Where each thing is
 
-| Quiero cambiar… | Archivo |
+| I want to change… | File |
 |---|---|
-| Reglas (DoR, DoD, WIP, etiquetas, review) | `plugins/dark-factory/template/factory/reglas.md` |
-| Estructura esperada / instrucciones para agentes | `plugins/dark-factory/template/factory/ESTRUCTURA.md` |
-| Prompts de las tareas programadas | `plugins/dark-factory/template/factory/jobs/` |
-| Claves del config | `plugins/dark-factory/template/factory/proyecto/config.md` + las skills y jobs que las usan |
-| Comportamiento de una skill | `plugins/dark-factory/skills/<skill>/SKILL.md` |
-| Cómo se instala o actualiza | `plugins/dark-factory/skills/factory-setup/SKILL.md` |
-| Preguntas de la entrevista de arranque | `plugins/dark-factory/skills/factory-kickoff/SKILL.md` + `template/factory/proyecto/estado.md` |
+| Rules (DoR, DoD, WIP, labels, review, language) | `plugins/dark-factory/template/factory/rules.md` |
+| Expected structure / instructions for agents / legacy names | `plugins/dark-factory/template/factory/STRUCTURE.md` |
+| Scheduled task prompts | `plugins/dark-factory/template/factory/jobs/` |
+| Config keys | `plugins/dark-factory/template/factory/project/config.md` + the skills and jobs that use them + a migration |
+| Status board rows | `plugins/dark-factory/template/factory/project/status.md` + *Verify* in `factory-kickoff` + the gate in `factory-implement` / `factory-review` |
+| Setup guides | `plugins/dark-factory/template/factory/project/setup/` + phase 4 of `factory-kickoff` |
+| What projects can customize, formats, limits, locked rules | `plugins/dark-factory/template/factory/EXTENDING.md` + the *Change* section of `factory-kickoff` |
+| A skill's behavior | `plugins/dark-factory/skills/<skill>/SKILL.md` |
+| Install, interview, update, verify | `plugins/dark-factory/skills/factory-kickoff/SKILL.md` |
+| Migrations between versions | `plugins/dark-factory/skills/factory-kickoff/migrations.md` |

@@ -1,58 +1,69 @@
-# Job: evaluación de cierre de sprint
+# Job: close review
 
-Modelo sugerido: Opus. Solo lectura: no modifiques tickets ni docs.
+Suggested model: Opus. Read only: don't modify tickets or docs. The file keeps the name `sprint-review.md` so existing scheduled tasks keep working; it covers every `work.method`.
 
-## 0. ¿Cerró un sprint?
+## Project extensions
 
-Leé `factory/proyecto/config.md`. Esta tarea corre todas las semanas, pero los sprints duran `sprint.duracion_semanas` semanas.
+If they exist, apply `factory/project/extensions/sprint-review.md` and `factory/project/context.md` as `factory/EXTENDING.md` says. A block whose heading doesn't exist is ignored and reported in the output.
 
-1. Buscá en Jira (`jira.cloud_id`, `jira.proyecto`) un sprint cerrado en los últimos 7 días.
-2. Si Jira no tiene sprints: semanas entre `sprint.fecha_referencia` y hoy. Si no es múltiplo de `sprint.duracion_semanas`, no hubo cierre.
-3. Si no hubo cierre: terminá con una sola línea, "Sin cierre de sprint esta semana".
+## 0. Is there something to close?
 
-## 1. Sprint cerrado vs. plan
+Read `factory/project/config.md`. This task runs every week; decide whether to report:
 
-Con `factory/proyecto/docs/03-planificacion-sprints.md`:
+| Method | Report when | Period reviewed |
+|---|---|---|
+| Scrum | A sprint closed in the last 7 days (Jira `jira.cloud_id`, `jira.project`). Without Jira sprints: the weeks between `sprint.reference_date` and today are a multiple of `sprint.weeks` | The closed sprint |
+| Kanban | Today is the first Monday of the month | The previous month |
+| Waterfall | A milestone in `factory/project/docs/03-delivery-plan.md` was due or finished in the last 7 days | That milestone |
 
-- SP comprometidos, completados y arrastrados. Velocidad real vs. planeada.
-- Tickets del plan para ese sprint que no se hicieron, y hechos que no estaban en el plan.
+If not: end with a single line, "Nothing to close this week" (in `project.language`).
 
-## 2. Cobertura de requisitos
+## 1. Period vs. plan
 
-Con `factory/proyecto/docs/01-analisis-requerimientos.md` y `02-product-backlog.md`:
+With `factory/project/docs/03-delivery-plan.md`:
 
-- Por prioridad (MUST / SHOULD / COULD): requisitos totales, con story, con story Done.
-- Requisitos MUST sin story o con la story pendiente: listarlos.
+- **Scrum:** SP committed, completed and carried over. Real vs. planned velocity. Planned tickets not done, and done ones not planned.
+- **Kanban:** tickets finished, throughput per week, median cycle time, and how they compare with the previous month. Whether the top priorities in the plan were the ones that moved.
+- **Waterfall:** milestone tickets done vs. planned, date met or missed (by how many days), tickets moved to the next milestone.
 
-## 3. Pronóstico
+## 2. Requirements coverage
 
-- Velocidad promedio de los últimos 3 sprints (o los que haya).
-- Sprints restantes = SP pendientes ÷ velocidad. Fin estimado = fin de este sprint + sprints restantes × `sprint.duracion_semanas` semanas.
-- Comparar con `proyecto.fecha_objetivo`. Si no llega: qué recortar primero (COULD, después SHOULD), con SP y claves, hasta que la fecha cierre.
+With `factory/project/docs/01-requirements.md` and `02-product-backlog.md` (skip this section if they don't exist yet, and say so):
 
-## 4. Desvíos de los docs
+- By priority (MUST / SHOULD / COULD): total requirements, with a story, with a Done story.
+- MUST requirements without a story or with the story pending: list them.
 
-Decisiones visibles en tickets o PRs que contradicen `factory/proyecto/docs/`. Listar para que alguien actualice los docs.
+## 3. Forecast
 
-## Salida
+- **Scrum:** average velocity of the last 3 sprints (or as many as there are). Remaining sprints = pending SP ÷ velocity. Estimated end = end of this sprint + remaining sprints × `sprint.weeks` weeks.
+- **Kanban:** average throughput of the last 4 weeks (or as many as there are). Remaining weeks = pending tickets ÷ throughput. Estimated end = today + remaining weeks.
+- **Waterfall:** for each remaining milestone, its open tickets ÷ the recent pace vs. its date.
 
-En `reportes.idioma`:
+Compare with `project.target_date` (and with the milestone dates in waterfall). If it doesn't make it: what to cut first (COULD, then SHOULD), with size and keys, until the date fits.
+
+## 4. Drift from the docs
+
+Decisions visible in tickets or PRs that contradict `factory/project/docs/`. List them so someone updates the docs.
+
+## Output
+
+In `project.language`:
 
 ```
-Evaluación de cierre — <sprint> — <proyecto.nombre>
-Veredicto: en camino | en riesgo | fuera de plazo
+Close review — <sprint | month | milestone> — <project.name>
+Verdict: on track | at risk | off schedule
 
-Sprint: X/Y SP (velocidad real Z vs. plan W)
-Requisitos MUST: a/b hechos · SHOULD: c/d · COULD: e/f
-Fin estimado: <fecha> (objetivo <proyecto.fecha_objetivo>)
+Period: <scrum: X/Y SP, velocity Z vs. plan W | kanban: n tickets, throughput t/week, cycle time c days | waterfall: X/Y tickets, date met / missed by n days>
+MUST requirements: a/b done · SHOULD: c/d · COULD: e/f
+Estimated end: <date> (target <project.target_date>)
 
-Riesgos
+Risks
 - …
-Recorte propuesto (si hace falta)
+Proposed cut (if needed)
 - …
-Docs a actualizar
+Docs to update
 - …
-Actualizar en factory/proyecto/config.md: sprint.velocidad_por_persona = <valor medido>
+Update in factory/project/config.md: <sprint.velocity_per_person | kanban.throughput_per_week> = <measured value>
 ```
 
-Mostrá los números de entrada de cada cálculo para que se puedan verificar.
+Show the input numbers of each calculation so they can be checked.

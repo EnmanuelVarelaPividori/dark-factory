@@ -1,28 +1,29 @@
-# Job: fábrica — implementar
+# Job: factory — implement
 
-Modelo sugerido: Sonnet. Necesita push al repo del proyecto. Nunca mergees. Un solo trabajo por corrida.
+Suggested model: Sonnet. Needs push access to the project repo. Never merge. One piece of work per run.
 
-## 1. Contexto
+## 1. Context
 
-Esta tarea conviene crearla **dentro del Project de claude.ai** del proyecto (`claude.project`): así la sesión puede leer los docs que los tickets citan en **Contexto**.
+If the project uses a claude.ai Project (`claude.project` is not `—`), create this task **inside it**: that way the session can read the docs tickets cite in **Context**. Otherwise it is a standalone task.
 
-1. Leé `CLAUDE.md` (importa `factory/proyecto/config.md` y `factory/reglas.md`).
-2. Usá la skill `dark-factory:factory-implement` para todo lo que sigue. Si la sesión no tiene el plugin, leé la skill de https://github.com/EnmanuelVarelaPividori/dark-factory, archivo `plugins/dark-factory/skills/factory-implement/SKILL.md`, y seguila igual.
+1. Read `CLAUDE.md` (it imports `factory/project/config.md` and `factory/rules.md`).
+2. Use the `dark-factory:factory-implement` skill for everything below. If the session doesn't have the plugin, read the skill from https://github.com/EnmanuelVarelaPividori/dark-factory, file `plugins/dark-factory/skills/factory-implement/SKILL.md`, and follow it the same way.
+3. The skill applies the project extensions (`factory/project/extensions/factory-implement.md`, which also covers this job) and starts with the status board gate. If it stops there, end with its one-line report: don't touch any ticket.
 
-## 2. Elegir un solo trabajo
+## 2. Pick a single piece of work
 
-En este orden:
+In this order:
 
-1. Un PR abierto con `factory:changes`: corregí los hallazgos del último review.
-2. Si no hay: el ticket de `jira.proyecto` con `factory:go`, sin `factory:wip`, sin `factory:blocked` y sin PR abierto. Primero por prioridad de Jira, después por antigüedad.
-3. Si no hay ninguno: terminá con una línea, "Fábrica <jira.proyecto>: sin trabajo".
+1. An open PR with `factory:changes`: fix the findings of the last review.
+2. If none: the `jira.project` ticket with `factory:go`, without `factory:wip`, without `factory:blocked` and without an open PR. First by Jira priority, then by age.
+3. If none at all: end with one line, "Factory <jira.project>: no work".
 
-## 3. Trabajar
+## 3. Work
 
-1. Poné `factory:wip` en el ticket. Sacala al terminar, también si fallás.
-2. Seguí la skill: pre-flight, implementación, tests (`repo.tests`), PR; o corrección de hallazgos.
-3. Al terminar, el PR queda con `factory:review`, o el ticket con `factory:blocked` o `factory:needs-human`.
+1. Set `factory:wip` on the ticket. Remove it when you finish, also if you fail.
+2. Follow the skill: pre-flight, implementation, tests (`repo.tests`), PR; or fixing findings.
+3. When done, the PR is left with `factory:review`, or the ticket with `factory:blocked` or `factory:needs-human`.
 
-## Salida
+## Output
 
-En `reportes.idioma`, máximo 5 líneas: ticket, qué pasó, link al PR. Si el resultado necesita a una persona (blocked, needs-human), empezá con "ATENCIÓN".
+In `project.language`, at most 5 lines: ticket, what happened, link to the PR. If the result needs a person (blocked, needs-human, setup not ready), start with "ATTENTION".

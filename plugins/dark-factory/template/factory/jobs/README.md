@@ -1,67 +1,70 @@
-# Tareas programadas
+# Scheduled tasks
 
-Cinco tareas por proyecto. Los archivos de esta carpeta son genéricos: cada uno es la instrucción completa de un job y lee lo propio del proyecto desde `factory/proyecto/` cuando corre.
+Up to five tasks per project. The files in this folder are generic: each one is the full instruction of a job and reads the project's own values from `factory/project/` at run time, including the way of working (`work.method`: scrum, kanban or waterfall). Which tasks are on in this project, with their schedule and model, is in `factory/project/setup/scheduled-tasks.md`, written by the kickoff.
 
-| Job | Archivo | Modelo | Va si… |
+| Job | File | Model | Scrum | Kanban | Waterfall | Runs if… |
+|---|---|---|---|---|---|---|
+| Daily check | `daily-check.md` | Haiku | Board rules before the daily | Same, with flow rules | Same, with milestone rules | Chosen in the interview |
+| Weekly review | `weekly-review.md` | Sonnet | Mid-sprint review | Flow review | Milestone progress review | Chosen in the interview (scrum: only if `sprint.weeks` ≥ 2) |
+| Close review | `sprint-review.md` | Opus | At each sprint close | Monthly forecast | At each milestone | Chosen in the interview |
+| Factory — implement | `factory-implement.md` | Sonnet | — | — | — | `factory.trigger` = A |
+| Factory — review | `factory-review.md` | Opus | — | — | — | `factory.trigger` = A |
+
+The close review keeps the file name `sprint-review.md` so existing scheduled tasks keep working; it handles all three methods.
+
+## 1. The prompt of every task
+
+The same for all; only the repo, branch and job change:
+
+```
+Project repo: <repo.url> (branch <repo.base_branch>)
+Clone the repo and run the job defined in factory/jobs/<job>.md. Follow that file exactly.
+```
+
+Suggested task name: `[<jira.project>] <job>`.
+
+## 2. Schedule (comes from the config)
+
+Local time in `team.timezone`. Daily check time: 20 min before `team.daily_time`, or 08:40 if there is no daily.
+
+| Job | Scrum | Kanban | Waterfall |
 |---|---|---|---|
-| Control diario | `daily-check.md` | Haiku | Siempre |
-| Review de mitad de sprint | `weekly-review.md` | Sonnet | `sprint.duracion_semanas` ≥ 2 |
-| Evaluación de cierre | `sprint-review.md` | Opus | Siempre |
-| Fábrica — implementar | `factory-implement.md` | Sonnet | `fabrica.disparo` = A |
-| Fábrica — revisar | `factory-review.md` | Opus | `fabrica.disparo` = A |
+| Daily check | `CRON_TZ=<zone> <mm> <hh> * * 1-5` | same | same |
+| Weekly review | Weekly on working day `D+2`, `D` = `sprint.start_day`: `CRON_TZ=<zone> 40 10 * * <D+2>` | Weekly on `work.review_day`: `CRON_TZ=<zone> 40 10 * * <day>` | Same as kanban |
+| Close review | Weekly on day `D`: `CRON_TZ=<zone> 10 8 * * <D>`. The job reports only if a sprint closed. | Weekly on Monday: `CRON_TZ=<zone> 10 8 * * 1`. The job reports only on the first Monday of the month. | Weekly on Monday: `CRON_TZ=<zone> 10 8 * * 1`. The job reports only if a milestone was due or finished in the last 7 days. |
+| Factory — implement | `CRON_TZ=<zone> 12 8-18/2 * * 1-5` | same | same |
+| Factory — review | `CRON_TZ=<zone> 47 9-19/2 * * 1-5` | same | same |
 
-## 1. El prompt de cada tarea
+Days: Monday = 1 … Friday = 5. The minutes avoid :00 and :30 on purpose: scheduled tasks pile up at those times and can be delayed. The close review runs weekly because cron can't count "every N weeks" or "first Monday of the month" reliably (day-of-month and day-of-week are OR'd); the job decides, and a run with nothing to report ends in one line and costs very little.
 
-Igual para todas; solo cambian el repo, la rama y el job:
+### Scrum by sprint length (example: D = Monday, daily 09:30)
 
-```
-Repo del proyecto: <repo.url> (rama <repo.rama_base>)
-Cloná el repo y ejecutá el job definido en factory/jobs/<job>.md. Seguí ese archivo al pie de la letra.
-```
-
-Nombre sugerido de la tarea: `[<jira.proyecto>] <job>`.
-
-## 2. Calendario (sale del config)
-
-`D` = `sprint.dia_inicio` (lunes = 1 … viernes = 5). Hora local de `equipo.zona_horaria`.
-
-| Job | Cuándo | Cron |
-|---|---|---|
-| Control diario | Días hábiles, 20 min antes de `equipo.hora_daily` | `CRON_TZ=<zona> <mm> <hh> * * 1-5` |
-| Review de mitad de sprint | Semanal, día hábil `D+2` | `CRON_TZ=<zona> 40 10 * * <D+2>` |
-| Evaluación de cierre | Semanal, día `D` a la mañana. El job decide si cerró un sprint y, si no, termina en una línea. | `CRON_TZ=<zona> 10 8 * * <D>` |
-| Fábrica — implementar | Cada 2 h en horario laboral | `CRON_TZ=<zona> 12 8-18/2 * * 1-5` |
-| Fábrica — revisar | Cada 2 h, 1 h después del implementador | `CRON_TZ=<zona> 47 9-19/2 * * 1-5` |
-
-Los minutos evitan :00 y :30 a propósito: a esas horas se acumulan las tareas programadas y pueden demorarse. La evaluación de cierre corre semanal porque el cron no sabe contar "cada N semanas"; con N = 2, una de cada dos corridas termina en una línea y cuesta muy poco.
-
-### Por largo de sprint (ejemplo: D = lunes, daily 09:30)
-
-| N | Control diario | Mitad de sprint | Cierre | Corridas reales de Opus por mes |
+| N | Daily check | Weekly review | Close | Real Opus runs per month |
 |---|---|---|---|---|
-| 1 semana | L–V 09:10 | — | lunes 08:10 | ~4 |
-| 2 semanas | L–V 09:10 | miércoles 10:40 | lunes 08:10 | ~2 |
-| 3 semanas | L–V 09:10 | miércoles 10:40 | lunes 08:10 | ~1,3 |
-| 4 semanas | L–V 09:10 | miércoles 10:40 | lunes 08:10 | 1 |
+| 1 week | Mon–Fri 09:10 | — | Monday 08:10 | ~4 |
+| 2 weeks | Mon–Fri 09:10 | Wednesday 10:40 | Monday 08:10 | ~2 |
+| 3 weeks | Mon–Fri 09:10 | Wednesday 10:40 | Monday 08:10 | ~1.3 |
+| 4 weeks | Mon–Fri 09:10 | Wednesday 10:40 | Monday 08:10 | 1 |
 
-## 3. Crear las tareas
+## 3. Creating the tasks
 
-Con el plugin: `/dark-factory:factory-setup` calcula el calendario, muestra la tabla y crea las tareas cuando confirmás.
+With the plugin: `/dark-factory:factory-kickoff` (phase 4) computes the schedule, asks which board checks to turn on, creates the tasks itself when the session can, runs each one once, and writes `factory/project/setup/scheduled-tasks.md`.
 
-A mano, para cada job que corresponda:
+By hand, for each chosen job:
 
-1. Nueva tarea programada con el nombre y el prompt de la sección 1.
-2. Horario según la sección 2.
-3. Para los dos runners: crear la tarea **dentro del Project de claude.ai** del proyecto, para que lean los docs que los tickets citan en Contexto. Conectores: Atlassian. Repo del proyecto con lectura (controles) o con push (runners). Repo dark-factory con lectura si es privado.
-4. Modelo: el de la tabla de arriba, en la configuración de la tarea.
-5. Notificaciones según `reportes.canales`.
-6. Aprobación automática en los tres controles (solo leen).
-7. Ejecutarla una vez a mano y revisar el resultado.
+1. New scheduled task with the name and prompt from section 1.
+2. Schedule per section 2.
+3. For the two runners: if the project uses a claude.ai Project, create the task **inside it**, so they can read the docs tickets cite in Context. Connectors: Atlassian. Project repo with read (checks) or push (runners). dark-factory repo with read if private.
+4. Model: the one in the table above, in the task's settings.
+5. Notifications per `reports.channels`.
+6. Automatic approval on the three board checks (they only read).
+7. Run it once by hand and check the result.
+8. Mark it in `factory/project/status.md` and in `factory/project/setup/scheduled-tasks.md`.
 
-## 4. Mantenimiento
+## 4. Maintenance
 
-| Cuando cambia… | Hacer |
+| When this changes… | Do this |
 |---|---|
-| Un umbral, el equipo o la velocidad | Editar `factory/proyecto/config.md`. Las tareas lo leen en la próxima corrida. |
-| El largo del sprint, el día de inicio o la hora de la daily | Editar el config y actualizar el horario de las tareas (crear o borrar la de mitad de sprint según N). |
-| El proyecto termina | Pausar las tareas. |
+| A threshold, the team, the velocity or the throughput | Edit `factory/project/config.md`. Tasks read it on their next run. |
+| The method, sprint length, start day, review day or daily time | Run the kickoff: it updates the config, recomputes the schedule and updates the tasks. |
+| The project ends | Pause the tasks. |

@@ -1,51 +1,54 @@
-# Plantilla de ticket
+# Ticket template
 
-Título: `[CAPA] US-xxx — Verbo + objeto` (la capa solo si el proyecto usa prefijos; ver `jira.prefijos_titulo` en el config).
+Title: `[LAYER] US-xxx — Verb + object` (layer only if the project uses prefixes; see `jira.title_prefixes` in the config).
+
+Headings and field names stay in English exactly as below, so the runners can find them. Everything you write under them goes in `project.language`.
 
 ```markdown
-**Épica:** EP-xx · **Requisitos:** R-x.y, R-x.z · **Tipo:** núcleo | configuración | específico de cliente
-**Módulo:** <módulo> · **Prioridad:** MUST | SHOULD | COULD · **SP:** 1 | 2 | 3 | 5
-**Dependencias:** US-xxx (Done) · US-yyy (en este sprint)
+**Epic:** EP-xx · **Requirements:** R-x.y, R-x.z · **Type:** core | configuration | client-specific
+**Module:** <module> · **Priority:** MUST | SHOULD | COULD · **SP:** 1 | 2 | 3 | 5 (omit without estimates)
+**Dependencies:** US-xxx (Done) · US-yyy (earlier in this sprint or milestone)
 
-## 1. Historia
-COMO <rol>
-QUIERO <acción>
-PARA <beneficio>
+## 1. Story
+AS A <role>
+I WANT <action>
+SO THAT <benefit>
 
-## 2. Descripción y ejemplo
-<Qué cambia y por qué, en 2–4 frases.>
+## 2. Description and example
+<What changes and why, in 2–4 sentences.>
 
-Ejemplo: <caso concreto con datos reales: quién, qué carga, qué ve después.>
+Example: <a concrete case with real data: who, what they enter, what they see afterwards.>
 
-## 3. Criterios de aceptación
-- [ ] CA1 — <condición verificable; cómo se comprueba>
-- [ ] CA2 — …
-- [ ] CA3 — …
+## 3. Acceptance criteria
+- [ ] AC1 — <verifiable condition; how it is checked>
+- [ ] AC2 — …
+- [ ] AC3 — …
 
 ## 4. Stakeholders
-<Quién valida y quién usa el resultado.>
+<Who validates and who uses the result.>
 
-## 5. Contexto
-- Requisitos: R-x.y — <título> (`factory/proyecto/docs/01-analisis-requerimientos.md`)
-- Project «<claude.project>» › `<ruta/del/doc.md>` — <qué mirar ahí y por qué> · obligatorio | referencia
-- Project «<claude.project>» › `<ruta/del/doc.md>` — …
+## 5. Context
+- Requirements: R-x.y — <title> (`factory/project/docs/01-requirements.md`)
+- Project «<claude.project>» › `<path/of/doc.md>` — <what to look at there and why> · required | reference
+- Project «<claude.project>» › `<path/of/doc.md>` — …
 
-## Notas para la fábrica (opcional)
-<Módulos o archivos tocados, restricciones técnicas, fuera de alcance de este ticket.>
+## Notes for the factory (optional)
+<Modules or files touched, technical constraints, out of scope for this ticket.>
 ```
 
-## Sección Contexto
+## Context section
 
-- La investigación detallada (research, decisiones, diagramas, actas) vive en el Project de claude.ai, no en el repo. El ticket la nombra por **ruta dentro del Project**.
-- **Lo imprescindible va en el ticket.** Si una decisión del Project define cómo se implementa, resumila en la descripción o en un criterio de aceptación; el doc es para profundizar.
-- Marcá cada doc como **obligatorio** (sin leerlo no se puede implementar bien) o **referencia** (ayuda, pero el ticket alcanza).
-- Sin docs relevantes en el Project: `- Project: no aplica`.
+- Only when the project uses a claude.ai Project (`claude.project` is not `—`); otherwise `- Project: not applicable` and the ticket carries everything.
+- Detailed research (research, decisions, diagrams, minutes) lives in the claude.ai Project, not in the repo. The ticket names it by **path inside the Project**.
+- **The essentials go in the ticket.** If a Project decision defines how to implement, summarize it in the description or in an acceptance criterion; the doc is for going deeper.
+- Mark each doc as **required** (it can't be implemented well without reading it) or **reference** (it helps, but the ticket is enough).
+- No relevant docs in the Project: `- Project: not applicable`.
 
-## Criterios verificables
+## Verifiable criteria
 
-| Malo | Bueno |
+| Bad | Good |
 |---|---|
-| "El sistema es rápido." | "La búsqueda responde en menos de 2 s con 5.000 registros cargados." |
-| "Se puede aprobar." | "Un usuario con rol Aprobador cambia el estado de Borrador a Aprobado; queda registrado quién, cuándo y el estado anterior, y el registro no es editable." |
-| "Funciona bien con permisos." | "Un usuario sin permiso de aprobación recibe 403 al intentar aprobar." |
-| "Muestra los datos de la empresa." | "Un usuario de la empresa B no ve ningún registro de la empresa A (test automatizado)." |
+| "The system is fast." | "Search answers in under 2 s with 5,000 records loaded." |
+| "It can be approved." | "A user with the Approver role changes the status from Draft to Approved; who, when and the previous status are recorded, and the record can't be edited." |
+| "Works fine with permissions." | "A user without approval permission gets 403 when trying to approve." |
+| "Shows the company data." | "A user of company B sees no record of company A (automated test)." |
