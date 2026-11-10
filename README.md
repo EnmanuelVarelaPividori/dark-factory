@@ -20,11 +20,10 @@ Claude hace una entrevista por rondas, instala todo, convierte los docs del Proj
 
 ```
 /plugin install dark-factory --marketplace EnmanuelVarelaPividori/dark-factory
-/dark-factory:factory-kickoff   # entrevista guiada
-/dark-factory:factory-setup     # o: instalar sin entrevista
+/dark-factory:factory-kickoff
 ```
 
-El setup copia la plantilla, detecta lo que puede del repo y de Jira, pregunta el resto, conecta `CLAUDE.md`, `AGENTS.md` y `.claude/settings.json`, arma las tareas programadas y verifica la checklist. Volver a correrlo actualiza la plantilla sin tocar `factory/proyecto/`.
+El kickoff detecta lo que puede del repo y de Jira, pregunta el resto por rondas cortas, copia la plantilla, conecta `CLAUDE.md`, `AGENTS.md` y `.claude/settings.json`, arma las tareas programadas y verifica la checklist. Volver a correrlo retoma lo pendiente, actualiza la plantilla si hay versión nueva (sin tocar `factory/proyecto/`) o verifica que todo siga en orden.
 
 ## Qué queda en cada proyecto
 
@@ -57,8 +56,7 @@ dark-factory/
 └── plugins/dark-factory/
     ├── .claude-plugin/plugin.json     Manifiesto y versión del plugin
     ├── skills/
-    │   ├── factory-kickoff/           Entrevista guiada de arranque
-    │   ├── factory-setup/             Instalar, actualizar, verificar
+    │   ├── factory-kickoff/           Instalar, actualizar y verificar (entrevista guiada)
     │   ├── ticket-quality/            Tickets que cumplen el Definition of Ready
     │   ├── factory-implement/         Implementar un ticket Ready
     │   └── factory-review/            Revisar un PR contra su ticket
@@ -72,8 +70,7 @@ dark-factory/
 
 | Skill | Dónde se usa | Para qué |
 |---|---|---|
-| `dark-factory:factory-kickoff` | Project de claude.ai o Claude Code | Entrevista guiada: instala, configura, chequea y deja el estado para retomar. |
-| `dark-factory:factory-setup` | Claude Code en el repo | Instalar, actualizar o verificar la fábrica. |
+| `dark-factory:factory-kickoff` | Project de claude.ai o Claude Code | Entrevista guiada: instala, configura, actualiza, verifica y deja el estado para retomar. |
 | `dark-factory:ticket-quality` | Project de claude.ai (como skill de la cuenta) o Claude Code | Crear o refinar tickets. |
 | `dark-factory:factory-implement` | Tarea programada o Claude Code | Implementar un ticket y corregir hallazgos. |
 | `dark-factory:factory-review` | Tarea programada | Revisar un PR en una sesión independiente. |

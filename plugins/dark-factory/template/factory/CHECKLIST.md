@@ -1,6 +1,6 @@
 # Checklist de puesta en marcha
 
-`/dark-factory:factory-kickoff` recorre esta lista como entrevista guiada y guarda el avance en `factory/proyecto/estado.md`. `/dark-factory:factory-setup` instala y verifica sin entrevista. Esta lista es la referencia completa. Cada bloque termina con una verificación.
+`/dark-factory:factory-kickoff` recorre esta lista como entrevista guiada, la verifica y guarda el avance en `factory/proyecto/estado.md`. Esta lista es la referencia completa. Cada bloque termina con una verificación.
 
 ## 1. Planificación (Project de claude.ai)
 
@@ -13,7 +13,7 @@
 
 ## 2. Repo
 
-- [ ] Plugin instalado y `/dark-factory:factory-setup` corrido.
+- [ ] Plugin instalado y `/dark-factory:factory-kickoff` corrido.
 - [ ] `factory/` con la plantilla; `factory/VERSION` igual a la del plugin.
 - [ ] `factory/proyecto/config.md` completo (sin filas `COMPLETAR`).
 - [ ] `factory/proyecto/docs/` con los mismos docs que el Project.

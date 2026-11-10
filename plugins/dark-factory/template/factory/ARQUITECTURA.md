@@ -5,7 +5,7 @@
 | Capa | Dónde vive | Qué tiene | Cómo cambia |
 |---|---|---|---|
 | **Sistema** | Repo [dark-factory](https://github.com/EnmanuelVarelaPividori/dark-factory), instalado como plugin | Skills y la plantilla de `factory/` | Commit en dark-factory + subir versión |
-| **Plantilla instalada** | `factory/` de cada repo (todo menos `proyecto/`) | Playbook, reglas, checklist, prompts de jobs, formato de ticket | `/dark-factory:factory-setup` la actualiza; no se edita a mano |
+| **Plantilla instalada** | `factory/` de cada repo (todo menos `proyecto/`) | Playbook, reglas, checklist, prompts de jobs, formato de ticket | `/dark-factory:factory-kickoff` la actualiza; no se edita a mano |
 | **Proyecto** | `factory/proyecto/` de cada repo | `config.md` y los docs de planificación | Se edita en el proyecto (y en su Project de claude.ai) |
 
 Los archivos genéricos nunca nombran un proyecto: leen `factory/proyecto/config.md` y `factory/proyecto/docs/` por rutas fijas.
@@ -90,4 +90,4 @@ factory:approved ──► developer revisa y mergea     ▼
 ## Actualizar la plantilla en un proyecto
 
 1. Mejorar el archivo en dark-factory, subir `version` en `plugins/dark-factory/.claude-plugin/plugin.json` y la del archivo `template/factory/VERSION`.
-2. En cada proyecto: `/dark-factory:factory-setup`. Compara `factory/VERSION` con la del plugin y reemplaza los archivos genéricos. **Nunca toca `factory/proyecto/`.**
+2. En cada proyecto: `/dark-factory:factory-kickoff`. Compara `factory/VERSION` con la del plugin y reemplaza los archivos genéricos. **Nunca toca `factory/proyecto/`.**

@@ -52,8 +52,8 @@ Este repo usa **Dark Factory**. Este archivo le dice a cualquier agente de IA (C
 
 | Situación | Qué hacer |
 |---|---|
-| No existe `factory/` o falta un archivo genérico | Correr `/dark-factory:factory-setup` (o pedirle a una persona que lo haga). |
-| `factory/VERSION` distinta a la del plugin | Correr `/dark-factory:factory-setup` para actualizar. |
+| No existe `factory/` o falta un archivo genérico | Correr `/dark-factory:factory-kickoff` (o pedirle a una persona que lo haga). |
+| `factory/VERSION` distinta a la del plugin | Correr `/dark-factory:factory-kickoff` para actualizar. |
 | `config.md` tiene filas `COMPLETAR` que necesitás | Pedirle el valor a una persona; no inventarlo. |
-| Querés saber qué falta para que la fábrica funcione | Leer `factory/proyecto/estado.md`, o correr `/dark-factory:factory-kickoff` para retomar la entrevista. |
+| Querés saber qué falta para que la fábrica funcione | Leer `factory/proyecto/estado.md`, o correr `/dark-factory:factory-kickoff` para verificar y retomar la entrevista. |
 | Faltan docs en `factory/proyecto/docs/` | Se escriben en el Project de claude.ai y se copian acá. |

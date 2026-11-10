@@ -20,7 +20,7 @@ descripcion: Estado de la puesta en marcha de Dark Factory en este proyecto. Lo 
 | 7 | Reglas de la fábrica | ⏳ | |
 | 8 | Instalar | ⏳ | |
 | 9 | Tareas programadas | ⏳ | |
-| 10 | Checks de una persona | ⏳ | |
+| 10 | Verificar | ⏳ | |
 | 11 | Smoke test | ⏳ | |
 
 ## Checks

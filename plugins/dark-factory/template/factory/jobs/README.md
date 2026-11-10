@@ -46,7 +46,7 @@ Los minutos evitan :00 y :30 a propósito: a esas horas se acumulan las tareas p
 
 ## 3. Crear las tareas
 
-Con el plugin: `/dark-factory:factory-setup` calcula el calendario, muestra la tabla y crea las tareas cuando confirmás.
+Con el plugin: `/dark-factory:factory-kickoff` (ronda 9) calcula el calendario, muestra la tabla y crea las tareas cuando confirmás.
 
 A mano, para cada job que corresponda:
 

@@ -10,4 +10,4 @@ Este repo usa Dark Factory. Estructura, reglas y valores del proyecto:
 
 - Alcance del proyecto: `factory/proyecto/docs/` (requisitos `R-x.y` en `01-analisis-requerimientos.md`, stories en `02-product-backlog.md`).
 - Convenciones de rama, commits, tests y stack: claves `repo.*` del config.
-- Skills: `dark-factory:factory-implement` (implementar), `dark-factory:factory-review` (revisar), `dark-factory:ticket-quality` (tickets), `dark-factory:factory-setup` (instalar, actualizar, verificar).
+- Skills: `dark-factory:factory-implement` (implementar), `dark-factory:factory-review` (revisar), `dark-factory:ticket-quality` (tickets), `dark-factory:factory-kickoff` (instalar, actualizar, verificar).

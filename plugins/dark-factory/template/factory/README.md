@@ -2,7 +2,7 @@
 
 Sistema para pasar de la planificación al código con Claude, sin tableros inflados ni tickets usados como bitácora.
 
-Esta carpeta es **igual en todos los proyectos**, salvo `proyecto/`, que tiene lo propio de cada uno. No edites los archivos genéricos en un proyecto: se mejoran en el repo [dark-factory](https://github.com/EnmanuelVarelaPividori/dark-factory) y se actualizan con `/dark-factory:factory-setup`.
+Esta carpeta es **igual en todos los proyectos**, salvo `proyecto/`, que tiene lo propio de cada uno. No edites los archivos genéricos en un proyecto: se mejoran en el repo [dark-factory](https://github.com/EnmanuelVarelaPividori/dark-factory) y se actualizan con `/dark-factory:factory-kickoff`.
 
 ## Estructura
 
@@ -74,8 +74,7 @@ Cada tarea programada lleva el mismo prompt corto: el repo del proyecto y qué j
 
 | Skill | Para qué |
 |---|---|
-| `dark-factory:factory-kickoff` | Arrancar la fábrica con una entrevista guiada que deja todo chequeado (y retomarla). |
-| `dark-factory:factory-setup` | Instalar, actualizar o verificar la fábrica en un repo. |
+| `dark-factory:factory-kickoff` | Instalar la fábrica con una entrevista guiada, retomarla, actualizarla y verificarla. |
 | `dark-factory:ticket-quality` | Crear o refinar tickets que cumplan el Definition of Ready. |
 | `dark-factory:factory-implement` | Implementar un ticket Ready y corregir hallazgos del review. |
 | `dark-factory:factory-review` | Revisar un PR contra su ticket y los docs. |

@@ -8,7 +8,7 @@
     {
       "name": "dark-factory",
       "source": "./plugins/dark-factory",
-      "description": "Skills factory-kickoff, factory-setup, ticket-quality, factory-implement y factory-review."
+      "description": "Skills factory-kickoff, ticket-quality, factory-implement y factory-review."
     }
   ]
 }
