@@ -1,12 +1,13 @@
-# Instrucciones para agentes
+# Instructions for agents
 
-<!-- Sección genérica de Dark Factory. Si este repo ya tiene un AGENTS.md, este bloque se agrega al final sin borrar lo existente. -->
+<!-- Generic Dark Factory section. If this repo already has an AGENTS.md, this block is appended at the end without removing anything. -->
 
-Este repo usa Dark Factory. Antes de trabajar, leé en este orden:
+This repo uses Dark Factory. Before working, read in this order:
 
-1. `factory/ESTRUCTURA.md` — estructura esperada y qué se puede tocar.
-2. `factory/reglas.md` — Definition of Ready / Done, etiquetas, ciclo de review.
-3. `factory/proyecto/config.md` — valores del proyecto: Jira, rama base, convenciones, comandos de tests.
-4. `factory/proyecto/docs/` — alcance: requisitos (`01-…`) y backlog (`02-…`).
+1. `factory/STRUCTURE.md` — expected structure and what may be touched.
+2. `factory/rules.md` — Definition of Ready / Done, labels, review cycle, language.
+3. `factory/project/config.md` — project values: Jira, base branch, conventions, test commands, `project.language`.
+4. `factory/project/status.md` — what is set up and what is missing.
+5. `factory/project/docs/` — scope: requirements (`01-…`) and backlog (`02-…`).
 
-Los archivos de `factory/` fuera de `factory/proyecto/` son genéricos: no se editan en este repo.
+The files in `factory/` outside `factory/project/` are generic: they are not edited in this repo. No file under `factory/` may hold secrets.

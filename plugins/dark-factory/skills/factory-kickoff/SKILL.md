@@ -1,222 +1,251 @@
 ---
 name: factory-kickoff
-description: Única puerta para instalar, configurar, actualizar y verificar Dark Factory en el repo de un proyecto. Entrevista guiada por rondas cortas con propuestas, deja todo chequeado y el avance en factory/proyecto/estado.md para retomar. Usar con "arrancá la dark factory", "instalá la fábrica", "configurá dark factory", "kickoff de la fábrica", "actualizá la fábrica", "retomá el setup de la fábrica", "¿está bien configurada la fábrica?" o "¿qué falta para que la fábrica funcione?".
+description: The single entry point to set up Dark Factory in a project repo — a personal setup assistant. Guided interview in short rounds; installs and configures the repo, does the organization setup itself when the session has the tools (scheduled tasks, GitHub labels, branch protection), writes step-by-step guides for the rest, and keeps the shared status board factory/project/status.md. Also resumes, updates the template and checks status. Use for "start the dark factory", "install / set up / configure the factory", "factory kickoff", "update the factory", "resume the factory setup", "check the factory status", "what's missing for the factory to work?", in any language.
 ---
 
 # Factory kickoff
 
-Una sola skill para todo el ciclo de vida de la fábrica en un repo: instalarla con una entrevista, retomarla, actualizarla cuando cambia la plantilla y verificar que funciona. Sirve desde Claude Code o desde un Project de claude.ai.
+A personal setup assistant for one project. It takes the project from nothing to a working factory and keeps it that way: interview, install, organization setup, status board, updates. Works from Claude Code or from a claude.ai Project.
 
-- **Con el plugin instalado:** la plantilla está en `${CLAUDE_PLUGIN_ROOT}/template/`.
-- **Sin el plugin** (por ejemplo, desde un Project de claude.ai): leé la plantilla `plugins/dark-factory/template/` del repo https://github.com/EnmanuelVarelaPividori/dark-factory y seguí esta skill igual. Donde dice `${CLAUDE_PLUGIN_ROOT}/template/`, usá esa carpeta.
+- **With the plugin installed:** the template is in `${CLAUDE_PLUGIN_ROOT}/template/` and the migrations in `${CLAUDE_PLUGIN_ROOT}/skills/factory-kickoff/migrations.md`.
+- **Without the plugin** (for example from a claude.ai Project): read `plugins/dark-factory/template/` and `plugins/dark-factory/skills/factory-kickoff/migrations.md` from https://github.com/EnmanuelVarelaPividori/dark-factory and follow this skill the same way.
 
-La plantilla tiene la misma forma que la raíz de un repo:
+The template has the same shape as a repo root:
 
 ```
 template/
-├── CLAUDE.md, AGENTS.md          bloques genéricos (se agregan, no se pisan)
-├── .claude/settings.json         activa el plugin (se combina, no se pisa)
-└── factory/                      genérico, salvo factory/proyecto/
-    └── proyecto/                 plantilla del proyecto: se crea una vez y nunca se sobrescribe
+├── CLAUDE.md, AGENTS.md          generic blocks (appended, never overwrite)
+├── .claude/settings.json         enables the plugin (merged, never overwrite)
+└── factory/                      generic, except factory/project/
+    └── project/                  project skeleton: created once, never overwritten
 ```
 
-La estructura esperada y las reglas para agentes están en `template/factory/ESTRUCTURA.md`.
+## Principles
 
-## 0. Elegir el modo
+1. **Do it yourself when you can.** For every setup item, if this session has a tool that does it, offer to do it and do it after confirmation. Only when no tool exists, write exact steps in `factory/project/setup/` and mark the item ⏳ with an owner. Never ask a person to do something you can do.
+2. **The status board is the truth.** `factory/project/status.md` says, for the repo and the organization, what is ✅ / ❌ / ⏳ / —, who owns it and when it changed. The runners refuse to start until its *Required to run* rows are ✅ or —.
+3. **Everything you write is shared.** All of `factory/` is pushed. Never write passwords, tokens, API keys, personal data or connector credentials into any file. If a person pastes one, don't store it and tell them it doesn't belong in the repo.
+4. **Speak the project's language.** Run the interview in `project.language` once it is known (before that, in the language the person writes in). Files, keys, labels and headings stay in English; prose you write into the project's files (setup guides, notes, decisions) goes in `project.language`.
+5. **Never invent values.** "I don't know" leaves `TODO` in the config and a pending item with an owner.
 
-Mirá el repo antes de decir nada:
+## 0. Take stock (before saying anything)
 
-| Estado del repo | Modo |
+### Mode
+
+| Repo state | Mode |
 |---|---|
-| No existe `factory/` | **Entrevista** desde la ronda 1. |
-| `factory/VERSION` distinta de `${CLAUDE_PLUGIN_ROOT}/template/factory/VERSION` | **Actualizar** (sección *Actualizar*). Después seguí con la fila que corresponda. |
-| `factory/proyecto/estado.md` tiene rondas sin ✅ | **Retomar:** mostrá en 3 líneas qué está hecho y qué falta, y seguí desde la primera ronda incompleta. |
-| Todo al día y todas las rondas en ✅ o — | **Verificar** (sección *Verificar*) y ofrecé completar lo que dé ❌. |
+| No `factory/` | **Interview** from round 1. |
+| `factory/VERSION` differs from `${CLAUDE_PLUGIN_ROOT}/template/factory/VERSION` | **Update** (section *Update*). Then continue with the row that applies. |
+| `factory/project/status.md` has rounds not ✅ | **Resume:** show in 3 lines what is done and what's missing, and continue from the first open round. |
+| Everything up to date | **Check status** (section *Verify*): refresh the board, show what is not ✅ and offer to fix it. |
 
-Un proyecto instalado antes de esta versión puede tener el config completo y las rondas en ⏳: no repitas preguntas. Por cada ronda cuyos datos ya están en el config, mostralos como confirmados, marcá la ronda ✅ y pasá a la siguiente.
+A round whose data is already in the config is not asked again: show the values as confirmed, mark the round ✅ and move on.
 
-## Cómo preguntar
+### Capabilities
 
-- **Detectá antes de preguntar** (ver *Detectar*). Cada pregunta lleva tu propuesta como primera opción, marcada "(recomendado)", para que la respuesta pueda ser "sí". Lo que ya sabés con certeza no se pregunta: se muestra como confirmado.
-- **Rondas cortas:** máximo 4 preguntas por ronda. Si la sesión tiene una herramienta de preguntas con opciones, usala; si no, numeradas en un solo mensaje.
-- **Una ronda por tema**, en el orden de abajo. Saltá las que no aplican.
-- **"Preguntame todo junto":** si la persona lo pide, juntá las preguntas pendientes de las rondas 2 a 7 en un solo mensaje, con tu propuesta en cada una, y seguí con la ronda 8.
-- **"No sé" es una respuesta válida:** queda `COMPLETAR` en el config y como pendiente en el estado. No inventes.
-- **Después de cada ronda**, actualizá `factory/proyecto/estado.md` (ver *Formato del estado*). Si `factory/` todavía no existe, guardá las respuestas en la conversación y escribilas en la ronda 8. Si la conversación se corta, se retoma desde el estado.
+Find out which tools this session actually has, silently. You'll show the result in round 1.
 
-## Detectar (sin preguntar)
+| Capability | How to tell | Unlocks |
+|---|---|---|
+| Write the project repo | File tools on the repo folder, or a clone you can push | Install, status board, migrations |
+| Push / open PRs | `git push` works, or a GitHub tool with write access | Sharing the setup with the team |
+| GitHub admin | `gh auth status` and `gh api repos/<owner>/<repo>` → `permissions.admin` | Labels (write is enough), branch protection (admin) |
+| Jira | Atlassian connector tools | Detecting `jira.*`, R5 |
+| Scheduled tasks | Tools to create / list / run scheduled tasks (search for them if they load on demand) | Creating and testing the tasks, R8, O4 |
+| claude.ai Project | Project tools (`project_read`, `project_search`) and the name of the current Project | Reading research, checking O1–O2, creating runners inside it |
 
-Hacelo al empezar; alimenta las propuestas de todas las rondas.
+## How to ask
 
-| Clave del config | De dónde |
+- **Detect before asking** (see *Detect*). Each question carries your proposal as the first option, marked "(recommended)", so the answer can be "yes". What you already know for sure isn't asked: show it as confirmed.
+- **Short rounds:** at most 4 questions per round. If the session has a multiple-choice question tool, use it; otherwise, numbered in one message.
+- **One round per topic**, in the order below. Skip the ones that don't apply.
+- **"Ask me everything at once":** if the person asks, gather the open questions of rounds 2 to 7 into one message, with your proposal on each, and continue with round 8.
+- **After each round**, update `factory/project/status.md`. If `factory/` doesn't exist yet, keep the answers in the conversation and write them in round 8. If the conversation stops, the board is where it resumes.
+
+## Detect (without asking)
+
+Do it at the start; it feeds the proposals of every round.
+
+| Config key | From |
 |---|---|
+| `project.language` | The language the person writes in |
 | `repo.url` | `git remote get-url origin` |
-| `repo.rama_base` | Destino de los últimos PRs mergeados, u `origin/HEAD` |
-| `repo.nombre_rama`, `repo.commit` | Patrones en `git branch -r` y `git log --oneline -30` |
-| `repo.tests` | Workflows de CI, `README`, `package.json`, `composer.json`, `Makefile` |
-| `repo.stack` | Manifiestos, entorno local (`.ddev/`, `docker-compose`), carpetas de código propio |
-| `jira.*` | Si hay conector de Atlassian: sitio, cloudId, proyectos, IDs de tipos, campos de story points y sprint (`getJiraIssueTypeMetaWithFields`), boards |
-| Docs existentes | Docs de planificación en el Project o en otra carpeta del repo (ej. `docs/`) |
+| `repo.base_branch` | Target of the last merged PRs, or `origin/HEAD` |
+| `repo.branch_pattern`, `repo.commit_pattern` | Patterns in `git branch -r` and `git log --oneline -30` |
+| `repo.tests` | CI workflows, `README`, `package.json`, `composer.json`, `Makefile` |
+| `repo.stack` | Manifests, local environment (`.ddev/`, `docker-compose`), folders with own code |
+| `jira.*` | With the Atlassian connector: site, cloudId, projects, issue type IDs, story points and sprint fields (`getJiraIssueTypeMetaWithFields`), boards |
+| `team.timezone` | The session's time zone |
+| Existing docs | Planning docs in the Project or in another folder of the repo (ex. `docs/`) |
 
-## Rondas
+## Rounds
 
-### Ronda 1 — Acceso
+### Round 1 — Language and access
 
-Detectá y mostrá: ¿hay acceso a la carpeta o al repo del proyecto? ¿Conector de Atlassian? ¿Acceso a GitHub con escritura? ¿Estás en un Project de claude.ai (podés leer sus docs)?
+1. Confirm `project.language` (proposal: the language the person is writing in). From here on, speak it.
+2. Show the capability table as two short lists: **I can do** / **you'll need to do**, given this session.
+3. Ask only about what fails and can be fixed now. Ex.: "I can't reach the repo folder. Do you want to add it, or should I work on a clone from GitHub?", "There's no Atlassian connector in this session; want to connect it before we go on?", "`gh` isn't logged in; if you run `gh auth login`, I can create the labels myself."
 
-Preguntá solo lo que falle. Ej.: "No tengo acceso a la carpeta del repo. ¿Me la das, o trabajo sobre la URL de GitHub?". Sin acceso al repo no se puede instalar: decilo y frená ahí.
+Without access to the repo nothing can be installed: say so and stop there.
 
-### Ronda 2 — Proyecto
+### Round 2 — Project
 
-- Nombre del proyecto.
-- Objetivo en una frase (contra qué se prioriza todo).
-- Fecha objetivo.
-- Nombre del Project de claude.ai con la investigación (`claude.project`).
+- Project name.
+- Goal in one sentence (what everything is prioritized against).
+- Target date.
+- Name of the claude.ai Project with the research (`claude.project`). If you are inside a Project, propose its name.
 
-### Ronda 3 — Docs de planificación
+### Round 3 — Planning docs
 
-Mostrá lo que encontraste y a qué doc fijo corresponde cada uno: `00-analisis-problema.md`, `01-analisis-requerimientos.md`, `02-product-backlog.md`, `03-planificacion-sprints.md`.
+Show what you found and which fixed doc each one maps to: `00-problem-analysis.md`, `01-requirements.md`, `02-product-backlog.md`, `03-sprint-plan.md`.
 
-- Si están en otra carpeta del repo: ¿los muevo a `factory/proyecto/docs/` con esos nombres? No muevas sin confirmación.
-- ¿Los convierto al formato de la fábrica? (IDs `R-x.y` en requisitos; stories con metadatos, criterios en checklist, `Dependencias` y `Requisitos`.)
-- Si falta alguno: ¿lo armo desde lo que hay en el Project, o queda pendiente?
-- Si encontrás contradicciones entre docs: listalas y preguntá cómo resolver cada una (máx. 4 por ronda; si hay más, rondas extra).
+- If they are in another folder of the repo: move them to `factory/project/docs/` with those names? Don't move without confirmation.
+- Convert them to the factory format? (`R-x.y` IDs on requirements; stories with metadata, criteria as a checklist, `Dependencies` and `Requirements`.)
+- If one is missing: build it from what's in the Project, or leave it pending?
+- If docs contradict each other: list the contradictions and ask how to resolve each (max 4 per round; extra rounds if there are more).
 
-### Ronda 4 — Jira
+### Round 4 — Jira
 
-- ¿Cuál es el proyecto de Jira? (opciones: los detectados)
-- ¿Usan sprints en Jira? ¿En qué board?
-- Mapeo de prioridad MUST / SHOULD / COULD (proponé High / Medium / Low).
-- ¿Usan prefijos de capa en los títulos (ej. `[BE]`, `[FE]`)?
+- Which Jira project? (options: the detected ones)
+- Do you use sprints in Jira? On which board?
+- Priority mapping for MUST / SHOULD / COULD (propose High / Medium / Low).
+- Do you use layer prefixes in titles (ex. `[BE]`, `[FE]`)?
 
-### Ronda 5 — Equipo y sprint
+### Round 5 — Team and sprint
 
-- ¿Cuántas personas desarrollan y cuáles son sus cuentas de Jira?
-- Duración del sprint (1 / 2 / 3 / 4 semanas) y día de inicio.
-- Fecha de inicio de algún sprint real, hora de la daily y zona horaria.
-- Velocidad por persona y sprint: ¿medida o estimada? (si es estimada, marcala así).
+- How many people develop, and what are their Jira accounts?
+- Sprint length (1 / 2 / 3 / 4 weeks) and start day.
+- Start date of a real sprint, daily time and time zone.
+- Velocity per person per sprint: measured or estimated? (if estimated, mark it so).
 
-Derivados, sin preguntar: `sprint.dias_habiles` = N × 5; `reglas.dias_estancado` = max(2, N + 1).
+Derived, without asking: `sprint.working_days` = N × 5; `rules.stale_days` = max(2, N + 1).
 
-### Ronda 6 — Repo
+### Round 6 — Repo
 
-Mostrá lo detectado y pedí confirmación o corrección:
+Show what you detected and ask for confirmation or correction:
 
-- Rama base y patrón de nombres de rama.
-- Convención de commits.
-- Comandos de tests (los del CI).
-- Stack y carpetas de código propio; ¿algo queda fuera del alcance de la fábrica?
+- Base branch and branch name pattern.
+- Commit convention.
+- Test commands (the ones CI runs).
+- Stack and folders with own code; is anything out of the factory's scope?
 
-### Ronda 7 — Reglas de la fábrica
+### Round 7 — Factory rules
 
-Proponé los valores por defecto y preguntá si cambian:
+Propose the defaults and ask whether they change:
 
-- Disparo: A (etiqueta + tarea programada, recomendado) o B (automatización).
-- WIP por persona (2), SP máximos por ticket (5), tickets por carga que exigen confirmación (5), rondas de review (3).
-- Reportes: canales (push, email) e idioma.
+- Trigger: A (label + scheduled task, recommended) or B (automation).
+- WIP per person (2), max SP per ticket (5), tickets per batch that need confirmation (5), review rounds (3).
+- Reports: channels (push, email).
 
-### Ronda 8 — Instalar
+### Round 8 — Install
 
-Antes de escribir, mostrá la lista de archivos que se crean o cambian y pedí confirmación. Si la rama actual es la rama base, proponé una rama nueva.
+Before writing, show the list of files that will be created or changed and ask for confirmation. If the current branch is the base branch, propose a new branch.
 
-1. Copiá todo `${CLAUDE_PLUGIN_ROOT}/template/factory/` a `factory/`, **excepto `factory/proyecto/`** si ya existe.
-2. Si `factory/proyecto/` no existe: copiá `template/factory/proyecto/` (config vacío, `estado.md` y `docs/README.md`).
-3. Escribí `factory/proyecto/config.md` con lo detectado y lo respondido. Lo que no se sepa queda `COMPLETAR`.
-4. Mové o convertí los docs según la ronda 3.
-5. `CLAUDE.md` y `AGENTS.md`: si no existen, copiá los de la plantilla. Si existen y no tienen el bloque de Dark Factory, agregalo al final. Nunca borres contenido.
-6. `.claude/settings.json`: si no existe, copiá la plantilla. Si existe, combiná `extraKnownMarketplaces` y `enabledPlugins` sin tocar el resto.
-7. Si tenés acceso al Project, copiá ahí `factory/proyecto/config.md` y los docs con las mismas rutas.
+1. Copy all of `${CLAUDE_PLUGIN_ROOT}/template/factory/` to `factory/`, **except `factory/project/`** if it already exists.
+2. If `factory/project/` doesn't exist: copy `template/factory/project/` (config, status board, setup guide skeletons and `docs/README.md`).
+3. Write `factory/project/config.md` with what was detected and answered. Unknowns stay `TODO`.
+4. Move or convert the docs as agreed in round 3.
+5. `CLAUDE.md` and `AGENTS.md`: if they don't exist, copy the template's. If they exist without the Dark Factory block, append it at the end. Never delete content.
+6. `.claude/settings.json`: if it doesn't exist, copy the template. If it exists, merge `extraKnownMarketplaces` and `enabledPlugins` without touching the rest.
+7. Fill the status board: interview rounds so far, and rows R1–R4 per *Verify*.
 
-No hagas commit: preguntá si querés que lo prepare en una rama.
+The setup is only shared once it is pushed. Offer to commit it on a branch and open a PR (or push, if the team works that way). Never commit or push without confirmation.
 
-### Ronda 9 — Tareas programadas
+### Round 9 — claude.ai Project
 
-Con `factory/jobs/README.md`:
+1. Write `factory/project/setup/claude-project.md` from the skeleton, in `project.language`: Project name, a description and instructions drafted from the docs (domain context only), the files to upload with their paths, the folder layout, the account skill and where the runners go.
+2. Show the description and instructions draft and ask for corrections.
+3. If you are inside the Project and can read it: check what is already there (O1, O2) and say what's missing. If you can write to it, offer to add the missing files yourself.
+4. What only a person can do (creating the Project, uploading files, saving `ticket-quality` as an account skill): ask who will do it, and record each as ⏳ with that owner on the board.
 
-1. Calculá el calendario desde el config. Con N = 1 no va la de mitad de sprint; si `fabrica.disparo` ≠ A, no van los runners.
-2. Cada tarea usa el prompt corto del README (repo + rama + job). No pegues valores del config en el prompt: el job los lee al correr.
-3. Mostrá una tabla: nombre, cron, hora local, modelo sugerido, conectores.
-4. Preguntá:
-   - ¿Creo los controles de tablero (diario, mitad de sprint, cierre)?
-   - Los runners van **dentro del Project de claude.ai** (`claude.project`) para que lean los docs que citan los tickets. ¿Los creo yo para que los muevas al Project, o los creás vos desde el Project?
-5. Si la sesión puede crear tareas programadas: creá las confirmadas, con notificaciones según `reportes.canales`, y ejecutá cada una una vez para probarla. Si no puede: dejá la tabla y los prompts listos para pegar.
+### Round 10 — Scheduled tasks
 
-Recordá: el modelo de cada tarea y la aprobación automática se eligen en su configuración.
+With `factory/jobs/README.md`:
 
-### Ronda 10 — Verificar
+1. Compute the schedule from the config. With N = 1 there is no mid-sprint review; if `factory.trigger` ≠ A, there are no runners.
+2. Ask which board checks to turn on (daily, mid-sprint, close). They are optional; propose all that apply.
+3. Show a table: name, cron, local time, suggested model, where it lives, connectors, repo access.
+4. Write `factory/project/setup/scheduled-tasks.md` with the chosen tasks and the prompt.
+5. **If the session can create scheduled tasks**, offer to create them yourself:
+   - Use the short prompt from `factory/jobs/README.md`. Never put config values or secrets in the prompt: the job reads them at run time.
+   - Notifications per `reports.channels`.
+   - Runners belong inside the claude.ai Project. If this session is in that Project, create them here; if not, create them and record "move into the Project" as ⏳ (R8), or let the person create them from the Project — ask which.
+   - After creating, run each once and check the result. Mark **Created** ✅ in the guide and update R8 and O4.
+6. If the session can't create tasks: the guide is the instruction; record the tasks as ⏳ with an owner.
+7. Choosing each task's model (R9) and turning on automatic approval for the board checks are made in each task's settings: record them as ⏳ for the person, unless the tool let you set them.
 
-Corré la sección *Verificar*. Los ítems ⏳ se preguntan uno por uno (hecho / no / más tarde), en rondas de 4. Para las etiquetas de GitHub, si `gh` está autenticado, ofrecé crearlas vos mostrando antes los comandos.
+### Round 11 — GitHub
 
-### Ronda 11 — Smoke test
+1. **Labels** (R6): `factory:review`, `factory:changes`, `factory:approved`, `factory:needs-human`. If `gh` can write to the repo, show the `gh label create` commands and run them on confirmation. If not, ⏳ with an owner.
+2. **Branch protection** (R7): check `repo.base_branch` with `gh api repos/<owner>/<repo>/branches/<branch>/protection`. If it is missing and you have admin, show the command that requires a pull request review before merging and run it on confirmation. Without admin: ⏳ for a repo admin, with the exact setting in the note.
+3. If the dark-factory repo is private: who needs read access (people and tasks) goes as ⏳ (O6).
 
-- ¿Elegimos ahora un ticket chico (1–2 SP) para probar el ciclo completo? Proponé candidatos del backlog.
-- Si sí: verificalo o crealo con `ticket-quality` y explicá que alguien tiene que ponerle `factory:go`.
+### Round 12 — Verify
 
-## Actualizar
+Run *Verify* over every row. Ask about the ⏳ items one by one (done / not yet / later), in rounds of 4, and record the answers with owner and date. Offer to commit and push the updated board.
 
-Cuando `factory/VERSION` es distinta de la del plugin:
+### Round 13 — Smoke test
 
-1. Reemplazá los archivos genéricos de `factory/` con los de `${CLAUDE_PLUGIN_ROOT}/template/factory/`, **sin tocar `factory/proyecto/`**. Mostrá qué archivos cambiaron, se agregaron o se quitaron.
-2. Aplicá las migraciones que correspondan a la versión instalada (sección *Migraciones*).
-3. Compará las claves de `template/factory/proyecto/config.md` con las del config del proyecto. Las claves nuevas se agregan con su valor por defecto o `COMPLETAR`, y se preguntan como una ronda más.
-4. Seguí con *Verificar*. No hagas commit sin confirmación.
+- Shall we pick a small ticket (1–2 SP) now to test the full cycle? Propose candidates from the backlog.
+- If yes: check it or create it with `ticket-quality`, and explain that a person has to set `factory:go` on it. O7 turns ✅ when it reaches a human merge.
 
-## Migraciones
+## Update
 
-Una entrada por versión que necesita tocar algo fuera de los archivos genéricos. Aplicá todas las posteriores a la versión instalada, en orden.
+When `factory/VERSION` differs from the plugin's:
 
-| Desde una versión anterior a | Qué hacer |
-|---|---|
-| 0.5.0 | Si falta `factory/proyecto/estado.md`, copiá solo ese archivo de la plantilla. |
-| 0.6.0 | La skill `factory-setup` se unificó en esta. En el bloque de Dark Factory de `CLAUDE.md`, reemplazá la mención a `dark-factory:factory-setup` por la línea de skills de `template/CLAUDE.md`. En `estado.md`, si la ronda 10 se llama "Checks de una persona", renombrala a "Verificar". |
+1. Replace the generic files of `factory/` with those in `${CLAUDE_PLUGIN_ROOT}/template/factory/`, **without touching `factory/project/`** except as migrations say. Show which files changed, were added or were removed.
+2. Apply every migration in `migrations.md` newer than the installed version, in order. Show the list of renames before applying them.
+3. Compare the keys of `template/factory/project/config.md` with the project's config. New keys are added with their default or `TODO` and asked as one more round.
+4. If the template adds files to `factory/project/` that the project lacks (ex. a new setup guide), copy just those.
+5. Continue with *Verify*. Never commit without confirmation.
 
-## Verificar
+## Verify
 
-Una sola lista de verificación, usada en la ronda 10 y en el modo verificar. Reportá ✅ / ❌ / ⏳ (requiere a una persona):
+The single checklist, used in round 12 and in check-status mode. For each row: check it, set ✅ / ❌ / ⏳ / — with the date, and offer to fix what you can.
 
-| Ítem | Cómo |
-|---|---|
-| Plantilla instalada y al día | Todos los archivos genéricos existen; `factory/VERSION` = versión del plugin |
-| Config completo | Filas `COMPLETAR` en `factory/proyecto/config.md` |
-| Docs | Existen los 4 docs con los nombres fijos; los requisitos tienen IDs `R-x.y`; las stories tienen `Requisitos` |
-| `CLAUDE.md` | Importa `@factory/ESTRUCTURA.md`, `@factory/reglas.md`, `@factory/proyecto/config.md` |
-| `AGENTS.md` | Apunta a `factory/ESTRUCTURA.md` |
-| Plugin activado | `.claude/settings.json` con `dark-factory@dark-factory: true`; ⏳ aceptado en Claude Code (`/plugin` lo muestra habilitado) |
-| Jira accesible | Una JQL simple sobre `jira.proyecto` responde |
-| Etiquetas GitHub | `gh label list` incluye `factory:review`, `factory:changes`, `factory:approved`, `factory:needs-human` |
-| Tareas programadas | Existen (si se pueden listar); ⏳ modelo elegido y aprobación automática en los controles |
-| Project de claude.ai | ⏳ `factory/proyecto/config.md` y los docs subidos con las mismas rutas; investigación en `investigacion/`, `decisiones/`, `diagramas/` |
-| Runners dentro del Project | ⏳ Las tareas implementar y revisar pertenecen al Project |
-| `ticket-quality` en claude.ai | ⏳ Guardada como skill de la cuenta |
-| Rama base protegida | ⏳ Merge solo con review humano |
-| Repo dark-factory accesible | ⏳ Si es privado: lectura para todos y para las tareas |
-| Smoke test | ⏳ Ver bloque 6 de `factory/CHECKLIST.md` |
+| ID | How to check | Can you fix it? |
+|---|---|---|
+| R1 | Every generic file exists; `factory/VERSION` = plugin version | Yes: *Update* |
+| R2 | No `TODO` in `project.*`, `jira.*`, `repo.*`, `factory.*` of the config | Ask the missing values |
+| R3 | The 4 docs exist with the fixed names; requirements have `R-x.y`; stories have `Requirements` | Round 3 |
+| R4 | `CLAUDE.md` imports `@factory/STRUCTURE.md`, `@factory/rules.md`, `@factory/project/config.md`; `AGENTS.md` points to `factory/STRUCTURE.md`; `.claude/settings.json` has `dark-factory@dark-factory: true` | Yes |
+| R5 | A simple JQL on `jira.project` answers | Ask to connect Atlassian |
+| R6 | `gh label list` has the four PR labels | Yes, with write access |
+| R7 | Base branch protection requires a pull request review | Yes, with admin |
+| R8 | If `factory.trigger` = A: both runner tasks exist and are enabled (list them if you can); inside the Project is confirmed by a person unless you can see it. Trigger B: — | Create; moving into the Project is a person's step |
+| R9 | Each runner task has a model chosen (confirmed by a person unless the task listing shows it) | Person |
+| O1 | If you can read the Project: description and instructions present. Otherwise the person confirms | Person |
+| O2 | `factory/project/config.md` and the 4 docs present in the Project with the same paths | If you can write to the Project |
+| O3 | Person confirms `ticket-quality` is an account skill | Person |
+| O4 | The tasks marked **On** in `setup/scheduled-tasks.md` exist | Create |
+| O5 | Each developer confirms `/plugin` shows `dark-factory` enabled | Person |
+| O6 | dark-factory repo public: —. Private: person confirms read access | Person |
+| O7 | A ticket went through the full cycle to a human merge | Round 13 |
 
-Actualizá los checks en `factory/proyecto/estado.md`.
+## The status board
 
-## Cierre
+- Start from `template/factory/project/status.md`; never drop a row.
+- Each row: status, owner (a person's name, or "kickoff" when you did it), date, and a short note in `project.language` (what's missing or how it was done). No secrets, no tokens, no personal data beyond names.
+- Update *Last updated* with the date and who ran the kickoff.
+- Interview rounds: ✅ done / ⏳ in progress / — not applicable, with the date.
+- *Decisions*: one line per decision made in the interview. *Pending*: what's left, each with an owner.
+- Values go in the config, not in the board: the board records what is done and what's missing.
+- The board is shared only once pushed: at the end of each session that changed it, offer to commit and push.
 
-Terminá siempre con:
+## Close
 
-1. Qué quedó listo (una línea por bloque).
-2. Pendientes, cada uno con quién lo hace.
-3. Cómo retomar: "Decí *retomá el setup de la fábrica* y sigo desde `factory/proyecto/estado.md`".
+Always end with:
 
-## Formato del estado
+1. What is ready (one line per block).
+2. What's pending, each with who does it, as on the board.
+3. How to resume: "Say *resume the factory setup* (or *check the factory status*) and I'll continue from `factory/project/status.md`".
 
-`factory/proyecto/estado.md` parte de `template/factory/proyecto/estado.md`. Actualizá en cada ronda:
+## Don't
 
-- Tabla de rondas: estado (✅ hecha / ⏳ en curso / — no aplica) y fecha.
-- Checks: ✅ / ❌ / ⏳ con quién y cuándo.
-- Decisiones tomadas en la entrevista (una línea cada una).
-- Pendientes con responsable.
-
-No guardes en el estado valores que van en el config: el estado registra qué se hizo y qué falta.
-
-## No hacer
-
-- Sobrescribir `factory/proyecto/`, ni borrar contenido de `CLAUDE.md`, `AGENTS.md` o `settings.json`.
-- Editar archivos genéricos con valores del proyecto.
-- Escribir archivos sin mostrar antes la lista, ni hacer commit o push sin confirmación.
-- Crear tareas programadas sin mostrar antes la tabla.
-- Inventar valores de Jira, equipo o velocidad.
+- Overwrite `factory/project/`, or delete content from `CLAUDE.md`, `AGENTS.md` or `settings.json`.
+- Edit generic files with project values.
+- Write any file without showing the list first, or commit or push without confirmation.
+- Create scheduled tasks, labels or branch protection without showing what you'll create first.
+- Write secrets anywhere in the repo or in task prompts.
+- Invent Jira, team or velocity values.
+- Ask a person to do something you have a tool for.

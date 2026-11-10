@@ -1,58 +1,69 @@
 ---
 name: factory-review
-description: Revisar un PR de la fábrica contra su ticket de Jira, los requisitos y las convenciones del repo, en una sesión independiente de quien lo implementó, y devolver APROBADO o CAMBIOS con hallazgos numerados. Usar con "revisá el PR X", cuando un PR tiene factory:review, o en cada ronda del ciclo revisar ↔ corregir.
+description: Review a factory PR against its Jira ticket, the requirements and the repo conventions, in a session independent from whoever implemented it, and answer APPROVED or CHANGES with numbered findings. Use for "review PR X", when a PR has factory:review, or in each round of the review ↔ fix cycle, in any language.
 ---
 
 # Factory review
 
-Revisás como alguien que no vio cómo se escribió el código. No confíes en la descripción del PR: verificá contra el diff.
+You review as someone who didn't see how the code was written. Don't trust the PR description: check against the diff. Write the comment in `project.language`; the heading, verdict words and labels stay in English.
 
-## 1. Juntar el contexto
+## 0. Status gate (before anything else)
 
-1. `CLAUDE.md`, `factory/ESTRUCTURA.md`, `factory/reglas.md` y `factory/proyecto/config.md`.
-2. El ticket: criterios de aceptación, requisitos `R-x.y`, tipo (núcleo / config / cliente).
-3. La story en `factory/proyecto/docs/02-product-backlog.md` y los requisitos citados en `factory/proyecto/docs/01-analisis-requerimientos.md`.
-4. Los docs del Project en la sección **Contexto** del ticket, si la sesión tiene acceso (`project_read` por ruta). Si no tenés acceso, revisá contra el ticket y decilo en el comentario.
-5. El diff completo y los tests. Si podés, corré `repo.tests`.
-6. Las rondas anteriores de review en el PR: no repitas hallazgos ya resueltos ni cambies de criterio entre rondas.
+1. Read `factory/project/status.md`, section *Required to run*.
+2. If any row is not ✅ or —:
+   - **In a scheduled run:** don't touch any PR. End with one line: "ATTENTION — Review <jira.project> not ready: <IDs and items> (see factory/project/status.md)".
+   - **With a person in the session:** show the missing rows and ask whether to continue anyway. Continue only on an explicit yes.
+3. If the board says ✅ but something fails in practice, stop the same way and name it.
 
-## 2. Revisar, en este orden
+If `factory/project/status.md` doesn't exist, stop and ask for `/dark-factory:factory-kickoff` to be run.
 
-| # | Pregunta | Bloquea |
+## 1. Gather the context
+
+1. `CLAUDE.md`, `factory/STRUCTURE.md`, `factory/rules.md` and `factory/project/config.md`.
+2. The ticket: acceptance criteria, `R-x.y` requirements, type (core / configuration / client). Older tickets may use Spanish headings: see *Legacy names* in `factory/STRUCTURE.md`.
+3. The story in `factory/project/docs/02-product-backlog.md` and the requirements cited in `factory/project/docs/01-requirements.md`.
+4. The Project docs in the ticket's **Context** section, if the session has access (`project_read` by path). Without access, review against the ticket and say so in the comment.
+5. The full diff and the tests. If you can, run `repo.tests`.
+6. Previous review rounds on the PR (any comment starting with `## factory-review`, in any language): don't repeat findings already resolved and don't change criteria between rounds.
+
+## 2. Review, in this order
+
+| # | Question | Blocks |
 |---|---|---|
-| 1 | ¿Cada criterio de aceptación está cumplido? Verificalo en código o test, uno por uno. | Sí |
-| 2 | ¿El PR hace algo que el ticket no pide? (alcance extra) | Sí |
-| 3 | ¿Respeta los docs, los requisitos y las decisiones de los docs del Project citados en Contexto? ¿Contradice alguna regla de negocio? | Sí |
-| 4 | ¿Hay tests para la lógica nueva y pasan? | Sí |
-| 5 | ¿Rompe algo existente: datos, permisos, aislamiento multiempresa, trazabilidad? | Sí |
-| 6 | ¿Reutiliza lo que ya existe o abre un camino paralelo? | Sí, si duplica un flujo |
-| 7 | Convenciones del repo, legibilidad, nombres | No (sugerencia) |
+| 1 | Is each acceptance criterion met? Verify it in code or a test, one by one. | Yes |
+| 2 | Does the PR do something the ticket doesn't ask for? (extra scope) | Yes |
+| 3 | Does it respect the docs, the requirements and the decisions in the Project docs cited in Context? Does it contradict a business rule? | Yes |
+| 4 | Are there tests for the new logic, and do they pass? | Yes |
+| 5 | Does it break something existing: data, permissions, multi-company isolation, traceability? Does it add a secret to the repo? | Yes |
+| 6 | Does it reuse what exists or open a parallel path? | Yes, if it duplicates a flow |
+| 7 | Repo conventions, readability, naming | No (suggestion) |
 
-Solo reportá hallazgos con un escenario concreto de falla ("con X, pasa Y"). Nada de opiniones de estilo como bloqueantes.
+Only report findings with a concrete failure scenario ("with X, Y happens"). No style opinions as blockers.
 
-## 3. Responder
+## 3. Answer
 
-Comentario en el PR con este formato exacto:
+PR comment with this exact format:
 
 ```markdown
-## factory-review — ronda {n}/{max}
-**Veredicto:** APROBADO | CAMBIOS
+## factory-review — round {n}/{max}
+**Verdict:** APPROVED | CHANGES
 
-### Criterios de aceptación
-- CA1 ✅ verificado en `tests/…`
-- CA2 ❌ <qué falta>
+### Acceptance criteria
+- AC1 ✅ verified in `tests/…`
+- AC2 ❌ <what is missing>
 
-### Hallazgos
-1. **[bloquea]** `archivo:línea` — <problema>. Escenario: <cómo falla>. Sugerencia: <qué hacer>.
-2. **[sugerencia]** …
+### Findings
+1. **[blocks]** `file:line` — <problem>. Scenario: <how it fails>. Suggestion: <what to do>.
+2. **[suggestion]** …
 ```
 
-- `APROBADO` solo si no hay ningún hallazgo `[bloquea]`. Poné la etiqueta `factory:approved` y avisá en el ticket que espera review humano.
-- `CAMBIOS`: cambiá `factory:review` por `factory:changes` y devolvé el turno a `factory-implement`.
-- En la ronda máxima sin aprobación: `factory:needs-human` y un resumen de 3 líneas del desacuerdo.
+- `APPROVED` only if there is no `[blocks]` finding. Set the `factory:approved` label and note on the ticket that it awaits human review.
+- `CHANGES`: switch `factory:review` to `factory:changes` and hand back to `factory-implement`.
+- In the last round without approval: `factory:needs-human` and a 3-line summary of the disagreement.
 
-## Nunca
+## Never
 
-- Aprobar con criterios de aceptación sin verificar.
-- Pedir cambios fuera del alcance del ticket (proponé un ticket nuevo).
-- Hacer los cambios vos mismo: el reviewer no implementa.
+- Approve with acceptance criteria unverified.
+- Ask for changes outside the ticket's scope (propose a new ticket).
+- Make the changes yourself: the reviewer doesn't implement.
+- Run past a status gate that failed without a person's explicit yes.

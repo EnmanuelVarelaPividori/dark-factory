@@ -1,58 +1,58 @@
-# Job: evaluación de cierre de sprint
+# Job: sprint close review
 
-Modelo sugerido: Opus. Solo lectura: no modifiques tickets ni docs.
+Suggested model: Opus. Read only: don't modify tickets or docs.
 
-## 0. ¿Cerró un sprint?
+## 0. Did a sprint close?
 
-Leé `factory/proyecto/config.md`. Esta tarea corre todas las semanas, pero los sprints duran `sprint.duracion_semanas` semanas.
+Read `factory/project/config.md`. This task runs every week, but sprints last `sprint.weeks` weeks.
 
-1. Buscá en Jira (`jira.cloud_id`, `jira.proyecto`) un sprint cerrado en los últimos 7 días.
-2. Si Jira no tiene sprints: semanas entre `sprint.fecha_referencia` y hoy. Si no es múltiplo de `sprint.duracion_semanas`, no hubo cierre.
-3. Si no hubo cierre: terminá con una sola línea, "Sin cierre de sprint esta semana".
+1. Look in Jira (`jira.cloud_id`, `jira.project`) for a sprint closed in the last 7 days.
+2. If Jira has no sprints: weeks between `sprint.reference_date` and today. If it is not a multiple of `sprint.weeks`, nothing closed.
+3. If nothing closed: end with a single line, "No sprint close this week" (in `project.language`).
 
-## 1. Sprint cerrado vs. plan
+## 1. Closed sprint vs. plan
 
-Con `factory/proyecto/docs/03-planificacion-sprints.md`:
+With `factory/project/docs/03-sprint-plan.md`:
 
-- SP comprometidos, completados y arrastrados. Velocidad real vs. planeada.
-- Tickets del plan para ese sprint que no se hicieron, y hechos que no estaban en el plan.
+- SP committed, completed and carried over. Real vs. planned velocity.
+- Planned tickets for that sprint that weren't done, and done ones that weren't planned.
 
-## 2. Cobertura de requisitos
+## 2. Requirements coverage
 
-Con `factory/proyecto/docs/01-analisis-requerimientos.md` y `02-product-backlog.md`:
+With `factory/project/docs/01-requirements.md` and `02-product-backlog.md`:
 
-- Por prioridad (MUST / SHOULD / COULD): requisitos totales, con story, con story Done.
-- Requisitos MUST sin story o con la story pendiente: listarlos.
+- By priority (MUST / SHOULD / COULD): total requirements, with a story, with a Done story.
+- MUST requirements without a story or with the story pending: list them.
 
-## 3. Pronóstico
+## 3. Forecast
 
-- Velocidad promedio de los últimos 3 sprints (o los que haya).
-- Sprints restantes = SP pendientes ÷ velocidad. Fin estimado = fin de este sprint + sprints restantes × `sprint.duracion_semanas` semanas.
-- Comparar con `proyecto.fecha_objetivo`. Si no llega: qué recortar primero (COULD, después SHOULD), con SP y claves, hasta que la fecha cierre.
+- Average velocity of the last 3 sprints (or as many as there are).
+- Remaining sprints = pending SP ÷ velocity. Estimated end = end of this sprint + remaining sprints × `sprint.weeks` weeks.
+- Compare with `project.target_date`. If it doesn't make it: what to cut first (COULD, then SHOULD), with SP and keys, until the date fits.
 
-## 4. Desvíos de los docs
+## 4. Drift from the docs
 
-Decisiones visibles en tickets o PRs que contradicen `factory/proyecto/docs/`. Listar para que alguien actualice los docs.
+Decisions visible in tickets or PRs that contradict `factory/project/docs/`. List them so someone updates the docs.
 
-## Salida
+## Output
 
-En `reportes.idioma`:
+In `project.language`:
 
 ```
-Evaluación de cierre — <sprint> — <proyecto.nombre>
-Veredicto: en camino | en riesgo | fuera de plazo
+Sprint close review — <sprint> — <project.name>
+Verdict: on track | at risk | off schedule
 
-Sprint: X/Y SP (velocidad real Z vs. plan W)
-Requisitos MUST: a/b hechos · SHOULD: c/d · COULD: e/f
-Fin estimado: <fecha> (objetivo <proyecto.fecha_objetivo>)
+Sprint: X/Y SP (real velocity Z vs. plan W)
+MUST requirements: a/b done · SHOULD: c/d · COULD: e/f
+Estimated end: <date> (target <project.target_date>)
 
-Riesgos
+Risks
 - …
-Recorte propuesto (si hace falta)
+Proposed cut (if needed)
 - …
-Docs a actualizar
+Docs to update
 - …
-Actualizar en factory/proyecto/config.md: sprint.velocidad_por_persona = <valor medido>
+Update in factory/project/config.md: sprint.velocity_per_person = <measured value>
 ```
 
-Mostrá los números de entrada de cada cálculo para que se puedan verificar.
+Show the input numbers of each calculation so they can be checked.

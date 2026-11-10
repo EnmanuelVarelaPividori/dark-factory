@@ -1,91 +1,102 @@
 # Dark Factory
 
-Sistema para pasar de la planificación al código con Claude, sin tableros inflados ni tickets usados como bitácora.
+A system to go from planning to code with Claude, without bloated boards or tickets used as a log.
 
-Esta carpeta es **igual en todos los proyectos**, salvo `proyecto/`, que tiene lo propio de cada uno. No edites los archivos genéricos en un proyecto: se mejoran en el repo [dark-factory](https://github.com/EnmanuelVarelaPividori/dark-factory) y se actualizan con `/dark-factory:factory-kickoff`.
+This folder is **the same in every project**, except `project/`, which holds this project's own things. Don't edit the generic files in a project: they are improved in the [dark-factory](https://github.com/EnmanuelVarelaPividori/dark-factory) repo and updated with `/dark-factory:factory-kickoff`.
 
-## Estructura
+## Structure
 
 ```
 factory/
-├── README.md               Este archivo: flujo y mapa del sistema
-├── ESTRUCTURA.md           Estructura esperada e instrucciones para agentes de IA
-├── ARQUITECTURA.md         Quién carga qué, ciclo de etiquetas, cómo se actualiza
-├── CHECKLIST.md            Puesta en marcha y verificación
-├── reglas.md               Definition of Ready / Done, reglas de tablero, etiquetas, ciclo de review
-├── VERSION                 Versión de la plantilla instalada
+├── README.md               This file: flow and map of the system
+├── STRUCTURE.md            Expected structure and instructions for AI agents
+├── ARCHITECTURE.md         Who loads what, label cycle, updates
+├── CHECKLIST.md            Full setup reference
+├── rules.md                Definition of Ready / Done, board rules, labels, review cycle, language
+├── VERSION                 Installed template version
 ├── templates/
-│   └── ticket.md           Formato de ticket
+│   └── ticket.md           Ticket format
 ├── jobs/
-│   ├── README.md           Calendario, cron y cómo crear las tareas programadas
-│   ├── daily-check.md      Control diario del tablero
-│   ├── weekly-review.md    Review de mitad de sprint
-│   ├── sprint-review.md    Evaluación de cierre de sprint
-│   ├── factory-implement.md  Runner: implementar un ticket
-│   └── factory-review.md     Runner: revisar un PR
-└── proyecto/               ← LO ÚNICO PROPIO DE ESTE PROYECTO
-    ├── config.md           Jira, equipo, sprint, repo, reglas, reportes
-    ├── estado.md           Qué está hecho y qué falta en la puesta en marcha
+│   ├── README.md           Schedule rules and how to create the scheduled tasks
+│   ├── daily-check.md      Daily board check
+│   ├── weekly-review.md    Mid-sprint review
+│   ├── sprint-review.md    Sprint close review
+│   ├── factory-implement.md  Runner: implement a ticket
+│   └── factory-review.md     Runner: review a PR
+└── project/                ← THE ONLY PART THAT IS THIS PROJECT'S OWN
+    ├── config.md           Jira, team, sprint, repo, rules, language, reports
+    ├── status.md           Status board: what is set up and what is missing, repo and organization
+    ├── setup/
+    │   ├── claude-project.md   How to set up the claude.ai Project
+    │   └── scheduled-tasks.md  The scheduled tasks chosen for this project
     └── docs/
-        ├── README.md           Qué va en cada doc y con qué formato (genérico)
-        ├── 00-analisis-problema.md
-        ├── 01-analisis-requerimientos.md   requisitos con IDs R-x.y
-        ├── 02-product-backlog.md           stories con campo Requisitos
-        └── 03-planificacion-sprints.md
+        ├── README.md                What goes in each doc and in what format (generic)
+        ├── 00-problem-analysis.md
+        ├── 01-requirements.md       requirements with IDs R-x.y
+        ├── 02-product-backlog.md    stories with a Requirements field
+        └── 03-sprint-plan.md
 ```
 
-Todos los archivos genéricos se refieren a `proyecto/` por estas rutas fijas. Por eso funcionan igual en cualquier proyecto.
+Every generic file refers to `project/` by these fixed paths. That is why they work the same in any project.
 
-En la raíz del repo, además: `CLAUDE.md` y `AGENTS.md` (instrucciones para agentes de IA, importan o apuntan a `ESTRUCTURA.md`) y `.claude/settings.json` (activa el plugin).
+At the repo root, also: `CLAUDE.md` and `AGENTS.md` (instructions for AI agents, they import or point to `STRUCTURE.md`) and `.claude/settings.json` (enables the plugin).
 
-## El flujo
+**Nothing in `factory/` holds secrets.** It is pushed and shared by the team.
+
+## Is the factory ready?
+
+Open `project/status.md`. It shows, for the repo and the organization, what is ✅ done, ❌ missing or ⏳ waiting for a person, and who owns it. To refresh it, run `/dark-factory:factory-kickoff` or ask "check the factory status".
+
+## The flow
 
 ```
-1. PLANIFICAR    Project de claude.ai: investigación, diagramas, docs → factory/proyecto/docs/
+0. KICKOFF       factory-kickoff: interview, install, organization setup, status board
        │
-2. TICKETEAR     Skill ticket-quality: duplicados, plantilla, preguntas, Definition of Ready → backlog
+1. PLAN          claude.ai Project: research, diagrams, docs → factory/project/docs/
        │
-3. FABRICAR      Runner implementar: toma un ticket Ready con factory:go y abre un PR
+2. TICKET        ticket-quality skill: duplicates, template, questions, Definition of Ready → backlog
        │
-4. REVISAR       Runner revisar: otra sesión revisa el PR contra ticket + docs. Ciclo revisar ↔ corregir (máx. N rondas)
+3. BUILD         Implement runner: takes a Ready ticket with factory:go and opens a PR
        │
-5. MERGEAR       Un developer revisa la versión final y mergea. Nada se mergea sin humano.
+4. REVIEW        Review runner: another session reviews the PR against ticket + docs. Review ↔ fix cycle (max N rounds)
+       │
+5. MERGE         A developer reviews the final version and merges. Nothing merges without a person.
 ```
 
-Las reglas de cada paso están en `reglas.md`.
+The rules of each step are in `rules.md`.
 
-**Repo vs. Project:** `proyecto/` tiene lo general que necesita el código. La investigación detallada vive en el Project de claude.ai; cada ticket nombra en su sección **Contexto** qué docs del Project mirar. Ver `ARQUITECTURA.md`.
+**Repo vs. Project:** `project/` holds the general things the code needs. Detailed research lives in the claude.ai Project; each ticket names in its **Context** section which Project docs to read. See `ARCHITECTURE.md`.
 
-## Tareas programadas
+## Scheduled tasks
 
-| Job | Frecuencia (derivada del largo del sprint) | Modelo sugerido | Qué responde |
+| Job | Frequency (derived from sprint length) | Suggested model | Answers |
 |---|---|---|---|
-| `jobs/daily-check.md` | Días hábiles, antes de la daily | Haiku | ¿Se rompió alguna regla de tablero hoy? |
-| `jobs/weekly-review.md` | Semanal, a mitad de semana. No va con sprints de 1 semana. | Sonnet | ¿Cómo va el sprint y qué haría un scrum master esta semana? |
-| `jobs/sprint-review.md` | Al cierre de cada sprint (corre semanal; reporta solo si cerró uno) | Opus | ¿Avanzamos contra el plan y los requisitos? ¿Llegamos a la fecha? |
-| `jobs/factory-implement.md` | Cada 2 h en horario laboral | Sonnet | Implementa un ticket o corrige un PR. |
-| `jobs/factory-review.md` | Cada 2 h, desfasado 1 h | Opus | Revisa un PR en una sesión nueva. |
+| `jobs/daily-check.md` | Working days, before the daily | Haiku | Was any board rule broken today? |
+| `jobs/weekly-review.md` | Weekly, mid-week. Not with 1-week sprints. | Sonnet | How is the sprint going and what would a scrum master do this week? |
+| `jobs/sprint-review.md` | At each sprint close (runs weekly; reports only if one closed) | Opus | Are we on track against the plan and the requirements? Will we make the date? |
+| `jobs/factory-implement.md` | Every 2 h in working hours | Sonnet | Implements a ticket or fixes a PR. |
+| `jobs/factory-review.md` | Every 2 h, 1 h offset | Opus | Reviews a PR in a new session. |
 
-Cada tarea programada lleva el mismo prompt corto: el repo del proyecto y qué job ejecutar. Todo lo demás lo lee del repo al correr. Detalle en `jobs/README.md`.
+The board checks are optional; which ones run in this project is in `project/setup/scheduled-tasks.md`. Every task uses the same short prompt: the project repo and which job to run. Everything else is read from the repo at run time. Details in `jobs/README.md`.
 
-**Por qué esos modelos:** el diario son reglas mecánicas; el semanal lee el tablero y recomienda; el de cierre cruza requisitos, plan y estado real y de ahí salen decisiones de recorte. El implementador trabaja tickets chicos y claros; el reviewer es la compuerta antes del humano y conviene que sea el más exigente.
+**Why those models:** the daily check is mechanical rules; the weekly one reads the board and recommends; the close review crosses requirements, plan and actual state, and cut decisions come out of it. The implementer works small, clear tickets; the reviewer is the gate before a person and should be the most demanding.
 
-## Skills (plugin `dark-factory`)
+## Skills (`dark-factory` plugin)
 
-| Skill | Para qué |
+| Skill | For |
 |---|---|
-| `dark-factory:factory-kickoff` | Instalar la fábrica con una entrevista guiada, retomarla, actualizarla y verificarla. |
-| `dark-factory:ticket-quality` | Crear o refinar tickets que cumplan el Definition of Ready. |
-| `dark-factory:factory-implement` | Implementar un ticket Ready y corregir hallazgos del review. |
-| `dark-factory:factory-review` | Revisar un PR contra su ticket y los docs. |
+| `dark-factory:factory-kickoff` | Install the factory with a guided interview, set up the organization side, resume, update and check status. |
+| `dark-factory:ticket-quality` | Create or refine tickets that meet the Definition of Ready. |
+| `dark-factory:factory-implement` | Implement a Ready ticket and fix review findings. |
+| `dark-factory:factory-review` | Review a PR against its ticket and the docs. |
 
-## Disparo de la fábrica
+## Factory trigger
 
-Se elige por proyecto en `proyecto/config.md` (`fabrica.disparo`):
+Chosen per project in `project/config.md` (`factory.trigger`):
 
-| Opción | Cómo | Pros | Contras |
+| Option | How | Pros | Cons |
 |---|---|---|---|
-| **A. Etiqueta + tarea programada** (recomendada para empezar) | Los runners buscan cada 2 h tickets con `factory:go` y PRs con `factory:review` / `factory:changes`. | Sin infraestructura extra. Fácil de pausar. | Latencia de horas. |
-| **B. Automatización** | Jira Automation dispara un webhook (por ejemplo a CI con Claude Code) al agregar `factory:go`. | Inmediato. | Requiere configurar Jira Automation, CI y secretos. |
+| **A. Label + scheduled task** (recommended to start) | Every 2 h the runners look for tickets with `factory:go` and PRs with `factory:review` / `factory:changes`. | No extra infrastructure. Easy to pause. | Hours of latency. |
+| **B. Automation** | Jira Automation fires a webhook (for example to CI with Claude Code) when `factory:go` is added. | Immediate. | Needs Jira Automation, CI and secrets set up (secrets in CI, never in the repo). |
 
-En ambos casos `factory:go` lo pone una persona: la fábrica nunca se auto-asigna trabajo.
+Either way `factory:go` is set by a person: the factory never assigns itself work.

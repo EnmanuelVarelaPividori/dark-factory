@@ -1,37 +1,39 @@
-# Job: control diario
+# Job: daily check
 
-Modelo sugerido: Haiku. Solo lectura: no modifiques tickets.
+Suggested model: Haiku. Read only: don't modify tickets.
 
-## Contexto
+## Context
 
-1. Leé `factory/proyecto/config.md`. De ahí salen todos los valores: Jira (`jira.*`), equipo, sprint y reglas.
-2. Capacidad del sprint = `equipo.cantidad` × `sprint.velocidad_por_persona` SP.
+1. Read `factory/project/config.md`. Every value comes from there: Jira (`jira.*`), team, sprint, rules and `project.language`.
+2. Sprint capacity = `team.size` × `sprint.velocity_per_person` SP.
+3. Read the *Required to run* section of `factory/project/status.md`: if any row is not ✅ or —, add rule 9 below.
 
-## Datos
+## Data
 
-Consultá en Jira (`jira.cloud_id`, proyecto `jira.proyecto`) el sprint activo con JQL acotada: key, summary, status, assignee, labels, `jira.campo_sp`, `jira.campo_sprint`, created, updated; máximo 100 por consulta.
+Query Jira (`jira.cloud_id`, project `jira.project`) for the active sprint with a narrow JQL: key, summary, status, assignee, labels, `jira.sp_field`, `jira.sprint_field`, created, updated; at most 100 per query.
 
-Calculá el día hábil del sprint `d` de `sprint.dias_habiles`, desde la fecha de inicio del sprint activo. Si Jira no tiene sprints, usá `sprint.fecha_referencia` y `sprint.duracion_semanas`.
+Work out the sprint's working day `d` of `sprint.working_days`, from the active sprint's start date. If Jira has no sprints, use `sprint.reference_date` and `sprint.weeks`.
 
-## Reglas a revisar
+## Rules to check
 
-1. **WIP:** personas con más de `reglas.wip_por_persona` tickets In Progress.
-2. **Capacidad:** SP del sprint vs. capacidad; exceso en SP y %.
-3. **Alcance agregado:** tickets que entraron al sprint en las últimas 24 h; marcá si son más de `reglas.lote_confirmacion` de una misma persona.
-4. **No Ready:** tickets del sprint sin `factory:ready` o con más de `reglas.sp_max_ticket` SP.
-5. **Sin dueño:** In Progress sin asignar.
-6. **Estancados:** In Progress sin cambios hace más de `reglas.dias_estancado` días hábiles.
-7. **Fábrica:** tickets con `factory:blocked` o `factory:needs-human`.
-8. **Ritmo:** si `d` > `sprint.dias_habiles` / 2 y menos del 30 % de los SP está Done.
+1. **WIP:** people with more than `rules.wip_per_person` tickets In Progress.
+2. **Capacity:** sprint SP vs. capacity; excess in SP and %.
+3. **Added scope:** tickets that entered the sprint in the last 24 h; flag more than `rules.batch_confirm` from one person.
+4. **Not Ready:** sprint tickets without `factory:ready` or with more than `rules.max_sp_per_ticket` SP.
+5. **No owner:** In Progress and unassigned.
+6. **Stale:** In Progress without changes for more than `rules.stale_days` working days.
+7. **Factory:** tickets with `factory:blocked` or `factory:needs-human`.
+8. **Pace:** if `d` > `sprint.working_days` / 2 and less than 30 % of the SP is Done.
+9. **Setup:** required rows of the status board that are not ✅ (IDs).
 
-## Salida
+## Output
 
-En `reportes.idioma`, máximo 15 líneas:
+In `project.language`, at most 15 lines:
 
 ```
-Control diario <jira.proyecto> — <fecha> · día <d>/<sprint.dias_habiles>
-Estado: OK | ATENCIÓN (n reglas rotas)
-- <regla>: <dato concreto> (<claves>)
+Daily check <jira.project> — <date> · day <d>/<sprint.working_days>
+Status: OK | ATTENTION (n rules broken)
+- <rule>: <concrete data> (<keys>)
 ```
 
-Si no hay nada roto, una línea: "Control diario <jira.proyecto> — día <d>/<sprint.dias_habiles>, sin novedades". Sin consejos: eso es del review de mitad de sprint.
+If nothing is broken, one line: "Daily check <jira.project> — day <d>/<sprint.working_days>, nothing to report". No advice: that belongs to the mid-sprint review.

@@ -1,27 +1,28 @@
-# Job: fábrica — revisar
+# Job: factory — review
 
-Modelo sugerido: Opus. No implementás: solo revisás. Nunca hagas commits en el PR ni mergees. Un solo PR por corrida.
+Suggested model: Opus. You don't implement: you only review. Never commit to the PR and never merge. One PR per run.
 
-## 1. Contexto
+## 1. Context
 
-Esta tarea conviene crearla **dentro del Project de claude.ai** del proyecto (`claude.project`): así la sesión puede leer los docs que los tickets citan en **Contexto**.
+Create this task **inside the project's claude.ai Project** (`claude.project`): that way the session can read the docs tickets cite in **Context**.
 
-1. Leé `CLAUDE.md` (importa `factory/proyecto/config.md` y `factory/reglas.md`).
-2. Usá la skill `dark-factory:factory-review` para todo lo que sigue. Si la sesión no tiene el plugin, leé la skill de https://github.com/EnmanuelVarelaPividori/dark-factory, archivo `plugins/dark-factory/skills/factory-review/SKILL.md`, y seguila igual.
+1. Read `CLAUDE.md` (it imports `factory/project/config.md` and `factory/rules.md`).
+2. Use the `dark-factory:factory-review` skill for everything below. If the session doesn't have the plugin, read the skill from https://github.com/EnmanuelVarelaPividori/dark-factory, file `plugins/dark-factory/skills/factory-review/SKILL.md`, and follow it the same way.
+3. The skill starts with the status board gate. If it stops there, end with its one-line report: don't touch any PR.
 
-## 2. Elegir un solo PR
+## 2. Pick a single PR
 
-El más antiguo con `factory:review` cuyo último commit sea posterior al último comentario `factory-review` (o que todavía no tenga ninguno). Si no hay: terminá con una línea, "Review <jira.proyecto>: sin PRs pendientes".
+The oldest with `factory:review` whose last commit is newer than its last `factory-review` comment (or that has none yet). If none: end with one line, "Review <jira.project>: no pending PRs".
 
-## 3. Revisar
+## 3. Review
 
-1. Ronda = comentarios `factory-review` anteriores en el PR + 1. Máximo: `fabrica.rondas_review`.
-2. Revisá según la skill y publicá el comentario con su formato.
-3. Etiquetas según el veredicto:
-   - `APROBADO`: sacá `factory:review`, poné `factory:approved` y comentá en el ticket que espera review humano.
-   - `CAMBIOS` y ronda < máximo: sacá `factory:review`, poné `factory:changes`.
-   - `CAMBIOS` en la ronda máxima: `factory:needs-human` y resumen de 3 líneas del desacuerdo, en el PR y en el ticket.
+1. Round = previous `factory-review` comments on the PR + 1. Max: `factory.review_rounds`.
+2. Review per the skill and post the comment in its format.
+3. Labels per the verdict:
+   - `APPROVED`: remove `factory:review`, set `factory:approved` and comment on the ticket that it awaits human review.
+   - `CHANGES` and round < max: remove `factory:review`, set `factory:changes`.
+   - `CHANGES` in the last round: `factory:needs-human` and a 3-line summary of the disagreement, on the PR and on the ticket.
 
-## Salida
+## Output
 
-En `reportes.idioma`, máximo 5 líneas: PR, ronda, veredicto, link. Si quedó approved o needs-human, empezá con "ATENCIÓN".
+In `project.language`, at most 5 lines: PR, round, verdict, link. If it ended approved, needs-human or setup not ready, start with "ATTENTION".

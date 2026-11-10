@@ -1,83 +1,84 @@
 ---
 name: ticket-quality
-description: Crear o refinar tickets de Jira con calidad Dark Factory: busca duplicados, usa la plantilla de 4 bloques, pregunta lo que falta, aplica el Definition of Ready y muestra el borrador antes de crear. Usar con "creá un ticket", "cargá esto en el backlog", "pasá esta story a Jira", "refiná este ticket", o al cargar varios tickets juntos.
+description: Create or refine Jira tickets with Dark Factory quality — searches for duplicates, uses the ticket template, asks what's missing, applies the Definition of Ready and shows the draft before creating. Use for "create a ticket", "add this to the backlog", "turn this story into Jira", "refine this ticket", or when loading several tickets at once, in any language.
 ---
 
 # Ticket quality
 
-Convierte una necesidad en un ticket que la fábrica puede ejecutar sin preguntar. El objetivo no es crear tickets: es que cada ticket del backlog represente trabajo real, trazable y listo.
+Turns a need into a ticket the factory can run without asking. The goal isn't creating tickets: it is that every ticket in the backlog stands for real, traceable, ready work.
 
-## 0. Cargar el contexto
+## 0. Load the context
 
-1. Buscá la configuración del proyecto en `factory/proyecto/config.md`: en el repo o, si estás en un Project de claude.ai, el doc con esa misma ruta. Reglas en `factory/reglas.md`. Si no existe el config, pedí los datos mínimos (clave Jira, cloudId, ruta de docs) y seguí.
-2. Leé la story del backlog (`factory/proyecto/docs/02-product-backlog.md`) y los requisitos (`R-x.y`, en `factory/proyecto/docs/01-analisis-requerimientos.md`) relacionados con el pedido. Si el pedido no aparece en los docs, decilo: puede ser alcance nuevo.
+1. Find the project configuration in `factory/project/config.md`: in the repo or, inside a claude.ai Project, the doc with that same path (older projects: `factory/proyecto/config.md`). Rules in `factory/rules.md`. If there is no config, ask for the minimum (Jira key, cloudId, docs path, language) and continue.
+2. Write the ticket and talk to the person in `project.language`. Headings and field names of the template stay in English.
+3. Read the backlog story (`factory/project/docs/02-product-backlog.md`) and the requirements (`R-x.y`, in `factory/project/docs/01-requirements.md`) related to the request. If the request isn't in the docs, say so: it may be new scope.
 
-## 1. Clasificar el pedido
+## 1. Classify the request
 
-| Si el pedido es… | Hacé esto |
+| If the request is… | Do this |
 |---|---|
-| Trabajo nuevo, no hecho todavía | Seguí con el paso 2. |
-| Registro de algo ya hecho ("arreglé X", "hice Y") | No crees una story. Buscá el ticket al que pertenece y proponé un comentario o subtarea ahí. Si no existe ninguno, avisá que el trabajo se hizo sin ticket y proponé uno que cumpla el DoR, marcado como hecho. |
-| Bug | Plantilla de bug: pasos para reproducir, esperado vs. real, entorno, ticket o PR de origen si se conoce. |
-| Varias cosas mezcladas | Separalas en tickets distintos antes de seguir. |
+| New work, not done yet | Continue with step 2. |
+| A log of something already done ("I fixed X", "I did Y") | Don't create a story. Find the ticket it belongs to and propose a comment or subtask there. If there is none, point out that the work was done without a ticket and propose one that meets the DoR, marked as done. |
+| A bug | Bug template: steps to reproduce, expected vs. actual, environment, source ticket or PR if known. |
+| Several things mixed | Split them into separate tickets before continuing. |
 
-## 2. Buscar duplicados
+## 2. Search for duplicates
 
-Antes de redactar, buscá en Jira con JQL acotado (pocos campos, máximo 25 resultados):
+Before drafting, search Jira with a narrow JQL (few fields, at most 25 results):
 
-- `project = {clave} AND text ~ "{2–3 palabras clave}" AND statusCategory != Done`
-- La misma búsqueda por el ID de story (`US-xxx`) y por el requisito (`R-x.y`).
+- `project = {key} AND text ~ "{2–3 keywords}" AND statusCategory != Done`
+- The same search by story ID (`US-xxx`) and by requirement (`R-x.y`).
 
-Si hay coincidencias, mostralas y preguntá si es duplicado, extensión del existente o algo distinto. No crees hasta tener respuesta.
+If there are matches, show them and ask whether it's a duplicate, an extension of the existing one or something different. Don't create until you have an answer.
 
-## 3. Redactar con la plantilla
+## 3. Draft with the template
 
-Usá la plantilla de ticket (`factory/templates/ticket.md`; si no está, `${CLAUDE_PLUGIN_ROOT}/template/factory/templates/ticket.md` o `plugins/dark-factory/template/factory/templates/ticket.md` en https://github.com/EnmanuelVarelaPividori/dark-factory): metadatos, Historia, Descripción con ejemplo, Criterios de aceptación y Stakeholders. En español salvo que el proyecto diga otra cosa.
+Use the ticket template (`factory/templates/ticket.md`; if missing, `${CLAUDE_PLUGIN_ROOT}/template/factory/templates/ticket.md` or `plugins/dark-factory/template/factory/templates/ticket.md` in https://github.com/EnmanuelVarelaPividori/dark-factory): metadata, Story, Description with example, Acceptance criteria, Stakeholders and Context.
 
-- Cada criterio de aceptación tiene que poder verificarse mirando el sistema o un test. Reescribí los vagos ("funciona bien", "es rápido").
-- Cada criterio define una sola condición.
-- Trazá a requisitos `R-x.y`. Si no hay requisito, escribí por qué existe el ticket.
-- Armá la sección **Contexto**: si estás en un Project de claude.ai, buscá (`project_search`) investigación, decisiones o diagramas relacionados con el pedido. Listá cada doc con su ruta, qué mirar y si es obligatorio o referencia. Resumí en la descripción o en los criterios lo imprescindible de cada doc obligatorio: los runners pueden no tener acceso al Project. Si no hay nada relevante, `Project: no aplica`.
-- Clasificá: núcleo, configuración o específico de cliente. Si un pedido de cliente empuja lógica específica al núcleo, señalalo y proponé resolverlo por configuración.
+- Every acceptance criterion must be verifiable by looking at the system or a test. Rewrite vague ones ("works fine", "is fast").
+- Each criterion defines a single condition.
+- Trace to `R-x.y` requirements. If there is none, write why the ticket exists.
+- Build the **Context** section: inside a claude.ai Project, search (`project_search`) for research, decisions or diagrams related to the request. List each doc with its path, what to look at and whether it is required or reference. Summarize in the description or criteria what's essential from each required doc: the runners may not have access to the Project. If nothing is relevant, `Project: not applicable`.
+- Classify: core, configuration or client-specific. If a client request pushes client logic into the core, flag it and propose solving it with configuration.
 
-## 4. Preguntar lo que falta
+## 4. Ask what's missing
 
-Si falta algo que no podés inferir de los docs, preguntá, en un solo mensaje y con un máximo de 3 preguntas. Ofrecé tu mejor propuesta para cada una, así la respuesta puede ser "sí". Ejemplos de lo que vale preguntar: rol afectado, dato de ejemplo real, criterio de éxito medible, dependencia dudosa.
+If something is missing that you can't infer from the docs, ask, in one message and with at most 3 questions. Offer your best proposal for each, so the answer can be "yes". Worth asking: affected role, a real example, a measurable success criterion, a doubtful dependency.
 
-No preguntes lo que ya está en los docs.
+Don't ask what's already in the docs.
 
 ## 5. Gate: Definition of Ready
 
-Revisá el borrador contra esta lista y mostrá el resultado:
+Check the draft against this list and show the result:
 
-- [ ] Historia COMO / QUIERO / PARA
-- [ ] Ejemplo concreto
-- [ ] Criterios verificables
-- [ ] Requisito `R-x.y` o justificación
-- [ ] Épica y dependencias
-- [ ] ≤5 SP. Si es 8 o más, proponé la división antes de seguir.
-- [ ] Tipo (núcleo / configuración / cliente)
-- [ ] Sección Contexto completa (o `no aplica`)
-- [ ] Sin duplicados
+- [ ] Story AS A / I WANT / SO THAT
+- [ ] Concrete example
+- [ ] Verifiable criteria
+- [ ] Requirement `R-x.y` or justification
+- [ ] Epic and dependencies
+- [ ] ≤ `rules.max_sp_per_ticket` SP. If larger, propose the split before continuing.
+- [ ] Type (core / configuration / client)
+- [ ] Context section complete (or `not applicable`)
+- [ ] No duplicates
 
-Si todo está OK, el ticket lleva la etiqueta `factory:ready`. Si falta algo, se crea sin la etiqueta y con un comentario que diga qué falta.
+If everything is OK, the ticket gets the `factory:ready` label. If something is missing, it is created without the label and with a comment saying what's missing.
 
-## 6. Capacidad y destino
+## 6. Capacity and destination
 
-- Por defecto, el ticket va al **backlog**, no al sprint activo.
-- Si piden meterlo en el sprint activo: sumá los SP actuales del sprint y compará con la capacidad (`equipo.cantidad` × `sprint.velocidad_por_persona` del config). Si la supera, decilo y proponé qué sacar. Agregar al sprint en curso es un cambio de alcance: dejalo dicho en el comentario.
+- By default, the ticket goes to the **backlog**, not to the active sprint.
+- If asked to put it in the active sprint: add up the sprint's current SP and compare with capacity (`team.size` × `sprint.velocity_per_person` from the config). If it exceeds it, say so and propose what to drop. Adding to the running sprint is a scope change: note it in the comment.
 
-## 7. Mostrar y crear
+## 7. Show and create
 
-1. Mostrá el borrador completo (o una tabla resumen si son varios: título, SP, prioridad, requisitos, estado del DoR).
-2. Si son más de `reglas.lote_confirmacion` tickets, o si hay cualquier duda, esperá confirmación explícita.
-3. Antes de crear, consultá los campos del tipo de issue (`getJiraIssueTypeMetaWithFields`).
-4. Creá con: tipo, `parent` = épica, prioridad mapeada (MUST → High, SHOULD → Medium, COULD → Low), SP, etiquetas y descripción en markdown.
-5. Respondé con la clave creada y el estado del DoR. No resumas de nuevo el contenido.
+1. Show the full draft (or a summary table if there are several: title, SP, priority, requirements, DoR status).
+2. If there are more than `rules.batch_confirm` tickets, or any doubt, wait for explicit confirmation.
+3. Before creating, fetch the issue type's fields (`getJiraIssueTypeMetaWithFields`).
+4. Create with: type, `parent` = epic, priority per `jira.priority_map`, SP, labels and the description in markdown.
+5. Answer with the created key and the DoR status. Don't summarize the content again.
 
-## No hacer
+## Don't
 
-- Crear tickets para registrar trabajo ya hecho.
-- Crear en lote sin mostrar el borrador.
-- Poner `factory:go`: eso lo decide una persona.
-- Inventar criterios que los docs no respaldan sin marcarlos como propuesta.
+- Create tickets to log work already done.
+- Create in batch without showing the draft.
+- Set `factory:go`: a person decides that.
+- Invent criteria the docs don't support without marking them as a proposal.

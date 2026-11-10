@@ -1,13 +1,15 @@
 # Dark Factory
 
-<!-- Sección genérica de Dark Factory. Si este repo ya tiene un CLAUDE.md, este bloque se agrega al final sin borrar lo existente. -->
+<!-- Generic Dark Factory section. If this repo already has a CLAUDE.md, this block is appended at the end without removing anything. -->
 
-Este repo usa Dark Factory. Estructura, reglas y valores del proyecto:
+This repo uses Dark Factory. Structure, rules and project values:
 
-@factory/ESTRUCTURA.md
-@factory/reglas.md
-@factory/proyecto/config.md
+@factory/STRUCTURE.md
+@factory/rules.md
+@factory/project/config.md
 
-- Alcance del proyecto: `factory/proyecto/docs/` (requisitos `R-x.y` en `01-analisis-requerimientos.md`, stories en `02-product-backlog.md`).
-- Convenciones de rama, commits, tests y stack: claves `repo.*` del config.
-- Skills: `dark-factory:factory-implement` (implementar), `dark-factory:factory-review` (revisar), `dark-factory:ticket-quality` (tickets), `dark-factory:factory-kickoff` (instalar, actualizar, verificar).
+- Project scope: `factory/project/docs/` (`R-x.y` requirements in `01-requirements.md`, stories in `02-product-backlog.md`).
+- Setup status of the repo and the organization: `factory/project/status.md`.
+- Branch, commit, test and stack conventions: the `repo.*` keys of the config. Write for people in `project.language`.
+- No secrets in any file under `factory/`: it is pushed and shared by the team.
+- Skills: `dark-factory:factory-implement` (implement), `dark-factory:factory-review` (review), `dark-factory:ticket-quality` (tickets), `dark-factory:factory-kickoff` (install, update, check status).

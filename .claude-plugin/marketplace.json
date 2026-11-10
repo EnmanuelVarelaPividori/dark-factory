@@ -1,6 +1,6 @@
 {
   "name": "dark-factory",
-  "description": "Dark Factory: del plan al PR con Claude. Calidad de tickets, implementación y review contra el ticket.",
+  "description": "Dark Factory: from plan to PR with Claude. Setup assistant, ticket quality, implementation and review against the ticket.",
   "owner": {
     "name": "Enmanuel Varela Pividori"
   },
@@ -8,7 +8,7 @@
     {
       "name": "dark-factory",
       "source": "./plugins/dark-factory",
-      "description": "Skills factory-kickoff, ticket-quality, factory-implement y factory-review."
+      "description": "Skills factory-kickoff, ticket-quality, factory-implement and factory-review."
     }
   ]
 }
