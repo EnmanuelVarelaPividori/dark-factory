@@ -1,6 +1,6 @@
 # Dark Factory
 
-Template and Claude Code plugin to go from planning to code with Claude: planning docs → quality tickets → implementation → review against the ticket → human merge. With automatic board checks (daily, mid-sprint, sprint close).
+Template and Claude Code plugin to go from planning to code with Claude: planning docs → quality tickets → implementation → review against the ticket → human merge. With automatic board checks (daily, weekly, close review), for scrum, kanban or waterfall teams.
 
 The system is **generic**: it names no project and is written in English. Each project gets the same `factory/` folder and keeps its own things in `factory/project/`, including the language its agents write in (`project.language`).
 
@@ -47,7 +47,7 @@ Run it again any time to resume, update the template or check the status ("check
         ├── status.md          status board: repo + organization, owner, date
         ├── setup/             claude-project.md, scheduled-tasks.md
         └── docs/  00-problem-analysis.md  01-requirements.md
-                   02-product-backlog.md   03-sprint-plan.md
+                   02-product-backlog.md   03-delivery-plan.md
 ```
 
 Everything under `factory/` is pushed and shared by the team, so it never holds secrets. Details: [`factory/STRUCTURE.md`](plugins/dark-factory/template/factory/STRUCTURE.md) (for agents) and [`factory/README.md`](plugins/dark-factory/template/factory/README.md) (flow).

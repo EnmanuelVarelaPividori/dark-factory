@@ -22,7 +22,7 @@ If `factory/proyecto/estado.md` is missing, copy only that file from the templat
 | `factory/project/estado.md` | `factory/project/status.md` (rebuilt, see step 4) |
 | `factory/project/docs/00-analisis-problema.md` | `factory/project/docs/00-problem-analysis.md` |
 | `factory/project/docs/01-analisis-requerimientos.md` | `factory/project/docs/01-requirements.md` |
-| `factory/project/docs/03-planificacion-sprints.md` | `factory/project/docs/03-sprint-plan.md` |
+| `factory/project/docs/03-planificacion-sprints.md` | `factory/project/docs/03-delivery-plan.md` |
 
 `reglas.md`, `ESTRUCTURA.md` and `ARQUITECTURA.md` are generic: the update removes them and adds `rules.md`, `STRUCTURE.md` and `ARCHITECTURE.md`.
 
@@ -56,7 +56,7 @@ Rewrite `factory/project/config.md` from the new template, carrying each value o
 | `sprint.dias_habiles` | `sprint.working_days` |
 | `sprint.velocidad_por_persona` | `sprint.velocity_per_person` |
 | `reglas.wip_por_persona` | `rules.wip_per_person` |
-| `reglas.sp_max_ticket` | `rules.max_sp_per_ticket` |
+| `reglas.sp_max_ticket` | `rules.max_ticket_size` (ex. `5` → `5 SP`) |
 | `reglas.lote_confirmacion` | `rules.batch_confirm` |
 | `reglas.dias_estancado` | `rules.stale_days` |
 | `repo.url` | `repo.url` |
@@ -70,6 +70,8 @@ Rewrite `factory/project/config.md` from the new template, carrying each value o
 | `reportes.canales` | `reports.channels` |
 
 If `reportes.idioma` was missing, ask for `project.language`.
+
+New keys, with these values for a project coming from before 0.7.0 (they all used sprints): `work.method` = `scrum`, `work.estimation` = `story points`, `work.review_day` = `—`, `kanban.*` = `—`. Ask only if the person says the team no longer works in sprints.
 
 ### 3. `CLAUDE.md` and `AGENTS.md`
 

@@ -45,6 +45,6 @@ To create one by hand: new scheduled task with the name and prompt above, the cr
 
 | When this changes… | Do this |
 |---|---|
-| A threshold, the team or the velocity | Edit `factory/project/config.md`. Tasks read it on their next run. |
-| Sprint length, start day or daily time | Run the kickoff: it recomputes the schedule, updates the tasks and this file. |
+| A threshold, the team, the velocity or the throughput | Edit `factory/project/config.md`. Tasks read it on their next run. |
+| The method, sprint length, start day, review day or daily time | Run the kickoff: it recomputes the schedule, updates the tasks and this file. |
 | The project ends | Pause the tasks. |

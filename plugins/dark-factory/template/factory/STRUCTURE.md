@@ -22,12 +22,12 @@ This repo uses **Dark Factory**. This file tells any AI agent (Claude Code, Code
     ├── jobs/
     │   ├── README.md          GENERIC · Schedule rules and prompt of the scheduled tasks
     │   ├── daily-check.md     GENERIC · Job: daily check
-    │   ├── weekly-review.md   GENERIC · Job: mid-sprint review
-    │   ├── sprint-review.md   GENERIC · Job: sprint close review
+    │   ├── weekly-review.md   GENERIC · Job: weekly review (sprint, flow or milestone)
+    │   ├── sprint-review.md   GENERIC · Job: close review (sprint, month or milestone)
     │   ├── factory-implement.md  GENERIC · Job: implement runner
     │   └── factory-review.md     GENERIC · Job: review runner
     └── project/               THIS PROJECT'S OWN
-        ├── config.md          Project values: Jira, team, sprint, rules, repo, language, reports
+        ├── config.md          Project values: Jira, team, way of working, rules, repo, language, reports
         ├── status.md          Status board: what is set up in the repo and in the organization, and who owns what's missing
         ├── setup/
         │   ├── claude-project.md    How to set up the claude.ai Project
@@ -37,7 +37,7 @@ This repo uses **Dark Factory**. This file tells any AI agent (Claude Code, Code
             ├── 00-problem-analysis.md
             ├── 01-requirements.md       Requirements with IDs R-x.y
             ├── 02-product-backlog.md    Stories with a Requirements field
-            └── 03-sprint-plan.md
+            └── 03-delivery-plan.md     Sprints, flow priorities or milestones, per work.method
 ```
 
 ## Rules for agents
@@ -62,7 +62,7 @@ Tickets, PRs and Project docs written before 0.7.0 may use the old Spanish names
 |---|---|
 | `factory/proyecto/` | `factory/project/` |
 | `estado.md`, `reglas.md`, `ESTRUCTURA.md`, `ARQUITECTURA.md` | `status.md`, `rules.md`, `STRUCTURE.md`, `ARCHITECTURE.md` |
-| `00-analisis-problema.md`, `01-analisis-requerimientos.md`, `03-planificacion-sprints.md` | `00-problem-analysis.md`, `01-requirements.md`, `03-sprint-plan.md` |
+| `00-analisis-problema.md`, `01-analisis-requerimientos.md`, `03-planificacion-sprints.md` | `00-problem-analysis.md`, `01-requirements.md`, `03-delivery-plan.md` |
 | Ticket headings *Historia*, *Descripción y ejemplo*, *Criterios de aceptación*, *Contexto*, *Notas para la fábrica* | *Story*, *Description and example*, *Acceptance criteria*, *Context*, *Notes for the factory* |
 | Review verdicts `APROBADO` / `CAMBIOS`, "ronda" | `APPROVED` / `CHANGES`, "round" |
 

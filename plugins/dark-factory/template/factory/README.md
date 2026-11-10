@@ -2,6 +2,8 @@
 
 A system to go from planning to code with Claude, without bloated boards or tickets used as a log.
 
+The factory works with scrum, kanban or waterfall (`work.method` in the config).
+
 This folder is **the same in every project**, except `project/`, which holds this project's own things. Don't edit the generic files in a project: they are improved in the [dark-factory](https://github.com/EnmanuelVarelaPividori/dark-factory) repo and updated with `/dark-factory:factory-kickoff`.
 
 ## Structure
@@ -19,12 +21,12 @@ factory/
 ├── jobs/
 │   ├── README.md           Schedule rules and how to create the scheduled tasks
 │   ├── daily-check.md      Daily board check
-│   ├── weekly-review.md    Mid-sprint review
-│   ├── sprint-review.md    Sprint close review
+│   ├── weekly-review.md    Weekly review (sprint, flow or milestone)
+│   ├── sprint-review.md    Close review (sprint, month or milestone)
 │   ├── factory-implement.md  Runner: implement a ticket
 │   └── factory-review.md     Runner: review a PR
 └── project/                ← THE ONLY PART THAT IS THIS PROJECT'S OWN
-    ├── config.md           Jira, team, sprint, repo, rules, language, reports
+    ├── config.md           Jira, team, way of working, repo, rules, language, reports
     ├── status.md           Status board: what is set up and what is missing, repo and organization
     ├── setup/
     │   ├── claude-project.md   How to set up the claude.ai Project
@@ -34,7 +36,7 @@ factory/
         ├── 00-problem-analysis.md
         ├── 01-requirements.md       requirements with IDs R-x.y
         ├── 02-product-backlog.md    stories with a Requirements field
-        └── 03-sprint-plan.md
+        └── 03-delivery-plan.md     sprints, flow priorities or milestones
 ```
 
 Every generic file refers to `project/` by these fixed paths. That is why they work the same in any project.
@@ -69,11 +71,11 @@ The rules of each step are in `rules.md`.
 
 ## Scheduled tasks
 
-| Job | Frequency (derived from sprint length) | Suggested model | Answers |
+| Job | Frequency (derived from the config) | Suggested model | Answers |
 |---|---|---|---|
-| `jobs/daily-check.md` | Working days, before the daily | Haiku | Was any board rule broken today? |
-| `jobs/weekly-review.md` | Weekly, mid-week. Not with 1-week sprints. | Sonnet | How is the sprint going and what would a scrum master do this week? |
-| `jobs/sprint-review.md` | At each sprint close (runs weekly; reports only if one closed) | Opus | Are we on track against the plan and the requirements? Will we make the date? |
+| `jobs/daily-check.md` | Working days, before the daily | Haiku | Was any board rule broken today (WIP, stale, sprint capacity, flow or milestone date)? |
+| `jobs/weekly-review.md` | Weekly. In scrum mid-sprint, not with 1-week sprints. | Sonnet | How is the sprint, the flow or the milestone going, and what should we do this week? |
+| `jobs/sprint-review.md` | Runs weekly; reports at each sprint close (scrum), monthly (kanban) or at each milestone (waterfall) | Opus | Are we on track against the plan and the requirements? Will we make the date? |
 | `jobs/factory-implement.md` | Every 2 h in working hours | Sonnet | Implements a ticket or fixes a PR. |
 | `jobs/factory-review.md` | Every 2 h, 1 h offset | Opus | Reviews a PR in a new session. |
 

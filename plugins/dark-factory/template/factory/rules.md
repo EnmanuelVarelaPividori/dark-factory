@@ -1,17 +1,17 @@
 # Factory rules
 
-Numeric values (WIP, max SP, rounds…) live in `factory/project/config.md`. The rules live here.
+Numeric values (WIP, max ticket size, rounds…) and the way of working (`work.method`: scrum, kanban or waterfall) live in `factory/project/config.md`. The rules live here; where they differ by method, it says so.
 
 ## Definition of Ready
 
-A ticket can enter a sprint and the factory only if it meets all of these:
+A ticket can be started — enter a sprint (scrum), be pulled into In Progress (kanban) or be scheduled in a milestone (waterfall) — and enter the factory only if it meets all of these:
 
 - [ ] Story in AS A / I WANT / SO THAT form.
 - [ ] Description with a concrete example.
 - [ ] Verifiable acceptance criteria: each one can be marked met / not met by looking at the system or a test.
 - [ ] Traced to a requirement `R-x.y` in `factory/project/docs/01-requirements.md` or, if there is none, an explicit justification.
 - [ ] Epic assigned and dependencies listed; blocking ones are Done, or earlier in the same sprint.
-- [ ] Estimate ≤ `rules.max_sp_per_ticket`. If larger, it is split before entering.
+- [ ] Size ≤ `rules.max_ticket_size` (in SP with story points, in working days without estimates). If larger, it is split before entering.
 - [ ] Type: core, configuration or client-specific.
 - [ ] No duplicates in the backlog.
 - [ ] A **Context** section with the Project docs the implementer has to read (path + why + required / reference), or `not applicable`. The essentials of those docs are summarized in the ticket.
@@ -29,10 +29,13 @@ Only a ticket that meets all of them gets `factory:ready`. Without that label, t
 ## Board rules
 
 - **WIP:** at most `rules.wip_per_person` tickets In Progress per person.
-- **Capacity:** the sprint's total SP doesn't exceed `team.size × sprint.velocity_per_person`. What doesn't fit goes to the backlog.
+- **Capacity:**
+  - Scrum: the sprint's total SP doesn't exceed `team.size × sprint.velocity_per_person`. What doesn't fit goes to the backlog.
+  - Kanban: In Progress doesn't exceed `kanban.wip_in_progress`. Pull the next ticket only when one finishes.
+  - Waterfall: the tickets of a milestone fit before its date at the measured pace; if not, the milestone's scope or date is renegotiated, not silently stretched.
 - **No log tickets.** If the work is already done, it goes as a comment or subtask on the existing ticket. If there is no ticket, one that meets the DoR is created before continuing the work, not after.
 - **Batches:** more than `rules.batch_confirm` tickets in one load requires showing the draft and confirming before creating.
-- **Adding to the running sprint** is a scope change: the daily check reports it.
+- **Scope changes:** adding to the running sprint (scrum) or to a milestone already planned (waterfall) is a scope change: the daily check reports it. In kanban, reprioritizing the backlog is normal; what counts is WIP.
 
 ## Labels
 

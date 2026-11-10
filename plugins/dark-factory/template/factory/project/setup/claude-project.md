@@ -38,7 +38,7 @@ Upload or sync from GitHub, **keeping these exact paths**, so tickets and runner
 | `factory/project/docs/00-problem-analysis.md` | The repo |
 | `factory/project/docs/01-requirements.md` | The repo |
 | `factory/project/docs/02-product-backlog.md` | The repo |
-| `factory/project/docs/03-sprint-plan.md` | The repo |
+| `factory/project/docs/03-delivery-plan.md` | The repo |
 
 Detailed research goes in stable folders: `research/<topic>.md`, `decisions/<YYYY-MM-DD>-<topic>.md`, `diagrams/<topic>.md`. Don't move a doc once a ticket cites it.
 

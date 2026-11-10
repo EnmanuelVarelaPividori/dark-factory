@@ -1,14 +1,16 @@
 # Scheduled tasks
 
-Up to five tasks per project. The files in this folder are generic: each one is the full instruction of a job and reads the project's own values from `factory/project/` at run time. Which tasks are on in this project, with their schedule and model, is in `factory/project/setup/scheduled-tasks.md`, written by the kickoff.
+Up to five tasks per project. The files in this folder are generic: each one is the full instruction of a job and reads the project's own values from `factory/project/` at run time, including the way of working (`work.method`: scrum, kanban or waterfall). Which tasks are on in this project, with their schedule and model, is in `factory/project/setup/scheduled-tasks.md`, written by the kickoff.
 
-| Job | File | Model | Runs if… |
-|---|---|---|---|
-| Daily check | `daily-check.md` | Haiku | Chosen in the interview (optional) |
-| Mid-sprint review | `weekly-review.md` | Sonnet | Chosen in the interview and `sprint.weeks` ≥ 2 |
-| Sprint close review | `sprint-review.md` | Opus | Chosen in the interview (optional) |
-| Factory — implement | `factory-implement.md` | Sonnet | `factory.trigger` = A |
-| Factory — review | `factory-review.md` | Opus | `factory.trigger` = A |
+| Job | File | Model | Scrum | Kanban | Waterfall | Runs if… |
+|---|---|---|---|---|---|---|
+| Daily check | `daily-check.md` | Haiku | Board rules before the daily | Same, with flow rules | Same, with milestone rules | Chosen in the interview |
+| Weekly review | `weekly-review.md` | Sonnet | Mid-sprint review | Flow review | Milestone progress review | Chosen in the interview (scrum: only if `sprint.weeks` ≥ 2) |
+| Close review | `sprint-review.md` | Opus | At each sprint close | Monthly forecast | At each milestone | Chosen in the interview |
+| Factory — implement | `factory-implement.md` | Sonnet | — | — | — | `factory.trigger` = A |
+| Factory — review | `factory-review.md` | Opus | — | — | — | `factory.trigger` = A |
+
+The close review keeps the file name `sprint-review.md` so existing scheduled tasks keep working; it handles all three methods.
 
 ## 1. The prompt of every task
 
@@ -23,21 +25,21 @@ Suggested task name: `[<jira.project>] <job>`.
 
 ## 2. Schedule (comes from the config)
 
-`D` = `sprint.start_day` (Monday = 1 … Friday = 5). Local time in `team.timezone`.
+Local time in `team.timezone`. Daily check time: 20 min before `team.daily_time`, or 08:40 if there is no daily.
 
-| Job | When | Cron |
-|---|---|---|
-| Daily check | Working days, 20 min before `team.daily_time` | `CRON_TZ=<zone> <mm> <hh> * * 1-5` |
-| Mid-sprint review | Weekly, working day `D+2` | `CRON_TZ=<zone> 40 10 * * <D+2>` |
-| Sprint close review | Weekly, day `D` in the morning. The job decides whether a sprint closed and, if not, ends in one line. | `CRON_TZ=<zone> 10 8 * * <D>` |
-| Factory — implement | Every 2 h in working hours | `CRON_TZ=<zone> 12 8-18/2 * * 1-5` |
-| Factory — review | Every 2 h, 1 h after the implementer | `CRON_TZ=<zone> 47 9-19/2 * * 1-5` |
+| Job | Scrum | Kanban | Waterfall |
+|---|---|---|---|
+| Daily check | `CRON_TZ=<zone> <mm> <hh> * * 1-5` | same | same |
+| Weekly review | Weekly on working day `D+2`, `D` = `sprint.start_day`: `CRON_TZ=<zone> 40 10 * * <D+2>` | Weekly on `work.review_day`: `CRON_TZ=<zone> 40 10 * * <day>` | Same as kanban |
+| Close review | Weekly on day `D`: `CRON_TZ=<zone> 10 8 * * <D>`. The job reports only if a sprint closed. | Weekly on Monday: `CRON_TZ=<zone> 10 8 * * 1`. The job reports only on the first Monday of the month. | Weekly on Monday: `CRON_TZ=<zone> 10 8 * * 1`. The job reports only if a milestone was due or finished in the last 7 days. |
+| Factory — implement | `CRON_TZ=<zone> 12 8-18/2 * * 1-5` | same | same |
+| Factory — review | `CRON_TZ=<zone> 47 9-19/2 * * 1-5` | same | same |
 
-The minutes avoid :00 and :30 on purpose: scheduled tasks pile up at those times and can be delayed. The close review runs weekly because cron can't count "every N weeks"; with N = 2, one run out of two ends in one line and costs very little.
+Days: Monday = 1 … Friday = 5. The minutes avoid :00 and :30 on purpose: scheduled tasks pile up at those times and can be delayed. The close review runs weekly because cron can't count "every N weeks" or "first Monday of the month" reliably (day-of-month and day-of-week are OR'd); the job decides, and a run with nothing to report ends in one line and costs very little.
 
-### By sprint length (example: D = Monday, daily 09:30)
+### Scrum by sprint length (example: D = Monday, daily 09:30)
 
-| N | Daily check | Mid-sprint | Close | Real Opus runs per month |
+| N | Daily check | Weekly review | Close | Real Opus runs per month |
 |---|---|---|---|---|
 | 1 week | Mon–Fri 09:10 | — | Monday 08:10 | ~4 |
 | 2 weeks | Mon–Fri 09:10 | Wednesday 10:40 | Monday 08:10 | ~2 |
@@ -63,6 +65,6 @@ By hand, for each chosen job:
 
 | When this changes… | Do this |
 |---|---|
-| A threshold, the team or the velocity | Edit `factory/project/config.md`. Tasks read it on their next run. |
-| Sprint length, start day or daily time | Edit the config and run the kickoff: it recomputes the schedule and updates the tasks (creating or removing the mid-sprint one per N). |
+| A threshold, the team, the velocity or the throughput | Edit `factory/project/config.md`. Tasks read it on their next run. |
+| The method, sprint length, start day, review day or daily time | Run the kickoff: it updates the config, recomputes the schedule and updates the tasks. |
 | The project ends | Pause the tasks. |

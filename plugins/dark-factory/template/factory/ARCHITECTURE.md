@@ -77,7 +77,7 @@ Project repo: <url> (branch <base_branch>)
 Clone the repo and run the job defined in factory/jobs/<job>.md. Follow that file exactly.
 ```
 
-Changing a threshold, the team or the velocity is editing `factory/project/config.md`: tasks read it on their next run. A task only needs touching when the schedule changes (sprint length, start day, daily time).
+Changing a threshold, the team, the velocity or the throughput is editing `factory/project/config.md`: tasks read it on their next run. A task only needs touching when the schedule changes (method, sprint length, start day, review day, daily time).
 
 ## Label cycle
 

@@ -20,7 +20,7 @@ The runners (`factory-implement`, `factory-review`) read this table first and **
 | ID | Item | Status | Owner | Updated | Note |
 |---|---|---|---|---|---|
 | R1 | Template installed and `factory/VERSION` = plugin version | ⏳ | | | |
-| R2 | Config has no `TODO` in `project.*`, `jira.*`, `repo.*`, `factory.*` | ⏳ | | | |
+| R2 | Config has no `TODO` in `project.*`, `jira.*`, `work.*`, `repo.*`, `factory.*` or the keys of the method in use | ⏳ | | | |
 | R3 | `CLAUDE.md`, `AGENTS.md`, `.claude/settings.json` connected | ⏳ | | | |
 | R4 | Jira reachable (Atlassian connector) | ⏳ | | | |
 | R5 | GitHub PR labels exist | ⏳ | | | |

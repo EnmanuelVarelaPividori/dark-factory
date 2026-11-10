@@ -6,8 +6,8 @@ Headings and field names stay in English exactly as below, so the runners can fi
 
 ```markdown
 **Epic:** EP-xx · **Requirements:** R-x.y, R-x.z · **Type:** core | configuration | client-specific
-**Module:** <module> · **Priority:** MUST | SHOULD | COULD · **SP:** 1 | 2 | 3 | 5
-**Dependencies:** US-xxx (Done) · US-yyy (in this sprint)
+**Module:** <module> · **Priority:** MUST | SHOULD | COULD · **SP:** 1 | 2 | 3 | 5 (omit without estimates)
+**Dependencies:** US-xxx (Done) · US-yyy (earlier in this sprint or milestone)
 
 ## 1. Story
 AS A <role>

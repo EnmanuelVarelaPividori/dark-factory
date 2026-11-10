@@ -36,28 +36,43 @@ This file is pushed and shared by the whole team. **Never put passwords, tokens,
 |---|---|---|
 | `claude.project` | TODO | Name of the claude.ai Project with the detailed research, or `—` if the project doesn't use one. Tickets cite it in **Context** |
 
-## Team and sprint
+## Team and way of working
 
 | Key | Value | What goes here |
 |---|---|---|
 | `team.members` | TODO | Jira accounts of the people who develop |
 | `team.size` | TODO | Number of people who develop |
 | `team.timezone` | TODO | IANA zone, ex. `Europe/Amsterdam` |
-| `team.daily_time` | TODO | HH:MM |
-| `sprint.weeks` | TODO | N. Sets the schedule of the scheduled tasks |
-| `sprint.start_day` | TODO | Weekday each sprint starts on |
-| `sprint.reference_date` | TODO | Start date of any real sprint (anchor for counting cycles) |
-| `sprint.working_days` | TODO | N × 5 |
-| `sprint.velocity_per_person` | TODO | SP per person per sprint. Measured, not wished for; update at every sprint close. Mark `(estimated)` until measured |
+| `team.daily_time` | TODO | HH:MM, or `—` if there is no daily (the daily check then runs at 08:40) |
+| `work.method` | TODO | `scrum` (sprints), `kanban` (continuous flow) or `waterfall` (phases and milestones in `03-delivery-plan.md`) |
+| `work.estimation` | TODO | `story points` or `none` |
+| `work.review_day` | TODO | Weekday of the weekly review. Kanban and waterfall; `—` in scrum (derived from the sprint) |
+
+### Scrum (`—` for other methods)
+
+| Key | Value | What goes here |
+|---|---|---|
+| `sprint.weeks` | — | N. Sets the schedule of the scheduled tasks |
+| `sprint.start_day` | — | Weekday each sprint starts on |
+| `sprint.reference_date` | — | Start date of any real sprint (anchor for counting cycles) |
+| `sprint.working_days` | — | N × 5 |
+| `sprint.velocity_per_person` | — | SP per person per sprint. Measured, not wished for; update at every sprint close. Mark `(estimated)` until measured |
+
+### Kanban (`—` for other methods)
+
+| Key | Value | What goes here |
+|---|---|---|
+| `kanban.wip_in_progress` | — | Max tickets In Progress for the whole team (column limit), or `—` for none |
+| `kanban.throughput_per_week` | — | Tickets finished per week. Measured; mark `(estimated)` until measured |
 
 ## Rules
 
 | Key | Value | What goes here |
 |---|---|---|
 | `rules.wip_per_person` | 2 | Tickets In Progress per person |
-| `rules.max_sp_per_ticket` | 5 | Max SP for a ticket to enter a sprint |
+| `rules.max_ticket_size` | 5 SP | Largest ticket the factory takes: in SP with story points (ex. `5 SP`), in working days without estimates (ex. `3 days`) |
 | `rules.batch_confirm` | 5 | Tickets per batch that require confirmation before creating |
-| `rules.stale_days` | TODO | Working days without change = stale. Rule: `max(2, N + 1)` |
+| `rules.stale_days` | TODO | Working days without change = stale. Scrum: `max(2, N + 1)`; kanban and waterfall: `3` |
 
 ## Repo
 

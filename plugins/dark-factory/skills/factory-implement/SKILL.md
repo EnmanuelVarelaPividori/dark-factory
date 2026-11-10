@@ -25,7 +25,7 @@ If `factory/project/status.md` doesn't exist, the repo predates the board: stop 
    - [ ] It has `factory:ready` and `factory:go`.
    - [ ] The acceptance criteria are verifiable.
    - [ ] Blocking dependencies are Done (or merged).
-   - [ ] ≤ `rules.max_sp_per_ticket` SP.
+   - [ ] Size ≤ `rules.max_ticket_size`.
    - [ ] There is no other open PR for the same ticket.
    - [ ] The Project docs marked **required** in the Context section can be read (see step 2), or the ticket summarizes what's needed.
 4. If anything fails: comment on the ticket what's missing, set `factory:blocked` and stop. Don't guess requirements.

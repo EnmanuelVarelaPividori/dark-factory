@@ -56,7 +56,7 @@ Check the draft against this list and show the result:
 - [ ] Verifiable criteria
 - [ ] Requirement `R-x.y` or justification
 - [ ] Epic and dependencies
-- [ ] ≤ `rules.max_sp_per_ticket` SP. If larger, propose the split before continuing.
+- [ ] Size ≤ `rules.max_ticket_size` (SP with story points, working days without estimates). If larger, propose the split before continuing.
 - [ ] Type (core / configuration / client)
 - [ ] Context section complete (or `not applicable`)
 - [ ] No duplicates
@@ -65,15 +65,18 @@ If everything is OK, the ticket gets the `factory:ready` label. If something is 
 
 ## 6. Capacity and destination
 
-- By default, the ticket goes to the **backlog**, not to the active sprint.
-- If asked to put it in the active sprint: add up the sprint's current SP and compare with capacity (`team.size` × `sprint.velocity_per_person` from the config). If it exceeds it, say so and propose what to drop. Adding to the running sprint is a scope change: note it in the comment.
+- By default, the ticket goes to the **backlog**, not to work already planned.
+- If asked to plan it in right away, check capacity per `work.method`:
+  - Scrum: add up the active sprint's SP and compare with `team.size` × `sprint.velocity_per_person`. If it exceeds it, say so and propose what to drop. Adding to the running sprint is a scope change: note it in the comment.
+  - Kanban: put it at the right place in the backlog order; In Progress stays within `kanban.wip_in_progress`.
+  - Waterfall: adding it to a planned milestone is a scope change: check whether the milestone still fits its date and note it in the comment.
 
 ## 7. Show and create
 
-1. Show the full draft (or a summary table if there are several: title, SP, priority, requirements, DoR status).
+1. Show the full draft (or a summary table if there are several: title, size, priority, requirements, DoR status).
 2. If there are more than `rules.batch_confirm` tickets, or any doubt, wait for explicit confirmation.
 3. Before creating, fetch the issue type's fields (`getJiraIssueTypeMetaWithFields`).
-4. Create with: type, `parent` = epic, priority per `jira.priority_map`, SP, labels and the description in markdown.
+4. Create with: type, `parent` = epic, priority per `jira.priority_map`, SP (if `work.estimation` = story points), labels and the description in markdown.
 5. Answer with the created key and the DoR status. Don't summarize the content again.
 
 ## Don't

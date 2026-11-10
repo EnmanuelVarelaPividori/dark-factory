@@ -44,7 +44,7 @@ Skip the Project items if the project doesn't use one; then tickets and `factory
 ## 5. Scheduled tasks
 
 - [ ] Schedule computed with `factory/jobs/README.md` from the config, and the chosen tasks written in `factory/project/setup/scheduled-tasks.md`.
-- [ ] Board checks chosen in the interview (optional): daily (Haiku), mid-sprint (Sonnet; only with sprints of 2+ weeks), sprint close (Opus). [O6]
+- [ ] Board checks chosen in the interview (optional): daily (Haiku), weekly review (Sonnet; in scrum only with sprints of 2+ weeks), close review (Opus: sprint close, monthly forecast or milestone, per `work.method`). [O6]
 - [ ] If `factory.trigger` = A: implement runner (Sonnet) and review runner (Opus), with push access to the repo, created **inside the Project** when one is used, so they read the docs cited in Context. [R6]
 - [ ] Model chosen in each task's settings. [O7]
 - [ ] All with the short prompt, the Atlassian connector, repo access and notifications per `reports.channels`.
@@ -53,7 +53,7 @@ Skip the Project items if the project doesn't use one; then tickets and `factory
 
 ## 6. Factory smoke test [O10]
 
-- [ ] A small ticket (1–2 SP), Ready and with `factory:go`, goes all the way: PR with criteria checklist → review with verdict → fix if needed → `factory:approved` → human merge → ticket Done.
+- [ ] A small ticket (1–2 SP, or a day of work without estimates), Ready and with `factory:go`, goes all the way: PR with criteria checklist → review with verdict → fix if needed → `factory:approved` → human merge → ticket Done.
 - [ ] With a Project: a ticket that cites a Project doc as required is read by the runner (the PR says "Context read").
 - [ ] A ticket without `factory:ready` but with `factory:go` ends up `factory:blocked` with a comment saying what's missing, and no code.
 
@@ -61,5 +61,5 @@ Skip the Project items if the project doesn't use one; then tickets and `factory
 
 - [ ] The team knows the flow, the rules in `factory/rules.md` and where the status board is.
 - [ ] Initial backlog cleanup if it comes from before: duplicates, log tickets and tickets without a requirement are closed or rewritten with `ticket-quality`.
-- [ ] Real velocity measured in the first 2 sprints and updated in the config.
+- [ ] Real pace measured and updated in the config: velocity after 2 sprints (scrum) or throughput after 4 weeks (kanban).
 - [ ] Improvements to the template found in this project are taken to the dark-factory repo, not edited in the local copy.
