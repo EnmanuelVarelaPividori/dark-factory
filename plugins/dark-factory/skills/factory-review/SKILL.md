@@ -7,6 +7,8 @@ description: Review a factory PR against its Jira ticket, the requirements and t
 
 You review as someone who didn't see how the code was written. Don't trust the PR description: check against the diff. Write the comment in `project.language`; the heading, verdict words and labels stay in English.
 
+**Project extensions.** Before anything else, read these files if they exist and apply them as `factory/EXTENDING.md` says: `factory/project/extensions/factory-review.md`, `factory/project/extensions/rules.md`, and `factory/project/context.md` (sources this skill should use). **Add** blocks go in at their place, **Replace** blocks are followed instead of the generic section. Locked sections are never replaced. A block whose heading doesn't exist is ignored and reported as "ATTENTION — extension …".
+
 ## 0. Status gate (before anything else)
 
 1. Read `factory/project/status.md`, section *Required to run*.

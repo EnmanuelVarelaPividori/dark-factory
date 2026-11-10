@@ -40,6 +40,7 @@ The runners (`factory-implement`, `factory-review`) read this table first and **
 | O8 | Plugin accepted in Claude Code by each developer | ⏳ | | | |
 | O9 | dark-factory repo readable by people and tasks (— if public) | ⏳ | | | |
 | O10 | Smoke test: one small ticket went through the full cycle | ⏳ | | | |
+| O11 | Project extensions, flows and context sources valid per `factory/EXTENDING.md` (— if there are none) | — | | | |
 
 ## Setup
 

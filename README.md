@@ -28,7 +28,7 @@ The kickoff is a setup assistant. It interviews you in short rounds, in your lan
 - writes step-by-step guides for what only a person can do (the claude.ai Project, task models, the account skill);
 - keeps everything on a shared status board, `factory/project/status.md`.
 
-Run it again any time to resume, update the template or check the status ("check the factory status"). Once every *Required to run* row on the board is ✅, the runners start on their own schedule; a person still decides which tickets go in (`factory:go`) and merges.
+Run it again any time to resume, update the template, check the status ("check the factory status") or change something ("add a hotfix flow", "use Sentry for bug tickets"). Once every *Required to run* row on the board is ✅, the runners start on their own schedule; a person still decides which tickets go in (`factory:go`) and merges.
 
 ## What each project gets
 
@@ -46,9 +46,12 @@ Run it again any time to resume, update the template or check the status ("check
         ├── config.md          settings, incl. project.language
         ├── status.md          status board: repo + organization, owner, date
         ├── setup/             claude-project.md, scheduled-tasks.md
+        ├── context.md · extensions/ · flows/   optional customizations
         └── docs/  00-problem-analysis.md  01-requirements.md
                    02-product-backlog.md   03-delivery-plan.md
 ```
+
+A project customizes the generic factory without forking it: in `factory/project/` it can add to or replace sections of a skill, job or the ticket template (`extensions/`), add its own procedures (`flows/`) and name the connectors to use for context (`context.md`). A few safety rules are locked. All of it is changed through chat, following [`factory/EXTENDING.md`](plugins/dark-factory/template/factory/EXTENDING.md).
 
 Everything under `factory/` is pushed and shared by the team, so it never holds secrets. Details: [`factory/STRUCTURE.md`](plugins/dark-factory/template/factory/STRUCTURE.md) (for agents) and [`factory/README.md`](plugins/dark-factory/template/factory/README.md) (flow).
 

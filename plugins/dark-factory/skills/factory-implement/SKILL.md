@@ -7,6 +7,8 @@ description: Implement in Claude Code a Jira ticket labeled factory:ready + fact
 
 Everything you write for people (ticket comments, PR body, replies to findings, the run report) goes in `project.language`. Headings, labels and file names stay in English.
 
+**Project extensions.** Before anything else, read these files if they exist and apply them as `factory/EXTENDING.md` says: `factory/project/extensions/factory-implement.md`, `factory/project/extensions/rules.md`, and `factory/project/context.md` (sources this skill should use). **Add** blocks go in at their place, **Replace** blocks are followed instead of the generic section. Locked sections are never replaced. A block whose heading doesn't exist is ignored and reported as "ATTENTION — extension …".
+
 ## 0. Status gate (before anything else)
 
 1. Read `factory/project/status.md`, section *Required to run*.

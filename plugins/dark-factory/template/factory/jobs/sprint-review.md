@@ -2,6 +2,10 @@
 
 Suggested model: Opus. Read only: don't modify tickets or docs. The file keeps the name `sprint-review.md` so existing scheduled tasks keep working; it covers every `work.method`.
 
+## Project extensions
+
+If they exist, apply `factory/project/extensions/sprint-review.md` and `factory/project/context.md` as `factory/EXTENDING.md` says. A block whose heading doesn't exist is ignored and reported in the output.
+
 ## 0. Is there something to close?
 
 Read `factory/project/config.md`. This task runs every week; decide whether to report:

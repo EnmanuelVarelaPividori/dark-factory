@@ -7,6 +7,8 @@ description: Create or refine Jira tickets with Dark Factory quality — searche
 
 Turns a need into a ticket the factory can run without asking. The goal isn't creating tickets: it is that every ticket in the backlog stands for real, traceable, ready work.
 
+**Project extensions.** Before anything else, read these files if they exist and apply them as `factory/EXTENDING.md` says: `factory/project/extensions/ticket-quality.md`, `factory/project/extensions/rules.md`, `factory/project/extensions/ticket.md` (applied to the ticket template), and `factory/project/context.md` (sources this skill should use). **Add** blocks go in at their place, **Replace** blocks are followed instead of the generic section. Locked sections are never replaced. A block whose heading doesn't exist is ignored and reported as "ATTENTION — extension …".
+
 ## 0. Load the context
 
 1. Find the project configuration in `factory/project/config.md`: in the repo or, inside a claude.ai Project, the doc with that same path (older projects: `factory/proyecto/config.md`). Rules in `factory/rules.md`. If there is no config, ask for the minimum (Jira key, cloudId, docs path, language) and continue.
@@ -21,6 +23,7 @@ Turns a need into a ticket the factory can run without asking. The goal isn't cr
 | A log of something already done ("I fixed X", "I did Y") | Don't create a story. Find the ticket it belongs to and propose a comment or subtask there. If there is none, point out that the work was done without a ticket and propose one that meets the DoR, marked as done. |
 | A bug | Bug template: steps to reproduce, expected vs. actual, environment, source ticket or PR if known. |
 | Several things mixed | Split them into separate tickets before continuing. |
+| Matches the `use_when` of a project flow in `factory/project/flows/` | Say which flow and ask: **Follow the flow (recommended)** · **Create a normal ticket**. |
 
 ## 2. Search for duplicates
 

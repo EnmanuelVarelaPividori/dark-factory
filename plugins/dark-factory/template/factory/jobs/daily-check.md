@@ -2,6 +2,10 @@
 
 Suggested model: Haiku. Read only: don't modify tickets.
 
+## Project extensions
+
+If they exist, apply `factory/project/extensions/daily-check.md` and `factory/project/context.md` as `factory/EXTENDING.md` says. A block whose heading doesn't exist is ignored and reported in the output.
+
 ## Context
 
 1. Read `factory/project/config.md`. Every value comes from there: Jira (`jira.*`), team, `work.method`, rules and `project.language`.

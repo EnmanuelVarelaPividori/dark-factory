@@ -8,7 +8,7 @@ If the project uses a claude.ai Project (`claude.project` is not `—`), create 
 
 1. Read `CLAUDE.md` (it imports `factory/project/config.md` and `factory/rules.md`).
 2. Use the `dark-factory:factory-implement` skill for everything below. If the session doesn't have the plugin, read the skill from https://github.com/EnmanuelVarelaPividori/dark-factory, file `plugins/dark-factory/skills/factory-implement/SKILL.md`, and follow it the same way.
-3. The skill starts with the status board gate. If it stops there, end with its one-line report: don't touch any ticket.
+3. The skill applies the project extensions (`factory/project/extensions/factory-implement.md`, which also covers this job) and starts with the status board gate. If it stops there, end with its one-line report: don't touch any ticket.
 
 ## 2. Pick a single piece of work
 

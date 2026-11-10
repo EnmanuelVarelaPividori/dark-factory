@@ -14,6 +14,7 @@ factory/
 ├── STRUCTURE.md            Expected structure and instructions for AI agents
 ├── ARCHITECTURE.md         Who loads what, label cycle, updates
 ├── CHECKLIST.md            Full setup reference
+├── EXTENDING.md            How this project customizes the factory, through chat
 ├── rules.md                Definition of Ready / Done, board rules, labels, review cycle, language
 ├── VERSION                 Installed template version
 ├── templates/
@@ -31,6 +32,9 @@ factory/
     ├── setup/
     │   ├── claude-project.md   How to set up the claude.ai Project
     │   └── scheduled-tasks.md  The scheduled tasks chosen for this project
+    ├── context.md          optional: connectors and sources for context
+    ├── extensions/         optional: additions or replacements for generic skills, jobs, rules, ticket template
+    ├── flows/              optional: project-specific procedures
     └── docs/
         ├── README.md                What goes in each doc and in what format (generic)
         ├── 00-problem-analysis.md
@@ -44,6 +48,10 @@ Every generic file refers to `project/` by these fixed paths. That is why they w
 At the repo root, also: `CLAUDE.md` and `AGENTS.md` (instructions for AI agents, they import or point to `STRUCTURE.md`) and `.claude/settings.json` (enables the plugin).
 
 **Nothing in `factory/` holds secrets.** It is pushed and shared by the team.
+
+## Customizing it
+
+The generic files are the default; `project/` can add to them or replace parts of them (extensions), add its own procedures (flows) and name the connectors to use for context. A few safety rules are locked. Everything is changed by asking Claude in a chat; the rules, formats and limits are in `EXTENDING.md`.
 
 ## Is the factory ready?
 

@@ -92,3 +92,10 @@ This file is pushed and shared by the whole team. **Never put passwords, tokens,
 | `factory.trigger` | A | A: label + scheduled task · B: automation |
 | `factory.review_rounds` | 3 | Max review rounds before `factory:needs-human` |
 | `reports.channels` | push + email | push, email, Jira comment |
+
+## Custom
+
+Values used only by this project's extensions and flows (`factory/EXTENDING.md`). At most 20.
+
+| Key | Value | What goes here |
+|---|---|---|

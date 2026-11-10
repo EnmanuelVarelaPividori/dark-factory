@@ -10,10 +10,12 @@ This repo is the **system**, not a project. It holds the Claude Code plugin and 
 4. **`template/` has the same shape as a project repo root.** Whatever you add there shows up in every project on update.
 5. **`template/factory/project/` is the project's starting skeleton:** copied once, never overwritten by the kickoff. Changes there don't reach existing projects; if they need migrating, add an entry to `plugins/dark-factory/skills/factory-kickoff/migrations.md`.
 6. **Fixed paths and names.** Renaming or moving a file in `template/`, or renaming a config key, breaks references in skills, jobs and `STRUCTURE.md`. If needed, update every reference, add the migration, and add the old name to *Legacy names* in `STRUCTURE.md` when tickets or PRs may still cite it.
-7. **Status board rows are a contract.** The runners gate on the *Required to run* IDs of `template/factory/project/status.md`, and the kickoff's *Verify* table checks them. Change both together.
-8. **No secrets, ever.** Every project file is pushed and shared. Nothing in the template may ask for or store passwords, tokens or keys.
-9. **Versioning.** Any change in `template/` or `skills/` bumps the version in `plugins/dark-factory/.claude-plugin/plugin.json` and in `plugins/dark-factory/template/factory/VERSION` (the same).
-10. **Validate before committing:** `claude plugin validate .` and `claude plugin validate plugins/dark-factory`.
+7. **Headings are an interface.** Project extensions target sections of skills, jobs, `rules.md` and `templates/ticket.md` by their exact heading. Renaming or removing a heading needs a migration that rewrites extension targets, and the locked list in `template/factory/EXTENDING.md` must match the real headings.
+8. **Keep it simple and hard to break.** Prefer one clear mechanism over several; add a new extension point, job, label or status row only when an extension can't express it. Generic skills stay short; projects stay within the limits in `EXTENDING.md`.
+9. **Status board rows are a contract.** The runners gate on the *Required to run* IDs of `template/factory/project/status.md`, and the kickoff's *Verify* table checks them. Change both together.
+10. **No secrets, ever.** Every project file is pushed and shared. Nothing in the template may ask for or store passwords, tokens or keys.
+11. **Versioning.** Any change in `template/` or `skills/` bumps the version in `plugins/dark-factory/.claude-plugin/plugin.json` and in `plugins/dark-factory/template/factory/VERSION` (the same).
+12. **Validate before committing:** `claude plugin validate .` and `claude plugin validate plugins/dark-factory`.
 
 ## Where each thing is
 
@@ -25,6 +27,7 @@ This repo is the **system**, not a project. It holds the Claude Code plugin and 
 | Config keys | `plugins/dark-factory/template/factory/project/config.md` + the skills and jobs that use them + a migration |
 | Status board rows | `plugins/dark-factory/template/factory/project/status.md` + *Verify* in `factory-kickoff` + the gate in `factory-implement` / `factory-review` |
 | Setup guides | `plugins/dark-factory/template/factory/project/setup/` + phase 4 of `factory-kickoff` |
+| What projects can customize, formats, limits, locked rules | `plugins/dark-factory/template/factory/EXTENDING.md` + the *Change* section of `factory-kickoff` |
 | A skill's behavior | `plugins/dark-factory/skills/<skill>/SKILL.md` |
 | Install, interview, update, verify | `plugins/dark-factory/skills/factory-kickoff/SKILL.md` |
 | Migrations between versions | `plugins/dark-factory/skills/factory-kickoff/migrations.md` |

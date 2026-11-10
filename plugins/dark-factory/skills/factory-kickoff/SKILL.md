@@ -1,6 +1,6 @@
 ---
 name: factory-kickoff
-description: The single entry point to set up Dark Factory in a project repo — a personal setup assistant. A short interview in four phases (Quick or Full), installs and configures the repo, does the organization setup itself when the session has the tools (scheduled tasks, GitHub labels, branch protection), writes step-by-step guides for the rest, and keeps the shared status board factory/project/status.md. Also resumes, updates the template and checks status. Use for "start the dark factory", "install / set up / configure the factory", "factory kickoff", "update the factory", "resume the factory setup", "check the factory status", "what's missing for the factory to work?", in any language.
+description: The single entry point to set up Dark Factory in a project repo — a personal setup assistant. A short interview in four phases (Quick or Full), installs and configures the repo, does the organization setup itself when the session has the tools (scheduled tasks, GitHub labels, branch protection), writes step-by-step guides for the rest, and keeps the shared status board factory/project/status.md. Also resumes, updates the template, checks status, and makes every project-specific change (config values, extensions, flows, context sources) through chat. Use for "start the dark factory", "install / set up / configure the factory", "factory kickoff", "update the factory", "resume the factory setup", "check the factory status", "what's missing for the factory to work?", "add a flow", "customize the tickets / the review", "use <connector> as context", "change <setting> in the factory", in any language.
 ---
 
 # Factory kickoff
@@ -38,6 +38,7 @@ template/
 | No `factory/` | Start at phase 1. |
 | `factory/VERSION` differs from `${CLAUDE_PLUGIN_ROOT}/template/factory/VERSION` | **Update** (section *Update*), then continue with the row that applies. |
 | A setup phase on the board is not ✅ | **Resume:** show in 3 lines what is done and what's missing, and continue from the first open phase. |
+| The person asks to change something in the factory (a value, an extension, a flow, a context source) | **Change** (section *Change*). |
 | Everything up to date | **Check status** (section *Verify*): refresh the board, show what is not ✅ or —, and offer to fix it, including items skipped earlier. |
 
 Anything already in the config is not asked again: show it as confirmed.
@@ -270,7 +271,8 @@ When `factory/VERSION` differs from the plugin's:
 2. Apply every migration in `migrations.md` newer than the installed version, in order. Show the list of renames before applying them.
 3. Compare the keys of `template/factory/project/config.md` with the project's config. New keys are added with their default or `TODO` and asked in one short round.
 4. If the template adds files to `factory/project/` that the project lacks (ex. a new setup guide), copy just those.
-5. Continue with *Verify*. Never commit without confirmation.
+5. Re-validate the project's extensions against the new generic files (O11): a heading that changed or disappeared is shown with a proposed fix.
+6. Continue with *Verify*. Never commit without confirmation.
 
 ## Verify
 
@@ -294,6 +296,19 @@ The single checklist, used at the end of phase 4 and in check-status mode. For e
 | O8 | Each developer confirms `/plugin` shows `dark-factory` enabled | Person |
 | O9 | dark-factory repo public: —. Private: a person confirms read access for people and tasks | Person |
 | O10 | A ticket went through the full cycle to a human merge | Smoke test |
+| O11 | Every file in `factory/project/extensions/`, `flows/` and `context.md` passes the *Validation* list in `factory/EXTENDING.md`. None: — | Propose the fix, per *Change* |
+
+## Change
+
+Any project-specific change after the setup — a config value, an extension, a flow, a context source, a custom key — follows `factory/EXTENDING.md` exactly. In short:
+
+1. Place it: say in one line which file and which kind of change. If it belongs to the generic system (a new job, label, runner behavior, status row), say so, offer to write it up as a proposal for the dark-factory repo, and stop.
+2. Ask what you need as multiple choice. Ex. for a context source: **Kind**: MCP connector · App · claude.ai Project doc · Public URL; **Used by** (multi-select): the skills; **Needed**: Optional · Required · Required for some tickets. For an extension: **Add** · **Replace a section** (options: the sections that aren't locked).
+3. Check it against the rules: target heading exists, not locked, within the length limits, no secrets, no conflict with `factory/rules.md` or another extension.
+4. Show the new file or the diff and ask: **Apply it (recommended)** · **Adjust it** · **Cancel**.
+5. Apply it, update the board (O11 and a one-line decision), then ask: **New branch and PR (recommended)** · **Push to the current branch** · **Don't commit yet**.
+
+When a requested change breaks a locked rule (ex. "let the runner merge", "skip review for small tickets"), say which rule, why it is locked, and offer the closest allowed change.
 
 ## The status board
 

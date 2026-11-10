@@ -2,6 +2,10 @@
 
 Suggested model: Sonnet. You act as a scrum master, flow coach or project lead, depending on `work.method`. Read only: don't modify tickets.
 
+## Project extensions
+
+If they exist, apply `factory/project/extensions/weekly-review.md` and `factory/project/context.md` as `factory/EXTENDING.md` says. A block whose heading doesn't exist is ignored and reported in the output.
+
 ## Context
 
 Read `factory/project/config.md` (Jira, team, `work.method`, rules, `project.language`) and the *Required to run* section of `factory/project/status.md`. In waterfall, also `factory/project/docs/03-delivery-plan.md` (milestones and dates).
