@@ -38,6 +38,7 @@ Example: <a concrete case with real data: who, what they enter, what they see af
 
 ## Context section
 
+- Only when the project uses a claude.ai Project (`claude.project` is not `—`); otherwise `- Project: not applicable` and the ticket carries everything.
 - Detailed research (research, decisions, diagrams, minutes) lives in the claude.ai Project, not in the repo. The ticket names it by **path inside the Project**.
 - **The essentials go in the ticket.** If a Project decision defines how to implement, summarize it in the description or in an acceptance criterion; the doc is for going deeper.
 - Mark each doc as **required** (it can't be implemented well without reading it) or **reference** (it helps, but the ticket is enough).

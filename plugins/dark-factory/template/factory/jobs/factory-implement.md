@@ -4,7 +4,7 @@ Suggested model: Sonnet. Needs push access to the project repo. Never merge. One
 
 ## 1. Context
 
-Create this task **inside the project's claude.ai Project** (`claude.project`): that way the session can read the docs tickets cite in **Context**.
+If the project uses a claude.ai Project (`claude.project` is not `—`), create this task **inside it**: that way the session can read the docs tickets cite in **Context**. Otherwise it is a standalone task.
 
 1. Read `CLAUDE.md` (it imports `factory/project/config.md` and `factory/rules.md`).
 2. Use the `dark-factory:factory-implement` skill for everything below. If the session doesn't have the plugin, read the skill from https://github.com/EnmanuelVarelaPividori/dark-factory, file `plugins/dark-factory/skills/factory-implement/SKILL.md`, and follow it the same way.

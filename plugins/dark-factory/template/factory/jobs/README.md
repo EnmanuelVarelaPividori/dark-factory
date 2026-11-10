@@ -46,13 +46,13 @@ The minutes avoid :00 and :30 on purpose: scheduled tasks pile up at those times
 
 ## 3. Creating the tasks
 
-With the plugin: `/dark-factory:factory-kickoff` (round 10) computes the schedule, asks which board checks to turn on, creates the tasks itself when the session can, runs each one once, and writes `factory/project/setup/scheduled-tasks.md`.
+With the plugin: `/dark-factory:factory-kickoff` (phase 4) computes the schedule, asks which board checks to turn on, creates the tasks itself when the session can, runs each one once, and writes `factory/project/setup/scheduled-tasks.md`.
 
 By hand, for each chosen job:
 
 1. New scheduled task with the name and prompt from section 1.
 2. Schedule per section 2.
-3. For the two runners: create the task **inside the project's claude.ai Project**, so they can read the docs tickets cite in Context. Connectors: Atlassian. Project repo with read (checks) or push (runners). dark-factory repo with read if private.
+3. For the two runners: if the project uses a claude.ai Project, create the task **inside it**, so they can read the docs tickets cite in Context. Connectors: Atlassian. Project repo with read (checks) or push (runners). dark-factory repo with read if private.
 4. Model: the one in the table above, in the task's settings.
 5. Notifications per `reports.channels`.
 6. Automatic approval on the three board checks (they only read).

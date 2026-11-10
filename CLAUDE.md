@@ -24,7 +24,7 @@ This repo is the **system**, not a project. It holds the Claude Code plugin and 
 | Scheduled task prompts | `plugins/dark-factory/template/factory/jobs/` |
 | Config keys | `plugins/dark-factory/template/factory/project/config.md` + the skills and jobs that use them + a migration |
 | Status board rows | `plugins/dark-factory/template/factory/project/status.md` + *Verify* in `factory-kickoff` + the gate in `factory-implement` / `factory-review` |
-| Setup guides | `plugins/dark-factory/template/factory/project/setup/` + rounds 9–10 of `factory-kickoff` |
+| Setup guides | `plugins/dark-factory/template/factory/project/setup/` + phase 4 of `factory-kickoff` |
 | A skill's behavior | `plugins/dark-factory/skills/<skill>/SKILL.md` |
 | Install, interview, update, verify | `plugins/dark-factory/skills/factory-kickoff/SKILL.md` |
 | Migrations between versions | `plugins/dark-factory/skills/factory-kickoff/migrations.md` |

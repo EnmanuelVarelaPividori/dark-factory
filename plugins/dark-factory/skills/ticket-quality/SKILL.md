@@ -11,7 +11,7 @@ Turns a need into a ticket the factory can run without asking. The goal isn't cr
 
 1. Find the project configuration in `factory/project/config.md`: in the repo or, inside a claude.ai Project, the doc with that same path (older projects: `factory/proyecto/config.md`). Rules in `factory/rules.md`. If there is no config, ask for the minimum (Jira key, cloudId, docs path, language) and continue.
 2. Write the ticket and talk to the person in `project.language`. Headings and field names of the template stay in English.
-3. Read the backlog story (`factory/project/docs/02-product-backlog.md`) and the requirements (`R-x.y`, in `factory/project/docs/01-requirements.md`) related to the request. If the request isn't in the docs, say so: it may be new scope.
+3. Read the backlog story (`factory/project/docs/02-product-backlog.md`) and the requirements (`R-x.y`, in `factory/project/docs/01-requirements.md`) related to the request. If the request isn't in the docs, say so: it may be new scope. If the docs don't exist yet, say so once and continue from the request.
 
 ## 1. Classify the request
 
@@ -38,7 +38,7 @@ Use the ticket template (`factory/templates/ticket.md`; if missing, `${CLAUDE_PL
 - Every acceptance criterion must be verifiable by looking at the system or a test. Rewrite vague ones ("works fine", "is fast").
 - Each criterion defines a single condition.
 - Trace to `R-x.y` requirements. If there is none, write why the ticket exists.
-- Build the **Context** section: inside a claude.ai Project, search (`project_search`) for research, decisions or diagrams related to the request. List each doc with its path, what to look at and whether it is required or reference. Summarize in the description or criteria what's essential from each required doc: the runners may not have access to the Project. If nothing is relevant, `Project: not applicable`.
+- Build the **Context** section. If the project doesn't use a claude.ai Project (`claude.project` is `—`), write `Project: not applicable` and make sure the ticket carries everything. Inside a claude.ai Project, search (`project_search`) for research, decisions or diagrams related to the request. List each doc with its path, what to look at and whether it is required or reference. Summarize in the description or criteria what's essential from each required doc: the runners may not have access to the Project. If nothing is relevant, `Project: not applicable`.
 - Classify: core, configuration or client-specific. If a client request pushes client logic into the core, flag it and propose solving it with configuration.
 
 ## 4. Ask what's missing

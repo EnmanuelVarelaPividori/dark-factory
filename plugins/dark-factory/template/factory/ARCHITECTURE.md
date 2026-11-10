@@ -35,6 +35,8 @@ A working factory needs things in two places:
 
 ## Repo and Project: what goes in each
 
+The claude.ai Project is optional. It keeps the planning context in one place, so chats and tasks start with it and tickets can cite docs instead of copying them. Without one, the ticket and `factory/project/docs/` must carry everything a runner needs.
+
 | | Repo (`factory/project/`) | claude.ai Project (`claude.project`) |
 |---|---|---|
 | For | What the code needs: general and stable | All the planning work, with the detail |
@@ -64,7 +66,7 @@ If a Project path changes, open tickets that cite it go stale: don't move cited 
 | claude.ai Project | `factory/project/…` docs in the Project | `ticket-quality` as an account skill | The conversation |
 | A developer's Claude Code | `CLAUDE.md` imports config and rules | Plugin (Claude Code offers to install it when opening the repo) | The developer |
 | Scheduled task (any job) | Clones the repo: `CLAUDE.md` + `factory/` | Plugin; if missing, the job reads the skill from the dark-factory repo | `factory/jobs/<job>.md` |
-| Runners created inside the Project | The above + the Project docs the ticket cites (`project_read`) | Same | Same |
+| Runners created inside the Project (if one is used) | The above + the Project docs the ticket cites (`project_read`) | Same | Same |
 
 ## Prompt of each scheduled task
 

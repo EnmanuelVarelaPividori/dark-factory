@@ -79,12 +79,12 @@ Replace the old Dark Factory block (it starts with the comment `Sección genéri
 
 1. Create `factory/project/status.md` from the new template.
 2. Carry over *Decisiones* → *Decisions* and *Pendientes* → *Pending* as they were.
-3. Mark interview rounds ✅ where their data is already in the config; rounds 9 (claude.ai Project), 10 (Scheduled tasks) and 11 (GitHub) stay open so the interview resumes there and writes the setup guides.
+3. Mark phases 1–3 ✅ when their data is already in the config; phase 4 (Organization) stays open so the kickoff resumes there and writes the setup guides. Setup mode: Full.
 4. Copy `factory/project/setup/` from the template.
 5. Run *Verify* to fill every row.
 
 ### 5. Outside the repo — record on the board
 
-- **claude.ai Project:** the copies of the config and the docs have to be renamed to the new paths (O2, ⏳ for whoever owns the Project, unless you can write to it).
+- **claude.ai Project:** the copies of the config and the docs have to be renamed to the new paths (O4, ⏳ for whoever owns the Project, unless you can write to it).
 - **Scheduled tasks:** existing prompts keep working, since they point to `factory/jobs/<job>.md`, whose names didn't change. Offer to update their prompt to the English wording.
 - **Tickets and PRs already written** keep their Spanish headings and paths: agents read them through the *Legacy names* table in `factory/STRUCTURE.md`. Don't rewrite them.

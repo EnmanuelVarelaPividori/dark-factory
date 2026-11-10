@@ -21,7 +21,7 @@ If `factory/project/status.md` doesn't exist, stop and ask for `/dark-factory:fa
 
 1. `CLAUDE.md`, `factory/STRUCTURE.md`, `factory/rules.md` and `factory/project/config.md`.
 2. The ticket: acceptance criteria, `R-x.y` requirements, type (core / configuration / client). Older tickets may use Spanish headings: see *Legacy names* in `factory/STRUCTURE.md`.
-3. The story in `factory/project/docs/02-product-backlog.md` and the requirements cited in `factory/project/docs/01-requirements.md`.
+3. The story in `factory/project/docs/02-product-backlog.md` and the requirements cited in `factory/project/docs/01-requirements.md`, if those docs exist.
 4. The Project docs in the ticket's **Context** section, if the session has access (`project_read` by path). Without access, review against the ticket and say so in the comment.
 5. The full diff and the tests. If you can, run `repo.tests`.
 6. Previous review rounds on the PR (any comment starting with `## factory-review`, in any language): don't repeat findings already resolved and don't change criteria between rounds.

@@ -49,8 +49,8 @@ This repo uses **Dark Factory**. This file tells any AI agent (Claude Code, Code
 5. **Check the status board before running as a runner.** If a row under *Required to run* in `factory/project/status.md` is not ✅ or —, stop and report which ones (see the runner skills).
 6. **Write for people in `project.language`.** Labels, file names, config keys, verdict words and ticket headings stay in English.
 7. **No secrets in the repo.** Every file under `factory/` is pushed and shared by the team: never write passwords, tokens, API keys or personal data. Those live in the tools' own settings.
-8. **Detailed research doesn't go in the repo.** It lives in the claude.ai Project (`claude.project`). If a ticket cites Project docs in its **Context** section, read them if you have access; if a required doc isn't accessible and the ticket isn't enough, don't guess: mark the ticket blocked with a comment. Don't copy research into the repo.
-9. **Docs are the source of truth for scope.** Before implementing, read the story in `02-product-backlog.md` and its requirements in `01-requirements.md`. If the ticket contradicts the docs, say so on the ticket and in the PR; never pick silently.
+8. **Detailed research doesn't go in the repo.** When the project uses a claude.ai Project (`claude.project` is not `—`), it lives there. If a ticket cites Project docs in its **Context** section, read them if you have access; if a required doc isn't accessible and the ticket isn't enough, don't guess: mark the ticket blocked with a comment. Don't copy research into the repo.
+9. **Docs are the source of truth for scope.** When they exist, before implementing, read the story in `02-product-backlog.md` and its requirements in `01-requirements.md`. If the ticket contradicts the docs, say so on the ticket and in the PR; never pick silently.
 10. **Work rules are in `factory/rules.md`.** In particular: only tickets with `factory:ready` and `factory:go`, one ticket = one branch = one PR, no scope changes, never merge.
 11. **Files outside `factory/`.** `CLAUDE.md`, `AGENTS.md` and `.claude/settings.json` can hold the repo's own content besides the factory's: add, don't replace.
 

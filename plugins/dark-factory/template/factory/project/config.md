@@ -34,7 +34,7 @@ This file is pushed and shared by the whole team. **Never put passwords, tokens,
 
 | Key | Value | What goes here |
 |---|---|---|
-| `claude.project` | TODO | Name of the claude.ai Project with the detailed research. Tickets cite it in **Context** |
+| `claude.project` | TODO | Name of the claude.ai Project with the detailed research, or `—` if the project doesn't use one. Tickets cite it in **Context** |
 
 ## Team and sprint
 

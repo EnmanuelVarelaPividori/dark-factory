@@ -32,8 +32,8 @@ If `factory/project/status.md` doesn't exist, the repo predates the board: stop 
 
 ## 2. Context
 
-- Read the story in `factory/project/docs/02-product-backlog.md` and the `R-x.y` requirements it cites in `factory/project/docs/01-requirements.md`.
-- Project docs in the ticket's **Context** section: if the session can access the Project (Projects tool), read each one by its path (`project_read`; if the path doesn't exist, `project_search` with the title). **Required** ones are always read; **reference** ones when the ticket leaves doubts.
+- Read the story in `factory/project/docs/02-product-backlog.md` and the `R-x.y` requirements it cites in `factory/project/docs/01-requirements.md`, if those docs exist. Without them, the ticket is the scope.
+- Project docs in the ticket's **Context** section (only when `claude.project` is not `—`): if the session can access the Project (Projects tool), read each one by its path (`project_read`; if the path doesn't exist, `project_search` with the title). **Required** ones are always read; **reference** ones when the ticket leaves doubts.
 - If a **required** doc can't be read and the ticket isn't enough to implement without guessing: comment on the ticket which doc is missing, set `factory:blocked` and stop.
 - If a Project doc contradicts the ticket or `factory/project/docs/`: the ticket wins; comment the contradiction on the ticket and in the PR.
 - Explore the related code before designing. Reuse what exists: don't open a path parallel to a flow that already does the same.
